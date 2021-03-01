@@ -3,7 +3,6 @@ AUTHOURS:
 Drax Lindgren
 Badi's contribution
 Ivory's contribution
+Bowen's contribution
 
-small change
-
-this is from a branch x2
+this is from a branch x3
