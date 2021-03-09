@@ -3,10 +3,11 @@ package com.COMP3004CMS.cms;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
-@RequestMapping
-public class Controller {
+@Controller
+//@RequestMapping
+public class AppController {
 
     @GetMapping("")
     public String homePage(){
@@ -17,4 +18,5 @@ public class Controller {
     public String hello(){
         return "login";
     }
+
 }
