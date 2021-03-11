@@ -9,8 +9,8 @@ package com.COMP3004CMS.cms;
 public abstract class User {
 
     // local variables
-    int userId;
-    boolean loggedIn;
+    int userId = -1;
+    boolean loggedIn = false;
 
     // will probably be passed login info
     public boolean LogIn(){
@@ -18,7 +18,7 @@ public abstract class User {
         // e.g. LogIn(data[] loginInfo)
 
         // set user variables (dummy for now)
-        userId = -1;
+        userId = 101074102;
         loggedIn = true;
         
         return loggedIn;
