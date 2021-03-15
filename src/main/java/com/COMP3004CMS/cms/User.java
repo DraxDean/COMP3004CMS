@@ -23,4 +23,10 @@ public abstract class User {
         
         return loggedIn;
     }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public abstract int getUserID();
 }

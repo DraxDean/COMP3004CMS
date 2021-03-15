@@ -14,11 +14,22 @@ public class Student extends User{
 
     //  empty constructor
     public Student (){
+        // for testing purposes
+        email = "1";
+        userId = 1;
     }
+
 
     //  making a student from admin request student (note: password is sketchy)
     public Student (String email, String password){
         email = email;
         password = password;
+    }
+
+    public int getUserID(){
+        return userId;
+    }
+    public String getEmail(){
+        return email;
     }
 }
