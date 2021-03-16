@@ -102,7 +102,7 @@ public class Course {
     }
     public void denyProfessor(int toDeny){
         if(professorsApplied.contains(toDeny)){
-            professorsApplied.remove(toDeny);
+            professorsApplied.remove(professorsApplied.indexOf(toDeny));
         }
         else{
             System.out.println("Error - Denying Professor: ID not found in Profs Applied List");
