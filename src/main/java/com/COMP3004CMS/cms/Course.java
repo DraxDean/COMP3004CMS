@@ -21,6 +21,7 @@ package com.COMP3004CMS.cms;
         * assign course grade
 */
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class Course {
@@ -52,6 +53,16 @@ public class Course {
         CarletonCode = "TEST1234";
         Title = "Data Structures and Algorithms, jk its a TEST";
         Description = "A course that makes you reconsider your degree.";
+
+        // instantiate Lists
+        professorsApplied = new ArrayList<>();
+        professorsAssigned = new ArrayList<>();
+
+        studentsEnrolled = new ArrayList<>();
+        studentsApplied = new ArrayList<>();
+        studentsWaitListed = new ArrayList<>();
+
+        deliverables = new ArrayList<>();
     }
 
      /*
@@ -64,6 +75,23 @@ public class Course {
         User enrolls Student in course ->
 
      */
+
+    // getters
+    public ArrayList<Integer> getProfessorsApplied() {
+        return professorsApplied;
+    }
+    public ArrayList<Integer> getProfessorsAssigned() {
+        return professorsAssigned;
+    }
+    public ArrayList<Integer> getStudentsEnrolled() {
+        return studentsEnrolled;
+    }
+    public ArrayList<Integer> getStudentsApplied() {
+        return studentsApplied;
+    }
+    public ArrayList<Integer> getStudentsWaitListed() {
+        return studentsWaitListed;
+    }
 
 
     // ******  Prof Course Assignment  ******
@@ -111,7 +139,7 @@ public class Course {
         studentsApplied.add(toApply);
     }
     public void waitListStudent(int toWait){
-        studentsApplied.add(toWait);
+        studentsWaitListed.add(toWait);
     }
 
     // Remove Student from ApplyList or WaitList
