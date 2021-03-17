@@ -59,6 +59,16 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<!--
+				### FRONT END ###
+	 -->
+	<!-- https://mvnrepository.com/artifact/org.webjars.npm/bulma -->
+	<dependency>
+		<groupId>org.webjars.npm</groupId>
+		<artifactId>bulma</artifactId>
+		<version>0.9.1</version>
+	</dependency>
+
 
 	<build>
 		<plugins>
