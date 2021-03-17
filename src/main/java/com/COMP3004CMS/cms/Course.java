@@ -8,16 +8,12 @@ package com.COMP3004CMS.cms;
         * students
         * waitlisted students
         * professors
-        * deliverables to hand out
-        * deliverables handed in
-        * grades for deliverable (might be encapuslated)
+        * deliverables
     - needs to perform:
         * course creation
         * assign student
         * assign prof
-        * deliverable creation
-        * deliverable submission
-        * assign deliverable grade
+        * course changes observer design pattern?
         * assign course grade
 */
 
