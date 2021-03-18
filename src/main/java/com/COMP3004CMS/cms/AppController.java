@@ -24,7 +24,12 @@ public class AppController {
         return "dashboard";
     }
 
-   /* @GetMapping("/error")
-    public String error() {return "test";}*/
+    @GetMapping("/requestAccount")
+    public String requestAccount(){
+        return "requestAccount";
+    }
+
+   @GetMapping("/error")
+    public String error() {return "test";}
 
 }
