@@ -7,7 +7,7 @@ public class StudentTest extends TestCase{
         Student newStudent = new Student();
 
         // from user parent class
-        assertEquals(1, newStudent.getUserID());
+        assertEquals(1, newStudent.getUserId());
 
         // from student child class
         assertEquals("1", newStudent.getEmail());
