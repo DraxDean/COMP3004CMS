@@ -28,10 +28,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/dashboard").permitAll()
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/css/**", "/", "/dashboard").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
                 .defaultSuccessUrl("/dashboard", true) //redirect to profile page
                 .permitAll()
                 .and()

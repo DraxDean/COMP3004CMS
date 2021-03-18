@@ -11,11 +11,11 @@ public class AppController {
 
     @GetMapping("")
     public String homePage(){
-        return "home";
+        return "login";
     }
 
     @GetMapping("/login")
-    public String hello(){
+    public String login(){
         return "login";
     }
 
@@ -23,5 +23,8 @@ public class AppController {
     public String dashboard(){
         return "dashboard";
     }
+
+   /* @GetMapping("/error")
+    public String error() {return "test";}*/
 
 }
