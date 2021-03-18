@@ -55,6 +55,7 @@ public class Deliverable {
         deadline = newDate;
     }
     // Most Definitely will be a file in the future
+    // public void submitRequirements(File newRequirements){ requirements = newRequirements; }
     public void submitRequirements(String newRequirements){
         requirements = newRequirements;
     }
@@ -62,12 +63,10 @@ public class Deliverable {
         grade = newGrade;
     }
 
-
     // *****  Student Actions  *****
 
     public void submitSubmission(String newSubmission){
         submission = newSubmission;
     }
-
 
 }
