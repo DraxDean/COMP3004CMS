@@ -28,7 +28,11 @@ public class Student extends User implements Subscriber {
         password = password;
     }
 
+
     public int getUserId(){
+        return userId;
+    }
+    public int getAnnouncements(){
         return userId;
     }
     public String getEmail(){
@@ -37,7 +41,6 @@ public class Student extends User implements Subscriber {
 
     @Override
     public void update(String s) {
-        System.out.println(s);
-
+       announcements.add(s);
     }
 }
