@@ -23,6 +23,13 @@ public class Student extends User implements Subscriber {
         userId = 1;
     }
 
+    /* add student number */
+    public Student (int i){
+        // for testing purposes
+        email = "1";
+        userId = i;
+    }
+
 
     //  making a student from admin request student (note: password is sketchy)
     public Student (String email, String password){
