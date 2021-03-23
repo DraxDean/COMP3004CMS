@@ -1,28 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<<<<<<< Updated upstream
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-=======
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Carleton Signup</title>
     <link rel="stylesheet" href="/css/style.css">
->>>>>>> Stashed changes
 </head>
 <body>
-<<<<<<< Updated upstream
-<div>
-    <form class="form-signup" th:action="@{/signup}" method="post">
-        <h1>Sign up</h1>
-        <div th:if="${param.error}">
-            Invalid username.
-=======
+
 <div class="columns is-centered">
     <div class="column is-5-tablet is-5-desktop is-3-widescreen">
         <div class="card has-text-centered ">
@@ -98,16 +85,8 @@
                 </div>
 
             </form>
-
-
->>>>>>> Stashed changes
         </div>
-        <label for="inputUsername" class="sr-only" >Username</label>
-        <input type="username" name="username" id="inputUsername" class="form-control" placeholder="Username" required="" />
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
-    </form>
+    </div>
 </div>
 </body>
 </html>

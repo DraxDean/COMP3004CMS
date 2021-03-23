@@ -10,12 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-<<<<<<< Updated upstream
-import java.util.*;
-=======
 import java.util.Arrays;
 import java.util.List;
->>>>>>> Stashed changes
+
 
 @Service
 public class UserDetailServiceImp implements UserDetailsService {

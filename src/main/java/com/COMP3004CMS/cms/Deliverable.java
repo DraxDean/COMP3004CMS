@@ -1,4 +1,4 @@
-package com.COMP3004CMS.cms.Model;
+package com.COMP3004CMS.cms;
 
 /*
     What is a Deliverable?
@@ -22,14 +22,14 @@ package com.COMP3004CMS.cms.Model;
 public class Deliverable {
 
     // deliverable variables
-    public String title;
-    public String start;
-    public String deadline;
+    String title;
+    String start;
+    String deadline;
     // these two will definitely have to evolve into file-readers
-    public String requirements;
-    public String submission;
+    String requirements;
+    String submission;
     // in format [A-]
-    public String grade;
+    String grade;
 
     // constructors
     public Deliverable () {
@@ -40,14 +40,13 @@ public class Deliverable {
         submission = "STUDENT SUBMISSION SLOT";
         grade = "PENDING";
     }
-
-    public Deliverable(String title, String start, String deadline) {
-        this.title = title;
-        this.start = start;
-        this.deadline = deadline;
-        this.requirements =  "TO BE ANNOUNCED";
-        this.submission = "STUDENT SUBMISSION SLOT";
-        this.grade = "PENDING";
+    public Deliverable (String titleC, String startC, String end) {
+        title = titleC;
+        start = startC;
+        deadline = end;
+        requirements = "TO BE ANNOUNCED";
+        submission = "STUDENT SUBMISSION SLOT";
+        grade = "PENDING";
     }
 
     // *****  Prof Actions  *****

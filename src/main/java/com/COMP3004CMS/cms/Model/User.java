@@ -3,10 +3,6 @@ package com.COMP3004CMS.cms.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 @Document(collection = "users")
 public class User {
     @Id

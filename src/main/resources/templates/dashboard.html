@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carleton Homepage</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<<<<<<< Updated upstream
-    <h1>Dashboard</h1>
-    <h2> [[${#httpServletRequest.remoteUser}]]</h2>
-    <a href="/logout">Logout</a>
-=======
 
 <!-- START NAV -->
 <nav class="navbar is-dark has-shadow">
@@ -29,7 +28,7 @@
                 <a class="navbar-item" href="/">
                     Home
                 </a>
-                <a class="navbar-item" href="/course">
+                <a class="navbar-item" href="/courses">
                     Course
                 </a>
                 <a class="navbar-item" href="/logout">
@@ -254,6 +253,5 @@
     </div>
 </div>
 <script async type="text/javascript" src="../js/bulma.js"></script>
->>>>>>> Stashed changes
 </body>
 </html>

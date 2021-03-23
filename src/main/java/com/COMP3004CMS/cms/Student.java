@@ -25,8 +25,7 @@ public class Student extends User{
         email = email;
         password = password;
     }
-
-    public int getUserID(){
+    public int getUserId(){
         return userId;
     }
     public String getEmail(){

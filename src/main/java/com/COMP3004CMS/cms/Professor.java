@@ -8,9 +8,7 @@ package com.COMP3004CMS.cms;
         get to homepage with student data
  */
 
-import com.COMP3004CMS.cms.User;
-
-public class Professor extends User {
+public class Professor extends User{
     String email;
     String password; // might be handled by security module
 

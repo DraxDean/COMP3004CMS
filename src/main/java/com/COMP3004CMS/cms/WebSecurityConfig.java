@@ -21,23 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService);
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-<<<<<<< Updated upstream
-                .antMatchers("/", "/signup").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .defaultSuccessUrl("/dashboard", true) //redirect to profile page
-=======
                     .antMatchers("/css/**", "/", "/signup", "courses/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
@@ -45,21 +35,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .usernameParameter("username")
                     .passwordParameter("password")
-                    //.permitAll()    //no need of permitAll()
-                .defaultSuccessUrl("/dashboard", true)
->>>>>>> Stashed changes
-                .permitAll()
-                .and()
+                    .permitAll()    //no need of permitAll()
+                    .defaultSuccessUrl("/dashboard", true)
+                    .and()
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll();
 
     }
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
