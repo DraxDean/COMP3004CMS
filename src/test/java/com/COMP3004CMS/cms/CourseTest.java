@@ -6,19 +6,18 @@ import org.junit.Before;
 public class CourseTest extends TestCase{
     Professor p1;
     Student s1;
+    Course c1;
 
     @Before
     public void setUp(){
         Professor p1 = new Professor();
-        Course s1 = new Course();
+        c1 = new Course();
+        for (int i = 0; i < 100; i++){
+            Student stuN = new Student(i);
+            c1.addStudent(stuN);
+        }
     }
 
-    // *****  Course Creation Testing  *****
-
-    public void testCourseCreation() {
-        Course newCourse = new Course();
-        assertEquals(-1, newCourse.CNumber);
-    }
 
 
     // *****  Professor Course Interaction Testing  *****
@@ -27,19 +26,19 @@ public class CourseTest extends TestCase{
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProf(newProfessor.getUserId());
+        assertEquals(1, newCourse.getProfessors().size());
     }
 
     public void testDenyProfApply() {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProf(newProfessor.getUserId());
+        assertEquals(1, newCourse.getProfessors().size());
 
         newCourse.denyProfessor(newProfessor.getUserId());
-        assertEquals(0, newCourse.getProfessorsApplied().size());
+        assertEquals(0, newCourse.getProfessors().size());
     }
 
     public void testAssignProf() {
@@ -47,13 +46,13 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         // applying first
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProf(newProfessor.getUserId());
+        assertEquals(1, newCourse.getProfessors().size());
 
         // admin should enact this action
         newCourse.assignProfessor(newProfessor.getUserId());
         assertEquals(1, newCourse.getProfessorsAssigned().size());
-        assertEquals(0, newCourse.getProfessorsApplied().size());
+        assertEquals(0, newCourse.getProfessors().size());
     }
 
     public void testRemoveProf() {
@@ -61,8 +60,8 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         // applying first
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProf(newProfessor.getUserId());
+        assertEquals(1, newCourse.getProfessors().size());
 
         // admin should enact this action
         newCourse.assignProfessor(newProfessor.getUserId());
@@ -80,7 +79,7 @@ public class CourseTest extends TestCase{
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent);
+        newCourse.add(newStudent);
         assertEquals(1, newCourse.getStudentsApplied().size());
     }
 
@@ -88,7 +87,7 @@ public class CourseTest extends TestCase{
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent);
+        newCourse.add(newStudent);
         assertEquals(1, newCourse.getStudentsApplied().size());
 
         newCourse.rejectStudent(newStudent);
@@ -120,7 +119,7 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         // applying first
-        newCourse.applyStudent(newStudent);
+        newCourse.add(newStudent);
         assertEquals(1, newCourse.getStudentsApplied().size());
 
         // admin should enact this action
@@ -159,5 +158,10 @@ public class CourseTest extends TestCase{
         // admin should enact this action
         newCourse.withdrawStudent(newStudent);
         assertEquals(0, newCourse.getStudentsEnrolled().size());
+    }
+
+
+    public void testGetStudent() {
+        assertEquals("Check if student in index match stu dnumber",1, c1.getById(1));
     }
 }
