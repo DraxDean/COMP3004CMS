@@ -25,8 +25,8 @@ public class DeliverableTest extends TestCase {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProf(newProfessor.getUserId());
+        assertEquals(1, newCourse.getProfessors().size());
 
         Deliverable newDeliverable = new Deliverable();
         newCourse.deliverables.add(newDeliverable);
@@ -41,8 +41,8 @@ public class DeliverableTest extends TestCase {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProf(newProfessor.getUserId());
+        assertEquals(1, newCourse.getProfessors().size());
 
         Deliverable newDeliverable = new Deliverable();
         newCourse.deliverables.add(newDeliverable);
@@ -57,8 +57,8 @@ public class DeliverableTest extends TestCase {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProf(newProfessor.getUserId());
+        assertEquals(1, newCourse.getProfessors().size());
 
         Deliverable newDeliverable = new Deliverable();
         newCourse.deliverables.add(newDeliverable);
@@ -76,8 +76,8 @@ public class DeliverableTest extends TestCase {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent);
-        newCourse.enrollStudent(newStudent);
+        newCourse.add(newStudent.getUserId());
+        newCourse.enrollStudent(newStudent.getUserId());
         assertEquals(1, newCourse.getStudentsEnrolled().size());
 
         Deliverable newDeliverable = new Deliverable();
@@ -94,8 +94,8 @@ public class DeliverableTest extends TestCase {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent);
-        newCourse.enrollStudent(newStudent);
+        newCourse.add(newStudent.getUserId());
+        newCourse.enrollStudent(newStudent.getUserId());
         assertEquals(1, newCourse.getStudentsEnrolled().size());
 
         Deliverable newDeliverable = new Deliverable();

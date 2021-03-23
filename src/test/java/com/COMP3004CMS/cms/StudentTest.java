@@ -15,20 +15,13 @@ public class StudentTest extends TestCase{
 
     @Test
     public void getUserId() {
+        assertEquals(1, stu.getUserId());
     }
 
     @Test
     public void getEmail() {
-    }
-
-    public void testCreation() {
-
-        // from user parent class
-        assertEquals(1, stu.getUserId());
-
         // from student child class
         assertEquals("1", stu.getEmail());
-
     }
 
     @Test
