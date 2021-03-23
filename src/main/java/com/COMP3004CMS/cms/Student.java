@@ -8,7 +8,9 @@ package com.COMP3004CMS.cms;
         get to homepage with student data
  */
 
-public class Student extends User{
+import com.COMP3004CMS.cms.utility.Subscriber;
+
+public class Student extends User implements Subscriber {
     String email;
     String password; // might be handled by security module
 
@@ -31,5 +33,11 @@ public class Student extends User{
     }
     public String getEmail(){
         return email;
+    }
+
+    @Override
+    public void update(String s) {
+        System.out.println(s);
+
     }
 }

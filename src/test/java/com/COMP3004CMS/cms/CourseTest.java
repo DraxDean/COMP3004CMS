@@ -1,8 +1,17 @@
 package com.COMP3004CMS.cms;
 
 import junit.framework.TestCase;
+import org.junit.Before;
 
 public class CourseTest extends TestCase{
+    Professor p1;
+    Student s1;
+
+    @Before
+    public void setUp(){
+        Professor p1 = new Professor();
+        Course s1 = new Course();
+    }
 
     // *****  Course Creation Testing  *****
 
