@@ -110,7 +110,7 @@ public class CourseTest extends TestCase{
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.waitListStudent(newStudent.getUserId());
+        newCourse.waitListStudent(newStudent);
 
         assertEquals(1, newCourse.getStudentsWaitListed().size());
     }
@@ -148,16 +148,16 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         // applying first
-        newCourse.waitListStudent(newStudent.getUserId());
+        newCourse.waitListStudent(newStudent);
         assertEquals(1, newCourse.getStudentsWaitListed().size());
 
         // admin should enact this action
-        newCourse.enrollStudent(newStudent.getUserId());
+        newCourse.enrollStudent(newStudent);
         assertEquals(1, newCourse.getStudentsEnrolled().size());
         assertEquals(0, newCourse.getStudentsApplied().size());
 
         // admin should enact this action
-        newCourse.withdrawStudent(newStudent.getUserId());
+        newCourse.withdrawStudent(newStudent);
         assertEquals(0, newCourse.getStudentsEnrolled().size());
     }
 }

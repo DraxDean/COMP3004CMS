@@ -174,7 +174,7 @@ public class Course {
     }
 
     // Admin withdraws Student from course (withdrawal requests)
-    public void withdrawStudent(int toWithdraw){
+    public void withdrawStudent(Student toWithdraw){
         if (studentsEnrolled.contains(toWithdraw)){
             studentsEnrolled.remove(studentsEnrolled.indexOf(toWithdraw));
         }

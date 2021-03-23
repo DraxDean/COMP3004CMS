@@ -76,8 +76,8 @@ public class DeliverableTest extends TestCase {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent.getUserId());
-        newCourse.enrollStudent(newStudent.getUserId());
+        newCourse.applyStudent(newStudent);
+        newCourse.enrollStudent(newStudent);
         assertEquals(1, newCourse.getStudentsEnrolled().size());
 
         Deliverable newDeliverable = new Deliverable();
@@ -94,8 +94,8 @@ public class DeliverableTest extends TestCase {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent.getUserId());
-        newCourse.enrollStudent(newStudent.getUserId());
+        newCourse.applyStudent(newStudent);
+        newCourse.enrollStudent(newStudent);
         assertEquals(1, newCourse.getStudentsEnrolled().size());
 
         Deliverable newDeliverable = new Deliverable();
