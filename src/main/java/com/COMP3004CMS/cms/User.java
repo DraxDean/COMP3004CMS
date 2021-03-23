@@ -6,11 +6,15 @@ package com.COMP3004CMS.cms;
     - this class has login logic
  */
 
+import java.util.ArrayList;
+
 public abstract class User {
 
     // local variables
     int userId = -1;
     boolean loggedIn = false;
+
+    ArrayList<String> announcements = new ArrayList<>();
 
     // will probably be passed login info
     public boolean LogIn(){
