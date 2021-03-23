@@ -23,11 +23,8 @@ public class CourseTest extends TestCase{
     // *****  Professor Course Interaction Testing  *****
 
     public void testProfApply() {
-        Professor newProfessor = new Professor();
-        Course newCourse = new Course();
-
-        newCourse.addProf(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessors().size());
+        c1.addProf(p1);
+        assertEquals(1, p1.getProfessors().size());
     }
 
     public void testDenyProfApply() {
@@ -158,7 +155,7 @@ public class CourseTest extends TestCase{
         // admin should enact this action
         newCourse.withdrawStudent(newStudent);
         assertEquals(0, newCourse.getStudentsEnrolled().size());
-    }
+    }/*
 
 
     public void testGetStudent() {
