@@ -74,14 +74,12 @@ public class Course {
     public ArrayList<Integer> getProfessorsAssigned() {
         return professorsAssigned;
     }
-    public ArrayList<Integer> getStudentsEnrolled() {
-        return studentsEnrolled;
+    public ArrayList<Student> getStudentsEnrolled() {
+        return students;
     }
-    public ArrayList<Integer> getStudentsApplied() {
-        return studentsApplied;
-    }
-    public ArrayList<Integer> getStudentsWaitListed() {
-        return studentsWaitListed;
+
+    public ArrayList<Student> getWaitList() {
+        return waitlist;
     }
 
 
@@ -109,8 +107,6 @@ public class Course {
         }
     }
 
-
-
     // *****  Student Enroll Sequence  ******
 
     /* Add student to course, waitlist if full*/
@@ -132,7 +128,8 @@ public class Course {
     }
 
     // Remove Student from ApplyList or WaitList
-    public void rejectStudent(int toReject){
+    /*
+    public void rejectStudent(Student stu){
         if(studentsApplied.contains(toReject)){
             studentsApplied.remove(studentsApplied.indexOf(toReject));
         }
@@ -143,22 +140,10 @@ public class Course {
             System.out.println("Error - Reject Student from Applied: Student ID not found in Students applied list or waitlist");
         }
     }
+     */
 
-    // Admin enrolls Student in Course and removes from applied list or waitlist
-    public void enrollStudent(int toAssign){
-        if (studentsApplied.contains(toAssign)){
-            studentsApplied.remove(studentsApplied.indexOf(toAssign));
-            studentsEnrolled.add(toAssign);
-        }
-        else if (studentsWaitListed.contains(toAssign)){
-            studentsWaitListed.remove(studentsWaitListed.indexOf(toAssign));
-            studentsEnrolled.add(toAssign);
-        }
-        else{
-            System.out.println("Error - Enrolling Student to Course: Student ID not in Students applied list or waitlist");
-        }
-    }
 
+    /*
     // Admin withdraws Student from course (withdrawal requests)
     public void withdrawStudent(Student toWithdraw){
         if (studentsEnrolled.contains(toWithdraw)){
@@ -168,5 +153,7 @@ public class Course {
             System.out.println("Error - Withdrawing Student to Course: Student ID not found in Students enrolled in Course");
         }
     }
+
+     */
 
 }
