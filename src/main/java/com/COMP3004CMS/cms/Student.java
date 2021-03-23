@@ -10,6 +10,8 @@ package com.COMP3004CMS.cms;
 
 import com.COMP3004CMS.cms.utility.Subscriber;
 
+import java.util.ArrayList;
+
 public class Student extends User implements Subscriber {
     String email;
     String password; // might be handled by security module
@@ -32,8 +34,8 @@ public class Student extends User implements Subscriber {
     public int getUserId(){
         return userId;
     }
-    public int getAnnouncements(){
-        return userId;
+    public ArrayList<String> getAnnouncements(){
+        return announcements;
     }
     public String getEmail(){
         return email;

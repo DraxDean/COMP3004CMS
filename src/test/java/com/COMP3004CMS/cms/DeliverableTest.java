@@ -18,6 +18,27 @@ public class DeliverableTest extends TestCase {
         assertEquals(1, newCourse.deliverables.size());
     }
 
+    public void testStudentReceiveDeliverableUpdate() {
+        Course newCourse = new Course();
+        assertEquals(-1, newCourse.CNumber);
+
+        Student newStudent = new Student();
+
+        newCourse.applyStudent(newStudent);
+        newCourse.enrollStudent(newStudent);
+        assertEquals(1, newCourse.getStudentsEnrolled().size());
+
+        Deliverable newDeliverable = new Deliverable();
+        assertEquals("Dummy Deliverable", newDeliverable.title);
+
+        // add to course
+        newCourse.addDeliverable(newDeliverable);
+        assertEquals(1, newCourse.deliverables.size());
+        assertEquals(1, newStudent.getAnnouncements().size());
+        System.out.println(newStudent.getAnnouncements());
+
+    }
+
 
     // *****  Professor Deliverable Interaction Testing  *****
 

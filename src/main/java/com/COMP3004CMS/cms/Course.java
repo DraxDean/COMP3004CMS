@@ -183,4 +183,10 @@ public class Course {
         }
     }
 
+    // prof adds deliverable
+    public void addDeliverable(Deliverable d){
+        deliverables.add(d);
+        notifyStudentsDeliverableCreated(d);
+    }
+
 }
