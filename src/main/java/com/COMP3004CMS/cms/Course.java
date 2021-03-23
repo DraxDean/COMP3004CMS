@@ -34,9 +34,9 @@ public class Course {
     ArrayList<Integer> professorsApplied;
     ArrayList<Integer> professorsAssigned;
 
-    ArrayList<Integer> studentsEnrolled;
-    ArrayList<Integer> studentsApplied;
-    ArrayList<Integer> studentsWaitListed;
+    ArrayList<Student> studentsEnrolled;
+    ArrayList<Student> studentsApplied;
+    ArrayList<Student> studentsWaitListed;
 
     ArrayList<Deliverable> deliverables;
 
@@ -79,16 +79,23 @@ public class Course {
     public ArrayList<Integer> getProfessorsAssigned() {
         return professorsAssigned;
     }
-    public ArrayList<Integer> getStudentsEnrolled() {
+    public ArrayList<Student> getStudentsEnrolled() {
         return studentsEnrolled;
     }
-    public ArrayList<Integer> getStudentsApplied() {
+    public ArrayList<Student> getStudentsApplied() {
         return studentsApplied;
     }
-    public ArrayList<Integer> getStudentsWaitListed() {
+    public ArrayList<Student> getStudentsWaitListed() {
         return studentsWaitListed;
     }
 
+    // Observer Design Pattern stuff
+
+    public void notifyStudentsDeliverableCreated(Deliverable d){
+        for (Student s : studentsEnrolled){
+            s.update("Deliverable " + d.title + " has been created.");
+        }
+    }
 
     // ******  Prof Course Assignment  ******
 
@@ -131,15 +138,15 @@ public class Course {
     // *****  Student Enroll Sequence  ******
 
     // Student applies to course
-    public void applyStudent(int toApply){
+    public void applyStudent(Student toApply){
         studentsApplied.add(toApply);
     }
-    public void waitListStudent(int toWait){
+    public void waitListStudent(Student toWait){
         studentsWaitListed.add(toWait);
     }
 
     // Remove Student from ApplyList or WaitList
-    public void rejectStudent(int toReject){
+    public void rejectStudent(Student toReject){
         if(studentsApplied.contains(toReject)){
             studentsApplied.remove(studentsApplied.indexOf(toReject));
         }
@@ -152,7 +159,7 @@ public class Course {
     }
 
     // Admin enrolls Student in Course and removes from applied list or waitlist
-    public void enrollStudent(int toAssign){
+    public void enrollStudent(Student toAssign){
         if (studentsApplied.contains(toAssign)){
             studentsApplied.remove(studentsApplied.indexOf(toAssign));
             studentsEnrolled.add(toAssign);
