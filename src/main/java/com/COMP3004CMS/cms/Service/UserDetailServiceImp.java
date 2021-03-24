@@ -27,10 +27,13 @@ public class UserDetailServiceImp implements UserDetailsService {
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+    public List<User> findAllByRoles(String roles){
+        return userRepository.findAllByRoles(roles);
+    }
 
     public void saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setRoles("STUDENT");
+        //user.setRoles("STUDENT");
         userRepository.save(user);
     }
 

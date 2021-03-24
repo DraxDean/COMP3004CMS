@@ -4,10 +4,13 @@ import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 //@RequestMapping
@@ -57,6 +60,14 @@ public class AppController {
         return "dashboard";
     }
 
+    @GetMapping("/user_approval")
+    public String getApprove(Model model) {
+        List<User> pendingStudent = userDetailServiceImp.findAllByRoles("STUDENT_PENDING");
+        List<User> pendingProf = userDetailServiceImp.findAllByRoles("PROFESSOR_PENDING");
+        model.addAttribute("pending_student", pendingStudent);
+        model.addAttribute("pending_prof", pendingProf);
+        return "admin";
+    }
 
     @GetMapping("/error")
     public String error() {return "test";}

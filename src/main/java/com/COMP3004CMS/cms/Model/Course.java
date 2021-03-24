@@ -24,7 +24,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "courses")
 public class Course {
     @Id
-    public String id;
+    public String courseId;
     public String department;
     public String coursecode;
     public String title;
@@ -33,20 +33,20 @@ public class Course {
     public Course() {
     }
 
-    public Course(String id, String department, String coursecode, String title, int maxSeats) {
-        this.id = id;
+    public Course(String courseId, String department, String coursecode, String title, int maxSeats) {
+        this.courseId = courseId;
         this.department = department;
         this.coursecode = coursecode;
         this.title = title;
         this.maxSeats = maxSeats;
     }
 
-    public String getId() {
-        return id;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     public String getDepartment() {
