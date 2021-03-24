@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Course</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<form method="post" id="data_send" th:action="@{/courses/addcourse}">
+    <input id="title" name="title" placeholder="Title" value="">
+    <input id="department" name="department" placeholder="Department" value="">
+    <input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
+    <input id="courseid" name="courseid"  placeholder="CNumber" value="">
+    <input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+
+</form>
+</body>
+</html>
