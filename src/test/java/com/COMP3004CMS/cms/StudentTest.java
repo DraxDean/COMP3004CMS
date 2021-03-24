@@ -28,4 +28,24 @@ public class StudentTest extends TestCase{
     public void testUpdate() {
         stu.update("Hello");
     }
+
+    public void testStudentReceiveDeliverableUpdate() {
+        Course newCourse = new Course();
+        assertEquals(-1, newCourse.CNumber);
+
+        Student newStudent = new Student();
+
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.getStudents().size());
+
+        Deliverable newDeliverable = new Deliverable();
+        assertEquals("Dummy Deliverable", newDeliverable.title);
+
+        // add to course
+        newCourse.addDeliverable(newDeliverable);
+        assertEquals(1, newCourse.deliverables.size());
+        assertEquals(1, newStudent.getAnnouncements().size());
+        System.out.println(newStudent.getAnnouncements());
+
+    }
 }

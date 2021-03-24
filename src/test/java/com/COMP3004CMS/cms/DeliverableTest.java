@@ -24,9 +24,8 @@ public class DeliverableTest extends TestCase {
 
         Student newStudent = new Student();
 
-        newCourse.applyStudent(newStudent);
-        newCourse.enrollStudent(newStudent);
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.getStudents().size());
 
         Deliverable newDeliverable = new Deliverable();
         assertEquals("Dummy Deliverable", newDeliverable.title);
@@ -46,7 +45,7 @@ public class DeliverableTest extends TestCase {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        newCourse.addProf(newProfessor.getUserId());
+        newCourse.addProfessor(newProfessor);
         assertEquals(1, newCourse.getProfessors().size());
 
         Deliverable newDeliverable = new Deliverable();
@@ -62,7 +61,7 @@ public class DeliverableTest extends TestCase {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        newCourse.addProf(newProfessor.getUserId());
+        newCourse.addProfessor(newProfessor);
         assertEquals(1, newCourse.getProfessors().size());
 
         Deliverable newDeliverable = new Deliverable();
@@ -75,58 +74,14 @@ public class DeliverableTest extends TestCase {
     }
 
     public void testSubmitGrade() {
-        Professor newProfessor = new Professor();
-        Course newCourse = new Course();
-
-        newCourse.addProf(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessors().size());
-
-        Deliverable newDeliverable = new Deliverable();
-        newCourse.deliverables.add(newDeliverable);
-        assertEquals(1, newCourse.deliverables.size());
-        // now you have a course with a prof and deliverable
-
-        newDeliverable.submitGrade("Z+");
-        assertEquals("Z+", newDeliverable.grade);
     }
 
 
     // *****  Student Deliverable Interaction Testing  *****
 
     public void testStudentAccessRequirements() {
-        Student newStudent = new Student();
-        Course newCourse = new Course();
-
-        newCourse.add(newStudent.getUserId());
-        newCourse.enrollStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-
-        Deliverable newDeliverable = new Deliverable();
-        newCourse.deliverables.add(newDeliverable);
-        assertEquals(1, newCourse.deliverables.size());
-        newDeliverable.submitRequirements("TEST REQUIREMENTS");
-
-        // now you have a course with a Student and deliverable with requirements
-
-        assertEquals("TEST REQUIREMENTS", newDeliverable.requirements);
     }
 
     public void testSubmitSubmission() {
-        Student newStudent = new Student();
-        Course newCourse = new Course();
-
-        newCourse.add(newStudent.getUserId());
-        newCourse.enrollStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-
-        Deliverable newDeliverable = new Deliverable();
-        newCourse.deliverables.add(newDeliverable);
-        assertEquals(1, newCourse.deliverables.size());
-        // now you have a course with a Student and deliverable
-
-        //get requirements
-
-        newDeliverable.submitSubmission("TEST SUBMISSION");
-        assertEquals("TEST SUBMISSION", newDeliverable.submission);
     }
 }
