@@ -27,13 +27,13 @@ public class UserDetailServiceImp implements UserDetailsService {
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+
     public List<User> findAllByRoles(String roles){
         return userRepository.findAllByRoles(roles);
     }
 
     public void saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        //user.setRoles("STUDENT");
         userRepository.save(user);
     }
 
@@ -41,6 +41,7 @@ public class UserDetailServiceImp implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if(user != null) {
+            //set login username, password and authorities
             List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRoles()));
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         } else {

@@ -32,17 +32,17 @@ public class CourseController {
 
     @PostMapping("/courses/addcourse")
     public String postAddCourse(Course course, BindingResult bindingResult) {
-        Optional<Course> courseExists = courseService.findByCoursecode(course.getCoursecode());
+        Optional<Course> courseExists = courseService.findByCourseid(course.getCourseid());
         if (courseExists.isPresent()) {
             bindingResult
-                    .rejectValue("id", "error.course",
+                    .rejectValue("courseid", "error.course",
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            System.out.print("fail");
+            //System.out.print("fail");
         } else {
             courseService.saveCourse(course);
-            System.out.print("creating course");
+            //System.out.print("creating course");
         }
         return "addcourse";
     }

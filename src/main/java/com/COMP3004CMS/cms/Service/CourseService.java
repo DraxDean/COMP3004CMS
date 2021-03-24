@@ -14,17 +14,17 @@ public class CourseService{
     @Autowired
     private CourseRepository courseRepository;
 
-    public Optional<Course> findByCoursecode(String coursecode){
-        return courseRepository.findByCoursecode(coursecode);
+    public Optional<Course> findByCourseid(String courseid){
+        return courseRepository.findByCourseid(courseid);
     }
 
     public void saveCourse(Course course) {
         courseRepository.save(course);
     }
+
     public List<Course> findAll() {
         return courseRepository.findAll();
     }
-
 
 
 }
