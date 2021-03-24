@@ -1,7 +1,7 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -18,11 +18,11 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form action="/login" class="box" method="post">
+                    <form th:action="@{/login}" class="box" method="post">
                         <div class="field">
-                            <label for="username" class="label">Email</label>
+                            <label for="username" class="label">Username</label>
                             <div class="control has-icons-left">
-                                <input type="text" id="username" name="username" placeholder="e.g. bobsmith@gmail.com" class="input" >
+                                <input type="text" id="username" name="username" placeholder="username" class="input" >
                                 <span class="icon is-small is-left">
                   <i class="fa fa-envelope"></i>
                 </span>

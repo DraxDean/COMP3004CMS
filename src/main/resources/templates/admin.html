@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Applicants Request</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div th:each="prof:${pending_prof}">
+        <a th:text="${prof.getUsername()}"></a>
+        <div>
+            <a>Approve</a>
+        </div>
+        <div>
+            <a>Deny</a>
+        </div>
+    </div>
+
+
+    <div th:each="student:${pending_student}">
+        <a th:text="${student.getUsername()}"></a>
+        <div>
+            <a>Approve</a>
+        </div>
+        <div>
+            <a>Deny</a>
+        </div>
+    </div>
+</body>
+</html>
