@@ -1,7 +1,8 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -15,7 +16,7 @@
 <div class="columns is-centered">
     <div class="column is-5-tablet is-5-desktop is-3-widescreen">
         <div class="card has-text-centered ">
-            <form class="box ">
+            <form class="form-signup" th:action="@{/signup}" method="post">
                 <div class="columns is-centered">
                     <div class="column ">
                         <div class="field is-vertical">
@@ -46,22 +47,29 @@
                             </div>
                         </div>
 
+                        <div class="field is-vertical">
+                            <label for="roles">I am:</label>
 
+                            <select name="roles" id="roles">
+                                <option value="STUDENT_PENDING">Student</option>
+                                <option value="PROFESSOR_PENDING">Professor</option>
+                            </select>
+                        </div>
 
 
                         <div class="field is-vertical">
                             <div class="field-label is-normal">
-                                <label class="label">Student Email</label>
+                                <label class="label">Username</label>
                             </div>
                             <div class="field-body">
                                 <div class="field is-medium">
                                     <div class="field ">
                                         <div class="field has-addons">
-                                            <input class="input is-medium" type="text" placeholder="first.lastName@carleton.ca">
+                                            <input class="input is-medium" name="username" type="username" placeholder="username">
                                         </div>
                                     </div>
                                     <div class="field mt-3">
-                                        <input class="input is-medium" type="password" placeholder="Password" >
+                                        <input class="input is-medium" name="password" type="password" placeholder="Password" >
                                     </div>
                                 </div>
                             </div>
