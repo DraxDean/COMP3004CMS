@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Student extends User implements Subscriber {
     String email;
     String password; // might be handled by security module
+    ArrayList<String> announcements = new ArrayList<>();
 
     //  empty constructor
     public Student (){
@@ -41,7 +42,7 @@ public class Student extends User implements Subscriber {
     public int getUserId(){
         return userId;
     }
-    public ArrayList<String> getAnnouncements(){
+    public ArrayList<String> getAnnouncements() {
         return announcements;
     }
     public String getEmail(){

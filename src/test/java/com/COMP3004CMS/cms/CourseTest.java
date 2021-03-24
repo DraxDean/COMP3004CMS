@@ -22,34 +22,18 @@ public class CourseTest extends TestCase{
 
     // *****  Professor Course Interaction Testing  *****
 
-    public void testProfApply() {
-        c1.addProf(p1);
-        assertEquals(1, p1.getProfessors().size());
-    }
-
-    public void testDenyProfApply() {
-        Professor newProfessor = new Professor();
-        Course newCourse = new Course();
-
-        newCourse.addProf(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessors().size());
-
-        newCourse.denyProfessor(newProfessor.getUserId());
-        assertEquals(0, newCourse.getProfessors().size());
+    public void testAddProf() {
+        c1.addProfessor(p1);
+        assertEquals(1, c1.getProfessors().size());
     }
 
     public void testAssignProf() {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        // applying first
-        newCourse.addProf(newProfessor.getUserId());
+        newCourse.addProfessor(newProfessor);
         assertEquals(1, newCourse.getProfessors().size());
 
-        // admin should enact this action
-        newCourse.assignProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsAssigned().size());
-        assertEquals(0, newCourse.getProfessors().size());
     }
 
     public void testRemoveProf() {
@@ -57,18 +41,13 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         // applying first
-        newCourse.addProf(newProfessor.getUserId());
+        newCourse.addProfessor(newProfessor);
         assertEquals(1, newCourse.getProfessors().size());
 
         // admin should enact this action
-        newCourse.assignProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsAssigned().size());
-
-        // admin should enact this action
-        newCourse.withdrawProfessor(newProfessor.getUserId());
+        newCourse.removeProfessor(newProfessor);
         assertEquals(0, newCourse.getProfessorsAssigned().size());
     }
-
 
     // *****  Student Course Interaction Testing  *****
 
@@ -76,30 +55,19 @@ public class CourseTest extends TestCase{
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.add(newStudent);
-        assertEquals(1, newCourse.getStudentsApplied().size());
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.getStudents().size());
     }
 
-    public void testRejectStudentFromAppliedList() {
-        Student newStudent = new Student();
-        Course newCourse = new Course();
-
-        newCourse.add(newStudent);
-        assertEquals(1, newCourse.getStudentsApplied().size());
-
-        newCourse.rejectStudent(newStudent);
-        assertEquals(0, newCourse.getStudentsApplied().size());
-    }
-
-    public void testRejectStudentFromWaitList() {
+    public void deWaitListStudent() {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
         newCourse.waitListStudent(newStudent);
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
+        assertEquals(1, newCourse.getWaitList().size());
 
-        newCourse.rejectStudent(newStudent);
-        assertEquals(0, newCourse.getStudentsWaitListed().size());
+        newCourse.deWaitListStudent(newStudent);
+        assertEquals(0, newCourse.getWaitList().size());
     }
 
     public void testStudentWaitList() {
@@ -107,22 +75,16 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         newCourse.waitListStudent(newStudent);
-
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
+        assertEquals(1, newCourse.getWaitList().size());
     }
 
-    public void testStudentEnrollFromApplied() {
+    public void testStudentAdd() {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
         // applying first
-        newCourse.add(newStudent);
-        assertEquals(1, newCourse.getStudentsApplied().size());
-
-        // admin should enact this action
-        newCourse.enrollStudent(newStudent);
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-        assertEquals(0, newCourse.getStudentsApplied().size());
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.students.size());
     }
 
     public void testStudentEnrollFromWaitList() {
@@ -131,34 +93,24 @@ public class CourseTest extends TestCase{
 
         // applying first
         newCourse.waitListStudent(newStudent);
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
+        assertEquals(1, newCourse.getWaitList().size());
 
         // admin should enact this action
-        newCourse.enrollStudent(newStudent);
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-        assertEquals(0, newCourse.getStudentsApplied().size());
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.students.size());
+        assertEquals(0, newCourse.waitlist.size());
     }
 
-    public void testStudentWithdrawFromEnrolledList() {
+    public void testRemoveStudentFromCourse() {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        // applying first
-        newCourse.waitListStudent(newStudent);
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
+        // admin should enact this action
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.students.size());
 
         // admin should enact this action
-        newCourse.enrollStudent(newStudent);
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-        assertEquals(0, newCourse.getStudentsApplied().size());
-
-        // admin should enact this action
-        newCourse.withdrawStudent(newStudent);
-        assertEquals(0, newCourse.getStudentsEnrolled().size());
-    }/*
-
-
-    public void testGetStudent() {
-        assertEquals("Check if student in index match stu dnumber",1, c1.getById(1));
+        newCourse.removeStudent(newStudent);
+        assertEquals(0, newCourse.getStudents().size());
     }
 }
