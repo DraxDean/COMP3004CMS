@@ -8,15 +8,27 @@ package com.COMP3004CMS.cms;
         get to homepage with student data
  */
 
-public class Student extends User{
+import com.COMP3004CMS.cms.utility.Subscriber;
+
+import java.util.ArrayList;
+
+public class Student extends User implements Subscriber {
     String email;
     String password; // might be handled by security module
+    ArrayList<String> announcements = new ArrayList<>();
 
     //  empty constructor
     public Student (){
         // for testing purposes
         email = "1";
         userId = 1;
+    }
+
+    /* add student number */
+    public Student (int i){
+        // for testing purposes
+        email = "1";
+        userId = i;
     }
 
 
@@ -26,10 +38,19 @@ public class Student extends User{
         password = password;
     }
 
+
     public int getUserId(){
         return userId;
     }
+    public ArrayList<String> getAnnouncements() {
+        return announcements;
+    }
     public String getEmail(){
         return email;
+    }
+
+    @Override
+    public void update(String s) {
+       announcements.add(s);
     }
 }

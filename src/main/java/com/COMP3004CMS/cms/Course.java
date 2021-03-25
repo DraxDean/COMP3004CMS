@@ -17,7 +17,6 @@ package com.COMP3004CMS.cms;
         * assign course grade
 */
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class Course {
@@ -31,12 +30,11 @@ public class Course {
     String Description;
 
     // using userId's to avoid storing whole object
-    ArrayList<Integer> professorsApplied;
+    ArrayList<Professor> professors;
     ArrayList<Integer> professorsAssigned;
 
-    ArrayList<Integer> studentsEnrolled;
-    ArrayList<Integer> studentsApplied;
-    ArrayList<Integer> studentsWaitListed;
+    ArrayList<Student> students;
+    ArrayList<Student> waitlist;
 
     ArrayList<Deliverable> deliverables;
 
@@ -51,14 +49,12 @@ public class Course {
         Description = "A course that makes you reconsider your degree.";
 
         // instantiate Lists
-        professorsApplied = new ArrayList<>();
+        professors = new ArrayList<Professor>();
         professorsAssigned = new ArrayList<>();
 
-        studentsEnrolled = new ArrayList<>();
-        studentsApplied = new ArrayList<>();
-        studentsWaitListed = new ArrayList<>();
-
-        deliverables = new ArrayList<>();
+        students = new ArrayList<Student>();
+        waitlist = new ArrayList<Student>();
+        deliverables = new ArrayList<Deliverable>();
     }
 
      /*
@@ -73,107 +69,98 @@ public class Course {
      */
 
     // getters
-    public ArrayList<Integer> getProfessorsApplied() {
-        return professorsApplied;
+    public ArrayList<Professor> getProfessors() {
+        return professors;
     }
     public ArrayList<Integer> getProfessorsAssigned() {
         return professorsAssigned;
     }
-    public ArrayList<Integer> getStudentsEnrolled() {
-        return studentsEnrolled;
-    }
-    public ArrayList<Integer> getStudentsApplied() {
-        return studentsApplied;
-    }
-    public ArrayList<Integer> getStudentsWaitListed() {
-        return studentsWaitListed;
+    public ArrayList<Student> getStudents() {
+        return students;
     }
 
+    public ArrayList<Student> getWaitList() {
+        return waitlist;
+    }
+
+    // Observer Design Pattern stuff
+    public void notifyStudentsDeliverableCreated(Deliverable d){
+        for (Student s : students){
+            s.update("Deliverable " + d.title + " has been created.");
+        }
+    }
+    public void notifyStudentsDeliverableGraded(Deliverable d){
+        for (Student s : students){
+            s.update("Deliverable " + d.title + " has been graded.");
+        }
+    }
+    public void notifyStudentsDeliverableDeadlineExtended(Deliverable d){
+        for (Student s : students){
+            s.update("Deliverable " + d.title + " deadline has been extended to " + d.deadline);
+        }
+    }
 
     // ******  Prof Course Assignment  ******
 
     // Prof Applies
-    public void applyProfessor(int toApply){
-        professorsApplied.add(toApply);
-    }
-    public void denyProfessor(int toDeny){
-        if(professorsApplied.contains(toDeny)){
-            professorsApplied.remove(professorsApplied.indexOf(toDeny));
+    public void addProfessor(Professor prof){
+        try{
+            professors.add(prof);
+        } catch (Exception e){
+            System.out.println("Error - adding Professor");
+            e.printStackTrace();
         }
-        else{
-            System.out.println("Error - Denying Professor: ID not found in Profs Applied List");
-        }
-    }
 
-    // Admin assigns Prof to course and removes from apply list
-    public void assignProfessor(int toAssign){
-        if (professorsApplied.contains(toAssign)) {
-            professorsApplied.remove(professorsApplied.indexOf(toAssign));
-            professorsAssigned.add(toAssign);
-        }
-        else{
-            System.out.println("Error - Assigning professor: ID not found in Profs Applied List");
-        }
     }
 
     // Admin withdraw Prof from course
-    public void withdrawProfessor(int toWithdraw){
+    public void removeProfessor(Professor toWithdraw){
         if (professorsAssigned.contains(toWithdraw)) {
-            professorsAssigned.remove(professorsAssigned.indexOf(toWithdraw));
+            professorsAssigned.remove(professorsAssigned);
         }
         else {
-            System.out.println("Error - Withdraw Professor: Prof ID not found in professors assigned to course");
+            System.out.println("Error - Remove Professor: Prof not found in professors assigned to course");
         }
     }
-
-
 
     // *****  Student Enroll Sequence  ******
 
-    // Student applies to course
-    public void applyStudent(int toApply){
-        studentsApplied.add(toApply);
-    }
-    public void waitListStudent(int toWait){
-        studentsWaitListed.add(toWait);
-    }
-
-    // Remove Student from ApplyList or WaitList
-    public void rejectStudent(int toReject){
-        if(studentsApplied.contains(toReject)){
-            studentsApplied.remove(studentsApplied.indexOf(toReject));
-        }
-        else if(studentsWaitListed.contains(toReject)){
-            studentsWaitListed.remove(studentsWaitListed.indexOf(toReject));
-        }
-        else{
-            System.out.println("Error - Reject Student from Applied: Student ID not found in Students applied list or waitlist");
+    /* Add student to course, waitlist if full*/
+    public void addStudent(Student stu){
+        try{
+            if (students.size() > maxSeats){
+                waitListStudent(stu);
+            } else{
+                students.add(stu);
+                if(waitlist.contains(stu)) deWaitListStudent(stu);
+            }
+        } catch (Exception e){
+            System.out.println("Course addStudent - Error adding student");
+            e.printStackTrace();
         }
     }
-
-    // Admin enrolls Student in Course and removes from applied list or waitlist
-    public void enrollStudent(int toAssign){
-        if (studentsApplied.contains(toAssign)){
-            studentsApplied.remove(studentsApplied.indexOf(toAssign));
-            studentsEnrolled.add(toAssign);
-        }
-        else if (studentsWaitListed.contains(toAssign)){
-            studentsWaitListed.remove(studentsWaitListed.indexOf(toAssign));
-            studentsEnrolled.add(toAssign);
-        }
-        else{
-            System.out.println("Error - Enrolling Student to Course: Student ID not in Students applied list or waitlist");
+    public void removeStudent(Student stu){
+        try{
+            students.remove(stu);
+        } catch (Exception e){
+            System.out.println("Course addStudent - Error removing student");
+            e.printStackTrace();
         }
     }
 
-    // Admin withdraws Student from course (withdrawal requests)
-    public void withdrawStudent(int toWithdraw){
-        if (studentsEnrolled.contains(toWithdraw)){
-            studentsEnrolled.remove(studentsEnrolled.indexOf(toWithdraw));
-        }
-        else{
-            System.out.println("Error - Withdrawing Student to Course: Student ID not found in Students enrolled in Course");
-        }
+    public void waitListStudent(Student stu){
+        waitlist.add(stu);
+    }
+    public void deWaitListStudent(Student stu){
+        waitlist.remove(stu);
+    }
+
+    public void addDeliverable(Deliverable newDeliverable) {
+        deliverables.add(newDeliverable);
+        notifyStudentsDeliverableCreated(newDeliverable);
+    }
+    public void deleteDeliverable(Deliverable newDeliverable) {
+        deliverables.remove(newDeliverable);
     }
 
 }

@@ -1,50 +1,39 @@
 package com.COMP3004CMS.cms;
 
 import junit.framework.TestCase;
+import org.junit.Before;
 
 public class CourseTest extends TestCase{
+    Professor p1;
+    Student s1;
+    Course c1;
 
-    // *****  Course Creation Testing  *****
-
-    public void testCourseCreation() {
-        Course newCourse = new Course();
-        assertEquals(-1, newCourse.CNumber);
+    @Before
+    public void setUp(){
+        Professor p1 = new Professor();
+        c1 = new Course();
+        for (int i = 0; i < 100; i++){
+            Student stuN = new Student(i);
+            c1.addStudent(stuN);
+        }
     }
+
 
 
     // *****  Professor Course Interaction Testing  *****
 
-    public void testProfApply() {
-        Professor newProfessor = new Professor();
-        Course newCourse = new Course();
-
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
-    }
-
-    public void testDenyProfApply() {
-        Professor newProfessor = new Professor();
-        Course newCourse = new Course();
-
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
-
-        newCourse.denyProfessor(newProfessor.getUserId());
-        assertEquals(0, newCourse.getProfessorsApplied().size());
+    public void testAddProf() {
+        c1.addProfessor(p1);
+        assertEquals(1, c1.getProfessors().size());
     }
 
     public void testAssignProf() {
         Professor newProfessor = new Professor();
         Course newCourse = new Course();
 
-        // applying first
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProfessor(newProfessor);
+        assertEquals(1, newCourse.getProfessors().size());
 
-        // admin should enact this action
-        newCourse.assignProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsAssigned().size());
-        assertEquals(0, newCourse.getProfessorsApplied().size());
     }
 
     public void testRemoveProf() {
@@ -52,18 +41,13 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         // applying first
-        newCourse.applyProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsApplied().size());
+        newCourse.addProfessor(newProfessor);
+        assertEquals(1, newCourse.getProfessors().size());
 
         // admin should enact this action
-        newCourse.assignProfessor(newProfessor.getUserId());
-        assertEquals(1, newCourse.getProfessorsAssigned().size());
-
-        // admin should enact this action
-        newCourse.withdrawProfessor(newProfessor.getUserId());
+        newCourse.removeProfessor(newProfessor);
         assertEquals(0, newCourse.getProfessorsAssigned().size());
     }
-
 
     // *****  Student Course Interaction Testing  *****
 
@@ -71,53 +55,36 @@ public class CourseTest extends TestCase{
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsApplied().size());
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.getStudents().size());
     }
 
-    public void testRejectStudentFromAppliedList() {
+    public void deWaitListStudent() {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.applyStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsApplied().size());
+        newCourse.waitListStudent(newStudent);
+        assertEquals(1, newCourse.getWaitList().size());
 
-        newCourse.rejectStudent(newStudent.getUserId());
-        assertEquals(0, newCourse.getStudentsApplied().size());
-    }
-
-    public void testRejectStudentFromWaitList() {
-        Student newStudent = new Student();
-        Course newCourse = new Course();
-
-        newCourse.waitListStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
-
-        newCourse.rejectStudent(newStudent.getUserId());
-        assertEquals(0, newCourse.getStudentsWaitListed().size());
+        newCourse.deWaitListStudent(newStudent);
+        assertEquals(0, newCourse.getWaitList().size());
     }
 
     public void testStudentWaitList() {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        newCourse.waitListStudent(newStudent.getUserId());
-
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
+        newCourse.waitListStudent(newStudent);
+        assertEquals(1, newCourse.getWaitList().size());
     }
 
-    public void testStudentEnrollFromApplied() {
+    public void testStudentAdd() {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
         // applying first
-        newCourse.applyStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsApplied().size());
-
-        // admin should enact this action
-        newCourse.enrollStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-        assertEquals(0, newCourse.getStudentsApplied().size());
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.students.size());
     }
 
     public void testStudentEnrollFromWaitList() {
@@ -125,30 +92,25 @@ public class CourseTest extends TestCase{
         Course newCourse = new Course();
 
         // applying first
-        newCourse.waitListStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
+        newCourse.waitListStudent(newStudent);
+        assertEquals(1, newCourse.getWaitList().size());
 
         // admin should enact this action
-        newCourse.enrollStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-        assertEquals(0, newCourse.getStudentsApplied().size());
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.students.size());
+        assertEquals(0, newCourse.waitlist.size());
     }
 
-    public void testStudentWithdrawFromEnrolledList() {
+    public void testRemoveStudentFromCourse() {
         Student newStudent = new Student();
         Course newCourse = new Course();
 
-        // applying first
-        newCourse.waitListStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsWaitListed().size());
+        // admin should enact this action
+        newCourse.addStudent(newStudent);
+        assertEquals(1, newCourse.students.size());
 
         // admin should enact this action
-        newCourse.enrollStudent(newStudent.getUserId());
-        assertEquals(1, newCourse.getStudentsEnrolled().size());
-        assertEquals(0, newCourse.getStudentsApplied().size());
-
-        // admin should enact this action
-        newCourse.withdrawStudent(newStudent.getUserId());
-        assertEquals(0, newCourse.getStudentsEnrolled().size());
+        newCourse.removeStudent(newStudent);
+        assertEquals(0, newCourse.getStudents().size());
     }
 }
