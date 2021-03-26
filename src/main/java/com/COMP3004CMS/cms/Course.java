@@ -24,18 +24,18 @@ public class Course {
     // class variables
     int CNumber;
     int maxSeats;
-    String Department;
+    private int courseNum;
+    String department;
     String CarletonCode;
     String Title;
     String Description;
 
+
     // using userId's to avoid storing whole object
     ArrayList<Professor> professors;
     ArrayList<Integer> professorsAssigned;
-
     ArrayList<Student> students;
     ArrayList<Student> waitlist;
-
     ArrayList<Deliverable> deliverables;
 
 
@@ -43,7 +43,8 @@ public class Course {
     public Course () {
         CNumber = -1;
         maxSeats = 40;
-        Department = "TEST";
+        department = "TEST";
+        courseNum = 1006;
         CarletonCode = "TEST1234";
         Title = "Data Structures and Algorithms, jk its a TEST";
         Description = "A course that makes you reconsider your degree.";
@@ -52,6 +53,24 @@ public class Course {
         professors = new ArrayList<Professor>();
         professorsAssigned = new ArrayList<>();
 
+        students = new ArrayList<Student>();
+        waitlist = new ArrayList<Student>();
+        deliverables = new ArrayList<Deliverable>();
+    }
+
+    /* Constructor with values*/
+
+    public Course (int cnum, int maxS, String dep, int crsNum, String title, String desc) {
+        CNumber = cnum;
+        maxSeats = maxS;
+        department = dep;
+        courseNum = crsNum;
+        Title = title;
+        Description = desc;
+
+        // instantiate Lists
+        professors = new ArrayList<Professor>();
+        professorsAssigned = new ArrayList<>();
         students = new ArrayList<Student>();
         waitlist = new ArrayList<Student>();
         deliverables = new ArrayList<Deliverable>();
@@ -78,10 +97,13 @@ public class Course {
     public ArrayList<Student> getStudents() {
         return students;
     }
-
     public ArrayList<Student> getWaitList() {
         return waitlist;
     }
+
+    public String getCourseCode(){return this.department + String.valueOf(courseNum); }
+    public String getDepartment(){return this.department;}
+    public int getCourseNum(){ return courseNum;}
 
     // Observer Design Pattern stuff
     public void notifyStudentsDeliverableCreated(Deliverable d){

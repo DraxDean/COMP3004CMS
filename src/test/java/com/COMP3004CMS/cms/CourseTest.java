@@ -7,15 +7,18 @@ public class CourseTest extends TestCase{
     Professor p1;
     Student s1;
     Course c1;
+    Course c2;
 
     @Before
     public void setUp(){
         Professor p1 = new Professor();
         c1 = new Course();
+        c2 = new Course(1, 500, "PSYC", 1001, "Multiple choice fun!", "Lets put into words what everyone knows already");
         for (int i = 0; i < 100; i++){
             Student stuN = new Student(i);
             c1.addStudent(stuN);
         }
+
     }
 
 
@@ -112,5 +115,11 @@ public class CourseTest extends TestCase{
         // admin should enact this action
         newCourse.removeStudent(newStudent);
         assertEquals(0, newCourse.getStudents().size());
+    }
+
+    public void testCourseGetters() {
+        assertEquals("Checking get Department","PSYC",c2.getDepartment());
+        assertEquals("Checking get Number",1001,c2.getCourseNum());
+        assertEquals("Checking get Concatenation","PSYC1001",c2.getCourseCode());
     }
 }
