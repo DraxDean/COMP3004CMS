@@ -18,19 +18,19 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @GetMapping("/courses")
+    @GetMapping("/add")
     public String showAllCourse(Model model) {
         List<Course> course = courseService.findAll();
         model.addAttribute("courses", course);
         return "course";
     }
 
-    @GetMapping("/courses/addcourse")
+    @GetMapping("/add/addcourse")
     public String getAddCourse() {
         return "addcourse";
     }
 
-    @PostMapping("/courses/addcourse")
+    @PostMapping("/add/addcourse")
     public String postAddCourse(Course course, BindingResult bindingResult) {
         Optional<Course> courseExists = courseService.findByCourseid(course.getCourseid());
         if (courseExists.isPresent()) {
