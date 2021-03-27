@@ -13,18 +13,38 @@
 </head>
 
 <body>
+
+<!-- START NAV -->
+<nav class="navbar has-shadow" style="background-color:#E0E0E0">
+    <div class="container" style="margin-left:15px">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../index.html">
+                <img src="https://southdundas.com/wp-content/uploads/2017/11/carleton_wide_colour_1844.png" alt="Carleton University" position="absolute" right="15px" />
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+</nav>
+
 <div class="columns is-centered">
     <div class="column is-5-tablet is-5-desktop is-3-widescreen">
-        <div class="card has-text-centered ">
+        <div class="card has-text-centered " style="background-color: #E0E0E0;top:30%">
             <form class="form-signup" th:action="@{/signup}" method="post">
+                <div style="position:relative; background-color:#CF112D; border-radius: 6px 6px 0px 0px">
+                    <h2 style="text-align:center; color:#FFFFFF; font-size: 150%; padding-top: 5px; padding-bottom: 5px;">Sign up</h2>
+                </div>
                 <div class="columns is-centered">
                     <div class="column ">
-                        <div class="field is-vertical">
+                        <div class="field is-vertical" >
                             <div class="field-label is-normal">
-                                <label class="label">Info</label>
+                                <label class="label" style="padding-left: 15px;padding-top: 15px;text-align: left;">Info</label>
                             </div>
                             <div class="field is-horizontal">
-                                <div class="field-body">
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field">
                                         <input class="input is-medium" type="text" placeholder="First Name">
                                     </div>
@@ -36,8 +56,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="field is-vertical">
-                                <div class="field-body">
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field ">
                                         <div class="field has-addons">
                                             <input class="input is-medium" type="text" placeholder="Student Number">
@@ -59,9 +79,9 @@
 
                         <div class="field is-vertical">
                             <div class="field-label is-normal">
-                                <label class="label">Username</label>
+                                <label class="label"  style="padding-left: 15px;text-align: left;">Username</label>
                             </div>
-                            <div class="field-body">
+                            <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                 <div class="field is-medium">
                                     <div class="field ">
                                         <div class="field has-addons">
@@ -75,25 +95,19 @@
                             </div>
                         </div>
 
-                        <div class="field is-vertical">
-                            <div class="field-label">
-                                <!-- Left empty for spacing -->
-                            </div>
-                            <div class="field-body">
-                                <div class="field">
-                                    <div class="control">
-                                        <button class="button is-medium is-rounded is-success">
-                                            Create Account
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
                     </div>
+
                 </div>
 
+                <div style="background-color:#212121;border-radius:0px 0px 6px 6px;padding-top:5px;padding-bottom:5px">
+                    <div class="control">
+                        <button class="button is-medium is-rounded is-success" style="background-color:#616161;border:none;color:#FFFFFF;">
+                            Create Account
+                        </button>
+                    </div>
+                </div>
             </form>
 
 
@@ -102,7 +116,19 @@
 </div>
 
 
+<!-- FOOTER -->
+<nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
 
+    <div class="navbar-brand">
+        <a class="navbar-item brand-text" href="../index.html" style="left:10px">
+            IT Support | Privacy Policy | Accessibility | Copyright 2019
+        </a>
+        <a class="navbar-item brand-text" href="../index.html" style="right:10px; top:6px; position:absolute">
+            IT Service Desk Support Email | 613-520-3700
+        </a>
+    </div>
+
+</nav>
 
 
 
