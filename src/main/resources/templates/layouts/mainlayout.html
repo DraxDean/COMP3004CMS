@@ -9,11 +9,16 @@
     <link rel="stylesheet" href="/css/style.css">
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">CMS HOME</title>
 </head>
+<!--
+    Template home page, menubar + sideBar +test footer
+    Page wraps any thymeleaf page that uses it as a decorator-->
 <body>
+<!-- fragment for menu bar-->
 <div th:replace="fragments/static/navbar.html"></div>
+<div th:insert="fragments/static/rightmenu.html"></div>
 
-<section layout:fragment="test-menu">
-
+<section layout:fragment="menu">
+        Content from page section will be placed here
 </section>
 
 <div>

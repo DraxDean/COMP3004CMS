@@ -50,6 +50,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     @Description("Thymeleaf Template Resolver")
     public ServletContextTemplateResolver templateResolver() {
+        /*Even though theres an error it's working*/
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
         templateResolver.setPrefix("/templates/");
         templateResolver.setSuffix(".html");
