@@ -33,8 +33,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     /* ******************************************************************* */
-    /*  GENERAL CONFIGURATION ARTIFACTS                                    */
-    /*  Static Resources, i18n Messages, Formatters (Conversion Service)   */
+    /*                  GENERAL CONFIGURATION ARTIFACTS                    */
     /* ******************************************************************* */
 
     @Override
@@ -58,6 +57,10 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
 
         return templateResolver;
     }
+
+    /* ******************************************************************* */
+    /*                  TEMPLATE ENGINE AND  LAYOUT DIALECT                */
+    /* ******************************************************************* */
 
     /**
      * Configuration for template engine
