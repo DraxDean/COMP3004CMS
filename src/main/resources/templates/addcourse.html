@@ -11,32 +11,50 @@
 </head>
 <body>
 
-<div>
-    <ul th:each="course : ${courses}">
-        <li><span th:text="${course.getCoursecode()}"></span></li>
-    </ul>
-</div>
-<!-- Dynamic parts that will be removed or added depending on what objects are provided to the page
-    idea is that after all the info from that page is submitted and checked
-    will be added to the model and page sent back
-    if model contains specific attribute, a different senction of the page will be shown -->
-<div th:if="${time != null}">
-    <div th:replace="fragments/static/addCourse-time.html"></div>
-</div>
+<section layout:fragment="menu">
+    <div class="container">
+        <div class="rows">
+            <div class="row is-full" >
+                <form method="post" class="field" id="data_send" th:action="@{/add/course}">
+                    <input id="title" class="label" name="title" placeholder="Title" value="">
+                    <div class="field">
+                        <input id="department" name="department" placeholder="Department" value="">
+                    </div>
+                    <div class="field">
+                        <input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
+                    </div>
+                    <div class="field">
+                        <input id="courseid" name="courseid"  placeholder="CNumber" value="">
+                    </div>
+                    <div class="field">
+                        <input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <ul th:each="course : ${courses}">
+            <li><span th:text="${course.getCoursecode()}"></span></li>
+        </ul>
+    </div>
+    <!-- Dynamic parts that will be removed or added depending on what objects are provided to the page
+        idea is that after all the info from that page is submitted and checked
+        will be added to the model and page sent back
+        if model contains specific attribute, a different senction of the page will be shown -->
+    <div th:if="${time != null}">
+        <div th:replace="fragments/static/addCourse-time.html"></div>
+    </div>
+
+</section>
 
 
 
-
-<!--
-<form method="post" id="data_send" th:action="@{/courses/addcourse}">
-    <input id="title" name="title" placeholder="Title" value="">
-    <input id="department" name="department" placeholder="Department" value="">
-    <input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
-    <input id="courseid" name="courseid"  placeholder="CNumber" value="">
-    <input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
-    -->
-
-</form>
 </body>
 </html>

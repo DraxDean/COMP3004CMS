@@ -32,7 +32,7 @@ public class CourseController {
      * @param model
      * @return page with addTime widget section
      */
-    @GetMapping("/add-times")
+    @GetMapping("/add/course/times")
     public String getAddCourse(Model model) {
         //get available timeslots for course
         List<Course> course = courseService.findAll();
@@ -41,7 +41,7 @@ public class CourseController {
         return "addcourse";
     }
 
-    @PostMapping("/add-time")
+    @PostMapping("/add/course/time")
     public String createTimeObject(@Validated @ModelAttribute("time") Time time,
                                    BindingResult bindingResult, Model model){
         //If the Time object is not valid
@@ -54,12 +54,12 @@ public class CourseController {
 
     }
 
-    @GetMapping("/add/addcourse")
+    @GetMapping("/add/course")
     public String getAddCourse() {
         return "addcourse";
     }
 
-    @PostMapping("/add/addcourse")
+    @PostMapping("/add/course")
     public String postAddCourse(Course course, BindingResult bindingResult) {
         Optional<Course> courseExists = courseService.findByCourseid(course.getCourseid());
         if (courseExists.isPresent()) {

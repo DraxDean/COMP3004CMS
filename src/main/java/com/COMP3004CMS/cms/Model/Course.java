@@ -21,7 +21,9 @@ import com.COMP3004CMS.cms.Deliverable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -31,19 +33,47 @@ public class Course {
     public String id;           //for MongoDB
     public String courseid;     //CNumber
     public String department;
+    public char classCode;
+    @Size(min = 4, max=4)
     public String coursecode;   //CarletonCode
+    //rules for parameter requirments
+    @Size(min = 4, max=4)
+    public String courseNum;
     public String title;
     public String description;
     public int maxSeats;
     private Time time;
     ArrayList<Integer> professorsApplied;
     ArrayList<Integer> professorsAssigned;
-
     ArrayList<Integer> studentsEnrolled;
     ArrayList<Integer> studentsApplied;
     ArrayList<Integer> studentsWaitListed;
-
     ArrayList<Deliverable> deliverables;
+
+    public Course() {
+    }
+
+    public Course(String courseid, String department ,String coursecode, String courseNum, char classCode, String title, int maxSeats, Time time) {
+        this.courseid = courseid;
+        this.department = department;
+        this.coursecode = coursecode;
+        this.courseNum = courseNum;
+        this.classCode = classCode;
+        this.title = title;
+        this.maxSeats = maxSeats;
+        this.time = time;
+    }
+    /*Temp constructor without time obj until it's added into creation on page*/
+    public Course(String courseid, String department ,String coursecode, String courseNum, char classCode, String title, int maxSeats) {
+        this.courseid = courseid;
+        this.department = department;
+        this.coursecode = coursecode;
+        this.courseNum = courseNum;
+        this.classCode = classCode;
+        this.title = title;
+        this.maxSeats = maxSeats;
+        time = new Time(12,13, new Date(2020,Calendar.MARCH,21), new Date(2020, Calendar.MAY,22));
+    }
 
     public ArrayList<Integer> getProfessorsApplied() {
         return professorsApplied;
@@ -65,17 +95,7 @@ public class Course {
         return studentsWaitListed;
     }
 
-    public Course() {
-    }
 
-    public Course(String courseid, String department, String coursecode, String title, int maxSeats, Time time) {
-        this.courseid = courseid;
-        this.department = department;
-        this.coursecode = coursecode;
-        this.title = title;
-        this.maxSeats = maxSeats;
-        this.time = time;
-    }
 
     public String getCourseid() {
         return courseid;
