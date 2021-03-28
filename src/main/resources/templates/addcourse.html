@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/mainlayout.html}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +10,24 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+
+<div>
+    <ul th:each="course : ${courses}">
+        <li><span th:text="${course.getCoursecode()}"></span></li>
+    </ul>
+</div>
+<!-- Dynamic parts that will be removed or added depending on what objects are provided to the page
+    idea is that after all the info from that page is submitted and checked
+    will be added to the model and page sent back
+    if model contains specific attribute, a different senction of the page will be shown -->
+<div th:if="${time != null}">
+    <div th:replace="fragments/static/addCourse-time.html"></div>
+</div>
+
+
+
+
+<!--
 <form method="post" id="data_send" th:action="@{/courses/addcourse}">
     <input id="title" name="title" placeholder="Title" value="">
     <input id="department" name="department" placeholder="Department" value="">
@@ -16,6 +35,7 @@
     <input id="courseid" name="courseid"  placeholder="CNumber" value="">
     <input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+    -->
 
 </form>
 </body>

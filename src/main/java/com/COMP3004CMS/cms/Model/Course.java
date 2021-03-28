@@ -22,6 +22,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 @Document(collection = "courses")
@@ -34,6 +35,7 @@ public class Course {
     public String title;
     public String description;
     public int maxSeats;
+    private Time time;
     ArrayList<Integer> professorsApplied;
     ArrayList<Integer> professorsAssigned;
 
@@ -66,12 +68,13 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseid, String department, String coursecode, String title, int maxSeats) {
+    public Course(String courseid, String department, String coursecode, String title, int maxSeats, Time time) {
         this.courseid = courseid;
         this.department = department;
         this.coursecode = coursecode;
         this.title = title;
         this.maxSeats = maxSeats;
+        this.time = time;
     }
 
     public String getCourseid() {
