@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -69,6 +70,17 @@ public class AppController {
         return "admin";
     }
 
+    @GetMapping("/user/delete")
+    public String deleteUser(@RequestParam("id") String id) {
+        userDetailServiceImp.deleteById(id);
+        return "redirect:/user_approval";
+    }
+    @GetMapping("/user/add")
+    public String addUser(@RequestParam("id") String id) {
+        System.out.println("Approving users...");
+        userDetailServiceImp.approveUserById(id);
+        return "redirect:/user_approval";
+    }
     @GetMapping("/error")
     public String error() {return "test";}
 
