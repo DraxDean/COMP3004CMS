@@ -40,11 +40,9 @@ public class UserDetailServiceImp implements UserDetailsService {
         }else {
             User temp = user.get();
             if (temp.getRoles().equals("STUDENT_PENDING")) {
-                System.out.println(temp.getRoles());
                 temp.setRoles("STUDENT");
             }
             if (temp.getRoles().equals("PROFESSOR_PENDING")) {
-                System.out.println("looking for users...");
                 temp.setRoles("PROFESSOR");
             }
             userRepository.save(temp);
