@@ -1,17 +1,92 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layouts/mainlayout.html}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Carleton Homepage</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<section class="is-10" layout:fragment="menu">
+<!-- START NAV -->
+<nav class="navbar has-shadow" style="background-color:#E0E0E0;box-shadow: none">
+    <div class="container" style="margin-left:15px">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/dashboard">
+                <img src="https://southdundas.com/wp-content/uploads/2017/11/carleton_wide_colour_1844.png" alt="Carleton University" position="absolute" right="15px" />
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/dashboard">
+                    Home
+                </a>
+                <a class="navbar-item" href="/courses">
+                    Courses
+                </a>
+                <a class="navbar-item" href="/logout" style="">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<div class="line" style="background: rgb(0,0,0); /* Old browsers */
+background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
+</div>
+
+<div class="container">
+    <div class="columns">
+        <div class="column is-3 ">
+            <aside class="menu is-hidden-mobile">
+                <p class="menu-label">
+                    General
+                </p>
+                <ul class="menu-list">
+                    <li><a class="is-active">Dashboard</a></li>
+                    <li><a>Customers</a></li>
+                    <li><a>Other</a></li>
+                </ul>
+                <p class="menu-label">
+                    Administration
+                </p>
+                <ul class="menu-list">
+                    <li><a>Course Management</a></li>
+                    <li>
+                        <a>Courses</a>
+                        <ul>
+                            <li><a>TODO: pull list</a></li>
+                            <li><a>ExampleCourse1</a></li>
+                            <li><a>ExampleCourse2</a></li>
+                            <li><a>ExampleLab1</a></li>
+                        </ul>
+                    </li>
+                    <li><a>Authentication</a></li>
+                </ul>
+                <p class="menu-label">
+                    Transactions
+                </p>
+                <ul class="menu-list">
+                    <li><a>Payments</a></li>
+                    <li><a>Transfers</a></li>
+                    <li><a>Balance</a></li>
+                    <li><a>Reports</a></li>
+                </ul>
+            </aside>
+        </div>
         <div class="column is-9">
+
             <section class="hero is-info welcome is-small">
                 <div class="hero-body">
                     <div class="container">
@@ -25,34 +100,6 @@
                 </div>
             </section>
             <div class="mt-5"></div>
-            <section class="info-tiles">
-                <div class="tile is-ancestor has-text-centered">
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">439k</p>
-                            <p class="subtitle">Users</p>
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">59k</p>
-                            <p class="subtitle">Products</p>
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">3.4k</p>
-                            <p class="subtitle">Open Orders</p>
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">19</p>
-                            <p class="subtitle">Exceptions</p>
-                        </article>
-                    </div>
-                </div>
-            </section>
             <div class="columns">
                 <div class="column is-6">
                     <div class="card events-card">
@@ -178,9 +225,21 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<!-- FOOTER -->
+<nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
 
+    <div class="navbar-brand">
+        <a class="navbar-item brand-text" href="../index.html" style="left:10px">
+            IT Support | Privacy Policy | Accessibility | Copyright 2019
+        </a>
+        <a class="navbar-item brand-text" href="../index.html" style="right:10px; top:6px; position:absolute">
+            IT Service Desk Support Email | 613-520-3700
+        </a>
+    </div>
 
-</section>
+</nav>
 <script async type="text/javascript" src="../js/bulma.js"></script>
 </body>
 
