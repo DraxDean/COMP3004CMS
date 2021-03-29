@@ -16,19 +16,17 @@ public class StudentController {
     @Autowired
     CourseService courseService;
 
-    //ask for a list of all courses
     /**
-     *  getting the add time page
+     *  For sending register course page, right now only sending json of courses
      * @param model
-     * @return page with addTime widget section
+     * @return json of formatted courses
      */
     @GetMapping("/register")
     public ArrayList<Course.CourseItem> registerCourse(Model model) {
-        //get available timeslots for course
+        //get all courses in db
         List<Course> courses = courseService.findAll();
         ArrayList<Course.CourseItem> courseList = new ArrayList<Course.CourseItem>();
         for (Course c: courses) {
-            System.out.println(c.toPublic());
             courseList.add(c.toPublic());
         }
         model.addAttribute("courseList", courseList);

@@ -231,11 +231,17 @@ public class Course {
         }
     }
 
+    /**
+     * Puts all the required course info for public into a new object
+     * @return CourseItem containing all the public info
+     */
     public CourseItem toPublic(){
         return new CourseItem(this.coursecode, this.courseNum, this.department, this.classCode, this.title, this.description, this.time, this.maxSeats);
     }
 
-
+    /**
+     * New Object for course display stuff
+     */
     public class CourseItem{
         private String code;
         private String number;
