@@ -31,13 +31,13 @@ import java.util.Date;
 public class Course {
     @Id
     public String id;           //for MongoDB
+    @Size(min = 4, max=4)
     public String courseid;     //CNumber
     public String department;
     public char classCode;
     @Size(min = 4, max=4)
     public String coursecode;   //CarletonCode
     //rules for parameter requirments
-    @Size(min = 4, max=4)
     public String courseNum;
     public String title;
     public String description;
@@ -49,7 +49,7 @@ public class Course {
     ArrayList<Integer> studentsApplied;
     ArrayList<Integer> studentsWaitListed;
     ArrayList<Deliverable> deliverables;
-
+/*
     public Course() {
     }
 
@@ -62,10 +62,10 @@ public class Course {
         this.title = title;
         this.maxSeats = maxSeats;
         this.time = time;
-    }
+    }*/
     /*Temp constructor without time obj until it's added into creation on page*/
-    public Course(String courseid, String department ,String coursecode, String courseNum, char classCode, String title, int maxSeats) {
-        this.courseid = courseid;
+    public Course(String department ,String coursecode, String courseNum, char classCode, String title, int maxSeats) {
+        this.courseid = "dontKnow";
         this.department = department;
         this.coursecode = coursecode;
         this.courseNum = courseNum;
@@ -228,6 +228,69 @@ public class Course {
         }
         else{
             System.out.println("Error - Withdrawing Student to Course: Student ID not found in Students enrolled in Course");
+        }
+    }
+
+    public CourseItem toPublic(){
+        return new CourseItem(this.coursecode, this.courseNum, this.department, this.classCode, this.title, this.description, this.time, this.maxSeats);
+    }
+
+
+    public class CourseItem{
+        private String code;
+        private String number;
+        private String department;
+        private char classCode;
+        private String title;
+        private String description;
+        private Time time;
+        private int maxSeats;
+        /*
+        private String prerequisites;
+        private String preclusions;
+         */
+
+        public CourseItem(String code, String number, String department, char classCode, String title, String description, Time time, int maxSeats) {
+            this.code = code;
+            this.number = number;
+            this.department = department;
+            this.classCode = classCode;
+            this.title = title;
+            this.description = description;
+            this.time = time;
+            this.maxSeats = maxSeats;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public String getDepartment() {
+            return department;
+        }
+
+        public char getClassCode() {
+            return classCode;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public Time getTime() {
+            return time;
+        }
+
+        public int getMaxSeats() {
+            return maxSeats;
         }
     }
 }

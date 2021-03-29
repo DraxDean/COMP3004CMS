@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,17 +63,32 @@ public class CourseController {
     @PostMapping("/add/course")
     public String postAddCourse(Course course, BindingResult bindingResult) {
         Optional<Course> courseExists = courseService.findByCourseid(course.getCourseid());
+        System.out.println(course.getCoursecode());
         if (courseExists.isPresent()) {
             bindingResult
                     .rejectValue("courseid", "error.course",
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            //System.out.print("fail");
+            System.out.print("fail");
         } else {
             courseService.saveCourse(course);
-            //System.out.print("creating course");
+            System.out.print("creating course");
         }
         return "addcourse";
     }
+
+    @DeleteMapping("/delete/{courseCode}")
+    public void deleteByCoursCode(@PathVariable("courseCode") String courseCode){
+        courseService.deleteByClassCode(courseCode);
+    }
+    @DeleteMapping("/delete/all")
+    public void deleteByCoursCode(Model model){
+        List<Course> courses = courseService.findAll();
+        for (Course c: courses) {
+            courseService.deleteByClassCode(c.getCoursecode());
+        }
+
+    }
+
 }
