@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -26,6 +27,30 @@ public class UserDetailServiceImp implements UserDetailsService {
 
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
+    }
+
+    public void deleteById(String id){
+        userRepository.deleteById(id);
+    }
+
+    public void approveUserById(String id){
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()){
+            //no user found
+        }else {
+            User temp = user.get();
+            if (temp.getRoles().equals("STUDENT_PENDING")) {
+                temp.setRoles("STUDENT");
+            }
+            if (temp.getRoles().equals("PROFESSOR_PENDING")) {
+                temp.setRoles("PROFESSOR");
+            }
+            userRepository.save(temp);
+        }
+    }
+
+    public User findUserById(String id){
+        return userRepository.findUserById(id);
     }
 
     public List<User> findAllByRoles(String roles){

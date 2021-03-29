@@ -13,39 +13,64 @@
 
 <body>
 
+
+<!-- START NAV -->
+<nav class="navbar has-shadow" style="background-color:#E0E0E0;box-shadow: none">
+    <div class="container" style="margin-left:15px">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../index.html">
+                <img src="https://southdundas.com/wp-content/uploads/2017/11/carleton_wide_colour_1844.png" alt="Carleton University" position="absolute" right="15px" />
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+</nav>
+<div class="line" style="background: rgb(0,0,0); /* Old browsers */
+background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
+</div>
 <section class="hero is-grey-darker is-fullheight">
     <div class="hero-body">
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form th:action="@{/login}" class="box" method="post">
-                        <div class="field">
-                            <label for="username" class="label">Username</label>
+                    <form th:action="@{/login}" class="box" method="post" style="background-color:#E0E0E0;padding:0px">
+                        <div style="position:relative; background-color:#CF112D; border-radius: 6px 6px 0px 0px">
+                            <h2 style="text-align:center; color:#FFFFFF; font-size: 150%; padding-top: 5px; padding-bottom: 5px;">Login</h2>
+                        </div>
+                        <div class="field"  style="padding-left:15px;padding-right:15px;padding-top:15px;">
+                            <label for="username" >Username:</label>
                             <div class="control has-icons-left">
-                                <input type="text" id="username" name="username" placeholder="username" class="input" >
+                                <input type="text" id="username" name="username" placeholder="username" class="input" style="padding-left: 5px;">
                                 <span class="icon is-small is-left">
-                  <i class="fa fa-envelope"></i>
-                </span>
+                                    <i class="fa fa-envelope"></i>
+                                </span>
                             </div>
                         </div>
-                        <div class="field">
-                            <label for="username" class="label">Password</label>
+                        <div class="field" style="padding-left:15px;padding-right:15px;">
+                            <label for="username">Password:</label>
                             <div class="control has-icons-left">
-                                <input type="password" id="password" name="password" placeholder="*******" class="input">
+                                <input type="password" id="password" name="password" placeholder="*******" class="input" style="padding-left: 5px;">
                                 <span class="icon is-small is-left">
-                  <i class="fa fa-lock"></i>
-                </span>
+                                <i class="fa fa-lock"></i>
+                                </span>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="field" style="position:relative;left:15px">
                             <label for="" class="checkbox">
                                 <input type="checkbox">
                                 Remember me
                             </label>
                         </div>
-                        <div class="field">
-                            <button class="button is-success" type="submit">
-                                Login
+                        <div class="field" style="background-color:#212121;border-radius:0px 0px 6px 6px;padding-top:5px;padding-bottom:5px">
+                            <button class="button" type="submit"  style="left:70%;background-color:#616161;border:none;color:#FFFFFF;">
+                                Okay
                             </button>
                         </div>
                     </form>
@@ -68,6 +93,21 @@
         </div>
     </div>
 </section>
+
+<!-- FOOTER -->
+<nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
+
+        <div class="navbar-brand">
+            <a class="navbar-item brand-text" href="../index.html" style="left:10px">
+                IT Support | Privacy Policy | Accessibility | Copyright 2019
+            </a>
+            <a class="navbar-item brand-text" href="../index.html" style="right:10px; top:6px; position:absolute">
+                IT Service Desk Support Email | 613-520-3700
+            </a>
+        </div>
+
+</nav>
+
 </body>
 
 </html>
