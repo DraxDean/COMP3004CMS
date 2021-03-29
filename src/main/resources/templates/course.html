@@ -68,7 +68,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                     <td th:text="${course.toString()}">
                         <h1 th:text="${course.id}"></h1>
                     </td>
-                    <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
+                    <td class="level-right"><a class="button is-small is-primary" th:href="@{/courses(courseid=${course.getCourseid()})}">Detail</a></td>
                 </tr>
                 </tbody>
             </table>

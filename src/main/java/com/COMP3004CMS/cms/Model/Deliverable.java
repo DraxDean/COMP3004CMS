@@ -52,22 +52,6 @@ public class Deliverable {
 
     // *****  Prof Actions  *****
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
-
-    public void setSubmission(String submission) {
-        this.submission = submission;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
     public void submitDeadline(String newDate){
         deadline = newDate;
     }

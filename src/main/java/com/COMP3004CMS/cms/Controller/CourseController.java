@@ -18,13 +18,20 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
+    // "/courses/courseid"
     @GetMapping("/courses")
+    public String showAllCourse(Model model, @RequestParam("courseid") String courseid) {
+        Course course = courseService.findByCourseid(courseid);
+        model.addAttribute("course", course);
+        return "courseprofile";
+    }
+
+    @GetMapping("/courses/all")
     public String showAllCourse(Model model) {
         List<Course> course = courseService.findAll();
         model.addAttribute("courses", course);
         return "course";
     }
-
     @GetMapping("/courses/addcourse")
     public String getAddCourse() {
         return "addcourse";
@@ -32,8 +39,8 @@ public class CourseController {
 
     @PostMapping("/courses/addcourse")
     public String postAddCourse(Course course, BindingResult bindingResult) {
-        Optional<Course> courseExists = courseService.findByCourseid(course.getCourseid());
-        if (courseExists.isPresent()) {
+        Course courseExists = courseService.findByCourseid(course.getCourseid());
+        if (courseExists!= null) {
             bindingResult
                     .rejectValue("courseid", "error.course",
                             "There is already a user registered with the username provided");
