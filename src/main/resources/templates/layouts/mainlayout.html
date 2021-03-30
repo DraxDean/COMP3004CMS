@@ -17,7 +17,7 @@
 <div th:replace="fragments/static/navbar.html"></div>
 <div class="container">
     <div class="columns">
-        <div class="columns is-3" th:replace="fragments/static/rightmenu.html"></div>
+        <div class="columns is-3" th:replace="fragments/static/leftmenu.html"></div>
         <section class="column is-9" layout:fragment="menu">
             Content from page section will be placed here
         </section>
@@ -27,8 +27,7 @@
     </div>
 </div>
 
-<div>
-    This is the temp footer hopefully it works
-</div>
+<div th:replace="fragments/static/footer.html"></div>
+<script async type="text/javascript" src="../js/bulma.js"></script>
 </body>
 </html>

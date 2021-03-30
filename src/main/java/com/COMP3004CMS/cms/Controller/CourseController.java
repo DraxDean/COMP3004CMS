@@ -21,10 +21,43 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @GetMapping("/add")
-    public String showAllCourse(Model model) {
-        List<Course> course = courseService.findAll();
-        model.addAttribute("courses", course);
+    // "/courses/courseid"
+    @GetMapping("/courses/{courseid}")
+    public String showAllCourse(Model model, @RequestParam("courseid") String courseid) {
+        Course course = courseService.findByCourseid(courseid);
+        model.addAttribute("course", course);
+        return "courseprofile";
+    }
+
+    /**
+     *  Send back public data instead of private course info
+     * @param model
+     * @return add course page
+     */
+    @GetMapping("/add/course")
+    public String addCourse(Model model) {
+        List<Course> courses = courseService.findAll();
+        ArrayList<Course.CourseItem> courseList = new ArrayList<Course.CourseItem>();
+        for (Course c: courses) {
+            courseList.add(c.toPublic());
+        }
+        model.addAttribute("courseList", courseList);
+        return "addcourse";
+    }
+    @PostMapping("/add/course")
+    public String postAddCourse(Course course, BindingResult bindingResult) {
+        System.out.println(course.getCoursecode());
+        if (courseService.findByCourseid(course.getCourseid()) != null) {
+            bindingResult
+                    .rejectValue("courseid", "error.course",
+                            "There is already a user registered with the username provided");
+        }
+        if (bindingResult.hasErrors()) {
+            System.out.print("fail");
+        } else {
+            courseService.saveCourse(course);
+            System.out.print("creating course");
+        }
         return "addcourse";
     }
 
@@ -55,28 +88,9 @@ public class CourseController {
 
     }
 
-    @GetMapping("/add/course")
-    public String getAddCourse() {
-        return "addcourse";
-    }
 
-    @PostMapping("/add/course")
-    public String postAddCourse(Course course, BindingResult bindingResult) {
-        Optional<Course> courseExists = courseService.findByCourseid(course.getCourseid());
-        System.out.println(course.getCoursecode());
-        if (courseExists.isPresent()) {
-            bindingResult
-                    .rejectValue("courseid", "error.course",
-                            "There is already a user registered with the username provided");
-        }
-        if (bindingResult.hasErrors()) {
-            System.out.print("fail");
-        } else {
-            courseService.saveCourse(course);
-            System.out.print("creating course");
-        }
-        return "addcourse";
-    }
+
+
 
     @DeleteMapping("/delete/{courseCode}")
     public void deleteByCoursCode(@PathVariable("courseCode") String courseCode){

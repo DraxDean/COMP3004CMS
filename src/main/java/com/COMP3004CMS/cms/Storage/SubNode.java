@@ -1,4 +1,4 @@
-package com.COMP3004CMS.cms.utility;
+package com.COMP3004CMS.cms.Storage;
 
 public class SubNode {
 
