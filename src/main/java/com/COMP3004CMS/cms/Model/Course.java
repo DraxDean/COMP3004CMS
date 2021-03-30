@@ -32,12 +32,14 @@ public class Course {
     @Id
     public String id;           //for MongoDB
     @Size(min = 4, max=4)
+    //
     public String courseid;     //CNumber
     public String department;
     public char classCode;
     @Size(min = 4, max=4)
     public String coursecode;   //CarletonCode
     //rules for parameter requirments
+    //2404
     public String courseNum;
     public String title;
     public String description;

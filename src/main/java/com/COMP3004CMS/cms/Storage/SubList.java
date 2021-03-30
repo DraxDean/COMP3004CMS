@@ -1,4 +1,4 @@
-package com.COMP3004CMS.cms.utility;
+package com.COMP3004CMS.cms.Storage;
 
 import com.COMP3004CMS.cms.utility.exceptions.MaxStudentSubmissions;
 
@@ -55,10 +55,8 @@ public class SubList{
                     prev = curr;
                     curr = curr.getNext();
                 }
-
                 curr.setNext(newN);
                 newN.setPrev(curr);
-
             }
             tail = newN;
             this.size++;

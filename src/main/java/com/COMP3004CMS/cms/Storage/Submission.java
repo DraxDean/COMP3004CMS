@@ -1,4 +1,4 @@
-package com.COMP3004CMS.cms.utility;
+package com.COMP3004CMS.cms.Storage;
 
 import java.lang.reflect.Type;
 import java.util.Date;
