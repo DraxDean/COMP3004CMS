@@ -17,14 +17,14 @@ import java.util.Dictionary;
     - needs to be created
     - needs to hold:
         * deliverable info
-        * deadline
+        * done -- deadline
         * deliverable requirements slot (from prof)
-        * submission slot (from student)
-        * grade
+        * Done -- submission slot (from student)
+        * done -- grade
     - needs to perform:
-        * deliverable creation
-        * deliverable update
-        * deliverable submission
+        * Done -- deliverable creation
+        * deliverable update -- not sure what it entails b.g --
+        * Done -- deliverable submission
         * assign deliverable grade
 */
 @Document(collection = "deliverable")
@@ -32,13 +32,15 @@ public class Deliverable {
 
     @Id
     // deliverable variables
+    /* can we please change these to ints */
     public String id;       //for MongoDB
     String title;
     Date start;
     Date deadline;
     // these two will definitely have to evolve into file-readers
     String requirements;
-    Dictionary<Integer, SubList> submissions;
+    //Dictionary<Integer, SubList> submissions;
+    Dictionary<String, SubList> submissions;
     // in format [A-]
     String grade;
 
@@ -48,7 +50,7 @@ public class Deliverable {
     public Deliverable() {}
 
 
-    public Deliverable(String title, Date start, Date deadline, Dictionary<Integer, SubList> submissions) {
+    public Deliverable(String title, Date start, Date deadline, Dictionary<String, SubList> submissions) {
         this.title = title;
         this.start = start;
         this.deadline = deadline;
