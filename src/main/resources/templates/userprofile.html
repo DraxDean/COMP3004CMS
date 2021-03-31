@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home</title>
+    <title>User Information</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -38,8 +39,14 @@
     </div>
 </nav>
 
-    <h1>Hello</h1>
-    <a href="login">log in </a>
-    <a href="signup">Sign Up </a>
+    <h1 th:text ="${user.getUsername()}"></h1>
+    <p>Role:</p>
+    <p th:text="${user.getRoles()}" ></p>
+    <p>First Name:</p>
+    <p th:text="${user.getFirstname()}"></p>
+    <p>Last Name:</p>
+    <p th:text="${user.getLastname()}" ></p>
+    <p> Student Number:</p>
+    <p th:text="${user.getUserid()}" ></p>
 </body>
 </html>

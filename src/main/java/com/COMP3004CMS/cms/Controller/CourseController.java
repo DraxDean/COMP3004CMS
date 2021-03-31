@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -30,7 +29,7 @@ public class CourseController {
     public String showAllCourse(Model model) {
         List<Course> course = courseService.findAll();
         model.addAttribute("courses", course);
-        return "course";
+        return "courseall";
     }
     @GetMapping("/courses/addcourse")
     public String getAddCourse() {
