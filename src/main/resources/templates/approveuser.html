@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home</title>
+    <title>Applicants Request</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -38,8 +39,27 @@
     </div>
 </nav>
 
-    <h1>Hello</h1>
-    <a href="login">log in </a>
-    <a href="signup">Sign Up </a>
+    <h1>Process Account Applicant</h1>
+    <p>Professors: </p>
+    <div th:each="prof:${pending_prof}">
+        <a th:href="@{/admin/user(id=${student.getId()})}" th:text="${prof.getUsername()}"></a>
+        <div>
+            <a class="button is-small is-primary" th:href="@{/admin/user/approve(id=${prof.getId()})}" th:method="post">Approve</a>
+        </div>
+        <div>
+            <a class="button is-small is-primary" th:href="@{/admin/user/deny(id=${prof.getId()})}" th:method="post">Deny</a>
+        </div>
+    </div>
+
+    <p>Students: </p>
+    <div th:each="student:${pending_student}">
+        <a th:href="@{/admin/user(id=${student.getId()})}" th:text="${student.getUsername()}"></a>
+        <div>
+            <a class="button is-small is-primary" th:href="@{/admin/user/approve(id=${student.getId()})}" th:method="post">Approve</a>
+        </div>
+        <div>
+            <a class="button is-small is-primary" th:href="@{/admin/user/deny(id=${student.getId()})}" th:method="post">Deny</a>
+        </div>
+    </div>
 </body>
 </html>

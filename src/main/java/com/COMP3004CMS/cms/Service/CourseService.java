@@ -26,5 +26,7 @@ public class CourseService{
         return courseRepository.findAll();
     }
 
-
+    public void deleteById(String id){
+        courseRepository.deleteById(id);
+    }
 }
