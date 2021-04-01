@@ -121,7 +121,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                                     <tr th:each="course:${courses}">
                                         <td width="5%"><i class="fa fa-bell-o"></i></td>
                                         <td>
-                                            <a th:text="${course.toString()}"></a>
+                                            <a th:href="@{/dashboard/course(courseid=${course.getCourseid()})}" th:text="${course.toString()}"></a>
                                         </td>
                                     </tr>
                                     </tbody>

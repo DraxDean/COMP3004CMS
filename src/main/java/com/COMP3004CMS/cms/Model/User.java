@@ -46,8 +46,8 @@ public class User implements Subscriber{
     @Override
     public String toString() {
         return String.format(
-                "[id=%s, username='%s']",
-                id, username);
+                "[First Name: %s, Last Name: %s, Student Number: %s]",
+                firstname, lastname, userid);
     }
 
     public List<Course> getCourseList() {

@@ -69,13 +69,6 @@ public class AppController {
         return "redirect:/dashboard";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard(Model model, Authentication authentication) {
-        User user = userDetailServiceImp.findByUsername(authentication.getName());
-        List<Course> courseList = user.getCourseList();
-        model.addAttribute("courses", courseList);
-        return "dashboard";
-    }
 
     @GetMapping("/error")
     public String error() {return "test";}
