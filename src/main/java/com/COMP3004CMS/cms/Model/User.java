@@ -138,6 +138,9 @@ public class User implements Subscriber{
 
     @Override
     public void update(String s) {
+        if(announcements==null){
+            this.setAnnouncements(new ArrayList<>());
+        }
         announcements.add(s);
     }
 

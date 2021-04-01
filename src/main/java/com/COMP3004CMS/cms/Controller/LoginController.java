@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 //@RequestMapping
-public class AppController {
+public class LoginController {
     @Autowired
     private UserDetailServiceImp userDetailServiceImp;
 

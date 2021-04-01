@@ -3,6 +3,8 @@ package com.COMP3004CMS.cms.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 /*
     What is a Deliverable?
     Prof created requirements to be fulfilled and submitted in a course by a deadline and graded
@@ -27,6 +29,8 @@ public class Deliverable {
     // deliverable variables
     @Id
     public String id;       //for MongoDB
+    public String deliverableid;
+    public String courseid;
     String title;
     String start;
     String deadline;
@@ -70,4 +74,90 @@ public class Deliverable {
         submission = newSubmission;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
+
+    public String getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(String submission) {
+        this.submission = submission;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getDeliverableid() {
+        return deliverableid;
+    }
+
+    public void setDeliverableid() {
+        this.deliverableid = UUID.randomUUID().toString().replace("-","").substring(0,6);
+    }
+
+    public String getCourseid() {
+        return courseid;
+    }
+
+    public void setCourseid(String courseid) {
+        this.courseid = courseid;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean retVal = false;
+        if (obj instanceof Deliverable){
+            Deliverable ptr = (Deliverable) obj;
+            retVal = ptr.deliverableid.equals(this.deliverableid);
+        }
+        return retVal;
+    }
+
+    @Override
+    public String toString() {
+        return title + " (start: " + start + " deadline: " + deadline+")";
+    }
 }

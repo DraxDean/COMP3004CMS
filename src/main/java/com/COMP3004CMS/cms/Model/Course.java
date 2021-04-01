@@ -171,6 +171,9 @@ public class Course {
     }
 
     public void addDeliverable(Deliverable newDeliverable) {
+        if(deliverables==null){
+            this.setDeliverables(new ArrayList<>());
+        }
         deliverables.add(newDeliverable);
         notifyStudentsDeliverableCreated(newDeliverable);
     }
