@@ -1,8 +1,10 @@
 package com.COMP3004CMS.cms.Controller;
 
+import com.COMP3004CMS.cms.Model.Course;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -67,7 +70,10 @@ public class AppController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(Model model, Authentication authentication) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        List<Course> courseList = user.getCourseList();
+        model.addAttribute("courses", courseList);
         return "dashboard";
     }
 

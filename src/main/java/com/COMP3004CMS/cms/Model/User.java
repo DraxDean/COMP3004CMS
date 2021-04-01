@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "users")
 public class User implements Subscriber{
@@ -16,6 +17,7 @@ public class User implements Subscriber{
     public String firstname;
     public String lastname;
     private String roles;
+    List<Course> courseList;
     ArrayList<String> announcements;
 
     public User(){}
@@ -23,6 +25,14 @@ public class User implements Subscriber{
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public void addCourse(Course course){
+        courseList.add(course);
+    }
+
+    public void dropCourse(Course course){
+        courseList.remove(course);
     }
 
     public String getRoles() {
@@ -38,6 +48,14 @@ public class User implements Subscriber{
         return String.format(
                 "[id=%s, username='%s']",
                 id, username);
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 
     public String getUserid() {
