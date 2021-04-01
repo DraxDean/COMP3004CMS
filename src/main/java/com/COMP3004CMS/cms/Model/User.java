@@ -27,10 +27,30 @@ public class User implements Subscriber{
         this.password = password;
     }
 
-    public void addCourse(Course course){
-        courseList.add(course);
+    public User(String id, String userid, String firstname, String lastname, String roles) {
+        this.id = id;
+        this.userid = userid;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.roles = roles;
     }
 
+    public void addCourse(Course course){
+        if (this.getCourseList()==null) {
+            this.setCourseList(new ArrayList<Course>());
+        }
+        courseList.add(course);
+    }
+    @Override
+    public boolean equals(Object v) {
+        boolean retVal = false;
+
+        if (v instanceof User){
+            User ptr = (User) v;
+            retVal = ptr.userid.equals(this.userid);
+        }
+        return retVal;
+    }
     public void dropCourse(Course course){
         courseList.remove(course);
     }

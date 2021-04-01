@@ -40,6 +40,8 @@ public class Course {
     public String term;
     public Year year;
 
+    public String status;       //for displaying "register" or "drop"
+    public String action;
     // using userId's to avoid storing whole object
     ArrayList<User> professors;
     ArrayList<Integer> professorsAssigned;
@@ -105,7 +107,6 @@ public class Course {
     }
 
 
-
     // ******  Prof Course Assignment  ******
 
     // Prof Applies
@@ -133,8 +134,14 @@ public class Course {
 
     /* Add student to course, waitlist if full*/
     public void addStudent(User stu){
+        if (this.getStudents()==null) {
+            this.setStudents(new ArrayList<User>());
+        }
         try{
             if (students.size() > maxSeats){
+                if (this.getWaitList()==null) {
+                    this.setWaitlist(new ArrayList<User>());
+                }
                 waitListStudent(stu);
             }else if (students.contains(stu)){
             }else{
@@ -146,6 +153,7 @@ public class Course {
             e.printStackTrace();
         }
     }
+
     public void removeStudent(User stu){
         try{
             students.remove(stu);
@@ -250,12 +258,28 @@ public class Course {
         this.professorsAssigned = professorsAssigned;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setStudents(ArrayList<User> students) {
         this.students = students;
     }
 
     public ArrayList<User> getWaitlist() {
         return waitlist;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public void setWaitlist(ArrayList<User> waitlist) {
@@ -274,5 +298,16 @@ public class Course {
     public String toString() {
         return department+coursecode + " [" + courseid+
                 "] " + title;
+    }
+
+    @Override
+    public boolean equals(Object v) {
+        boolean retVal = false;
+
+        if (v instanceof Course){
+            Course ptr = (Course) v;
+            retVal = ptr.courseid.equals(this.courseid);
+        }
+        return retVal;
     }
 }
