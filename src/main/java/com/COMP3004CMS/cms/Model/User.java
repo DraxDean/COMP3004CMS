@@ -1,15 +1,22 @@
 package com.COMP3004CMS.cms.Model;
 
+import com.COMP3004CMS.cms.utility.Subscriber;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+
 @Document(collection = "users")
-public class User {
+public class User implements Subscriber{
     @Id
     public String id;
+    public String userid;       //student id
     public String username;
     public String password;
+    public String firstname;
+    public String lastname;
     private String roles;
+    ArrayList<String> announcements;
 
     public User(){}
 
@@ -32,6 +39,24 @@ public class User {
                 "[id=%s, username='%s']",
                 id, username);
     }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public ArrayList<String> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(ArrayList<String> announcements) {
+        this.announcements = announcements;
+    }
+
+
 
     public String getId() {
         return id;
@@ -56,4 +81,27 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    @Override
+    public void update(String s) {
+        announcements.add(s);
+    }
+
+
 }

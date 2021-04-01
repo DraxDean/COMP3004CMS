@@ -16,7 +16,7 @@ public class CourseService{
     @Autowired
     private CourseRepository courseRepository;
 
-    public Optional<Course> findByCourseid(String courseid){
+    public Course findByCourseid(String courseid){
         return courseRepository.findByCourseid(courseid);
     }
 
@@ -28,5 +28,7 @@ public class CourseService{
         return courseRepository.findAll();
     }
 
-
+    public void deleteById(String id){
+        courseRepository.deleteById(id);
+    }
 }

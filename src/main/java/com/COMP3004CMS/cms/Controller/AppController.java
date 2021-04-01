@@ -9,8 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -22,9 +24,8 @@ public class AppController {
     @Autowired
     PasswordEncoder encoder;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String homePage() {
-        //userRepository.save(new User("ivoryzhang", "123456"));
         return "home";
     }
 
@@ -34,7 +35,7 @@ public class AppController {
     }
 
     @GetMapping("/signup")
-    public String getSignup() {
+    public String getSignup(Model model) {
         //com.COMP3004CMS.cms.Model.User user = new com.COMP3004CMS.cms.Model.User();
         return "signup";
     }
@@ -56,31 +57,20 @@ public class AppController {
     }
 
 
+    @GetMapping("/default")
+    public String getDefault(HttpServletRequest request) {
+        String role = request.getUserPrincipal().getName();
+        if (role.equals("admin")) {
+            return "redirect:/admin/";
+        }
+        return "redirect:/dashboard";
+    }
+
     @GetMapping("/dashboard")
     public String dashboard() {
         return "dashboard";
     }
 
-    @GetMapping("/user_approval")
-    public String getApprove(Model model) {
-        List<User> pendingStudent = userDetailServiceImp.findAllByRoles("STUDENT_PENDING");
-        List<User> pendingProf = userDetailServiceImp.findAllByRoles("PROFESSOR_PENDING");
-        model.addAttribute("pending_student", pendingStudent);
-        model.addAttribute("pending_prof", pendingProf);
-        return "admin";
-    }
-
-    @GetMapping("/user/delete")
-    public String deleteUser(@RequestParam("id") String id) {
-        userDetailServiceImp.deleteById(id);
-        return "redirect:/user_approval";
-    }
-    @GetMapping("/user/add")
-    public String addUser(@RequestParam("id") String id) {
-        System.out.println("Approving users...");
-        userDetailServiceImp.approveUserById(id);
-        return "redirect:/user_approval";
-    }
     @GetMapping("/error")
     public String error() {return "test";}
 
