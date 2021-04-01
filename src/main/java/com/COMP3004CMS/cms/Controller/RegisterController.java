@@ -1,7 +1,6 @@
 package com.COMP3004CMS.cms.Controller;
 
 import com.COMP3004CMS.cms.Model.Course;
-import com.COMP3004CMS.cms.Model.Student;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.UserDetailServiceImp;
@@ -10,10 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,21 +53,22 @@ public class RegisterController {
         if (student.getCourseList()==null) {
             student.setCourseList(new ArrayList<Course>());
         }
-        Course temp = new Course(course.id, course.courseid, course.department,
+        Course shortCourse = new Course(course.id, course.courseid, course.department,
                 course.coursecode,course.title, course.maxSeats);
-        student.addCourse(temp);
+        student.addCourse(shortCourse);
         courseService.saveCourse(course);
         userDetailServiceImp.saveUser(student);
         return "redirect:/register/search";
     }
     @GetMapping("/drop")
     public String dropStudent(@RequestParam("courseid") String courseid,
-                                   HttpServletRequest request) {
+                              Authentication authentication) {
         Course course = courseService.findByCourseid(courseid);
-        User student = userDetailServiceImp.findUserByUserid((String) request.getAttribute("userid"));
+        User student = userDetailServiceImp.findByUsername(authentication.getName());
         course.removeStudent(student);
-        Course shortCourse = new Course(course.id, course.courseid,course.department,course.coursecode, course.title, course.maxSeats);
-        student.addCourse(shortCourse);
+        Course shortCourse = new Course(course.id, course.courseid,course.department,
+                course.coursecode, course.title, course.maxSeats);
+        student.dropCourse(shortCourse);
         return "redirect:/register/search";
     }
 }
