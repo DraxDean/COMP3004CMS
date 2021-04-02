@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Course</title>
+    <title>Edit Deliverable</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -24,13 +24,13 @@
         </div>
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="/default">
+                <a class="navbar-item" href="/dashboard">
                     Home
                 </a>
-                <a class="navbar-item" href="/courses">
-                    Courses
+                <a class="navbar-item" href="/register/search">
+                    Register Courses
                 </a>
-                <a class="navbar-item" href="/logout">
+                <a class="navbar-item" href="/logout" style="">
                     Logout
                 </a>
             </div>
@@ -39,6 +39,7 @@
     </div>
 </nav>
 
+
 <div class="line" style="background: rgb(0,0,0); /* Old browsers */
 background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
 background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
@@ -46,13 +47,12 @@ background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /*
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
 </div>
 
-<form method="post" id="data_send" th:action="@{/courses/addcourse}">
-    <input id="title" name="title" placeholder="Title" value="">
-    <input id="department" name="department" placeholder="Department" value="">
-    <input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
-    <input id="courseid" name="courseid"  placeholder="CNumber" value="">
-    <input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+<form method="post" id="data_send" th:action="@{/dashboard/deliverable/edit(id=${deliverable.getDeliverableid()})}">
+    <input id="title" name="title" placeholder="Title" th:value="${deliverable.getTitle()}">
+    <input id="start" name="start" placeholder="start" th:value="${deliverable.getStart()}">
+    <input id="deadline" name="deadline" placeholder="deadline" th:value="${deliverable.getDeadline()}">
+    <input id="requirements" name="requirements"  placeholder="requirements" th:value="${deliverable.getRequirements()}">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
 
 </form>
 <!-- FOOTER -->

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text ="${course.getDepartment()+course.getCoursecode()}"></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<!-- START NAV -->
+<nav class="navbar has-shadow" style="background-color:#E0E0E0;box-shadow: none">
+    <div class="container" style="margin-left:15px">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/dashboard">
+                <img src="https://southdundas.com/wp-content/uploads/2017/11/carleton_wide_colour_1844.png" alt="Carleton University" position="absolute" right="15px" />
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/dashboard">
+                    Home
+                </a>
+                <a class="navbar-item" href="/register/search">
+                    Register Courses
+                </a>
+                <a class="navbar-item" href="/logout" style="">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+<h1 th:text ="${course.getDepartment()+course.getCoursecode()}"></h1>
+<p th:text="${course.getTitle()}" ></p>
+
+<p>Lecture: </p>
+
+<!---displaying deliverable---->
+<p>Assignment: </p>
+<div class="card-table">
+    <div class="content">
+        <table>
+            <tbody>
+                <tr th:each="deliverable:${course.getDeliverables()}">
+                    <td width="5%"><i class="fa fa-bell-o"></i></td>
+                    <td class="level-left">
+                        <a th:href="@{/dashboard/deliverable(id=${deliverable.getDeliverableid()})}"
+                           th:text="${deliverable.toString()}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!---prof only:add deliverable---->
+<p>
+    <a class="button is-small is-primary"
+       th:href="@{${action.getAction()}}"
+       th:text="${action.getButton()}">
+    </a>
+</p>
+<a>Grade</a>
+
+</body>
+</html>

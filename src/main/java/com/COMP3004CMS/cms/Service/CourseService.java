@@ -31,4 +31,13 @@ public class CourseService{
     public void deleteById(String id){
         courseRepository.deleteById(id);
     }
+    public boolean deleteCourseByCourseid(String id){
+        Course course = courseRepository.findByCourseid(id);
+        if (course.getStudents()!=null){
+            return false;
+        }else {
+            courseRepository.deleteCourseByCourseid(id);
+            return true;
+        }
+    }
 }
