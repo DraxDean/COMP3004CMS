@@ -28,7 +28,7 @@ public class CourseService{
         return courseRepository.findAll();
     }
 
-    public Long deleteByClassCode(String code){return courseRepository.deleteCourseByClassCode(code);}
-
-
+    public void deleteById(String id){
+        courseRepository.deleteById(id);
+    }
 }

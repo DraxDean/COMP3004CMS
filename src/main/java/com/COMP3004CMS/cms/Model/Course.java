@@ -17,87 +17,151 @@ package com.COMP3004CMS.cms.Model;
         * assign course grade
 */
 
-import com.COMP3004CMS.cms.Deliverable;
+import com.COMP3004CMS.cms.Model.Deliverable;
+import com.COMP3004CMS.cms.Model.Professor;
+import com.COMP3004CMS.cms.Model.Student;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 
 @Document(collection = "courses")
 public class Course {
     @Id
     public String id;           //for MongoDB
-    @Size(min = 4, max=4)
-    //
     public String courseid;     //CNumber
     public String department;
-    public char classCode;
-    @Size(min = 4, max=4)
     public String coursecode;   //CarletonCode
-    //rules for parameter requirments
-    //2404
-    public String courseNum;
     public String title;
     public String description;
     public int maxSeats;
-    private Time time;
-    ArrayList<Integer> professorsApplied;
+
+    // using userId's to avoid storing whole object
+    ArrayList<Professor> professors;
     ArrayList<Integer> professorsAssigned;
-    ArrayList<Integer> studentsEnrolled;
-    ArrayList<Integer> studentsApplied;
-    ArrayList<Integer> studentsWaitListed;
+
+    ArrayList<Student> students;
+    ArrayList<Student> waitlist;
+
     ArrayList<Deliverable> deliverables;
-/*
+
+
     public Course() {
     }
 
-    public Course(String courseid, String department ,String coursecode, String courseNum, char classCode, String title, int maxSeats, Time time) {
+    public Course(String courseid, String department, String coursecode, String title, int maxSeats) {
         this.courseid = courseid;
         this.department = department;
         this.coursecode = coursecode;
-        this.courseNum = courseNum;
-        this.classCode = classCode;
         this.title = title;
         this.maxSeats = maxSeats;
-        this.time = time;
-    }*/
-    /*Temp constructor without time obj until it's added into creation on page*/
-    public Course(String department ,String coursecode, String courseNum, char classCode, String title, int maxSeats) {
-        this.courseid = "dontKnow";
-        this.department = department;
-        this.coursecode = coursecode;
-        this.courseNum = courseNum;
-        this.classCode = classCode;
-        this.title = title;
-        this.maxSeats = maxSeats;
-        time = new Time(12,13, new Date(2020,Calendar.MARCH,21), new Date(2020, Calendar.MAY,22));
     }
 
-    public ArrayList<Integer> getProfessorsApplied() {
-        return professorsApplied;
+    public ArrayList<Professor> getProfessors() {
+        return professors;
     }
-
     public ArrayList<Integer> getProfessorsAssigned() {
         return professorsAssigned;
     }
-
-    public ArrayList<Integer> getStudentsEnrolled() {
-        return studentsEnrolled;
+    public ArrayList<Student> getStudents() {
+        return students;
     }
 
-    public ArrayList<Integer> getStudentsApplied() {
-        return studentsApplied;
+    public ArrayList<Student> getWaitList() {
+        return waitlist;
     }
 
-    public ArrayList<Integer> getStudentsWaitListed() {
-        return studentsWaitListed;
+    // Observer Design Pattern stuff
+
+    public void notifyStudentsDeliverableCreated(Deliverable d){
+        for (Student s : students){
+            s.update("Deliverable " + d.title + " has been created.");
+        }
+    }
+    public void notifyStudentsDeliverableGraded(Deliverable d){
+        for (Student s : students){
+            s.update("Deliverable " + d.title + " has been graded.");
+        }
+    }
+    public void notifyStudentsDeliverableDeadlineExtended(Deliverable d){
+        for (Student s : students){
+            s.update("Deliverable " + d.title + " deadline has been extended to " + d.deadline);
+        }
     }
 
 
+
+    // ******  Prof Course Assignment  ******
+
+    // Prof Applies
+    public void addProfessor(Professor prof){
+        try{
+            professors.add(prof);
+        } catch (Exception e){
+            System.out.println("Error - adding Professor");
+            e.printStackTrace();
+        }
+
+    }
+
+    // Admin withdraw Prof from course
+    public void removeProfessor(Professor toWithdraw){
+        if (professorsAssigned.contains(toWithdraw)) {
+            professorsAssigned.remove(professorsAssigned);
+        }
+        else {
+            System.out.println("Error - Remove Professor: Prof not found in professors assigned to course");
+        }
+    }
+
+    // *****  Student Enroll Sequence  ******
+
+    /* Add student to course, waitlist if full*/
+    public void addStudent(Student stu){
+        try{
+            if (students.size() > maxSeats){
+                waitListStudent(stu);
+            } else{
+                students.add(stu);
+                if(waitlist.contains(stu)) deWaitListStudent(stu);
+            }
+        } catch (Exception e){
+            System.out.println("Course addStudent - Error adding student");
+            e.printStackTrace();
+        }
+    }
+    public void removeStudent(Student stu){
+        try{
+            students.remove(stu);
+        } catch (Exception e){
+            System.out.println("Course addStudent - Error removing student");
+            e.printStackTrace();
+        }
+    }
+
+    public void waitListStudent(Student stu){
+        waitlist.add(stu);
+    }
+    public void deWaitListStudent(Student stu){
+        waitlist.remove(stu);
+    }
+
+    public void addDeliverable(Deliverable newDeliverable) {
+        deliverables.add(newDeliverable);
+        notifyStudentsDeliverableCreated(newDeliverable);
+    }
+    public void deleteDeliverable(Deliverable newDeliverable) {
+        deliverables.remove(newDeliverable);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCourseid() {
         return courseid;
@@ -131,6 +195,14 @@ public class Course {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getMaxSeats() {
         return maxSeats;
     }
@@ -149,158 +221,4 @@ public class Course {
                 ", maxSeats=" + maxSeats +
                 '}';
     }
-
-    public void applyProfessor(int toApply){
-        professorsApplied.add(toApply);
-    }
-    public void denyProfessor(int toDeny){
-        if(professorsApplied.contains(toDeny)){
-            professorsApplied.remove(professorsApplied.indexOf(toDeny));
-        }
-        else{
-            System.out.println("Error - Denying Professor: ID not found in Profs Applied List");
-        }
-    }
-
-    // Admin assigns Prof to course and removes from apply list
-    public void assignProfessor(int toAssign){
-        if (professorsApplied.contains(toAssign)) {
-            professorsApplied.remove(professorsApplied.indexOf(toAssign));
-            professorsAssigned.add(toAssign);
-        }
-        else{
-            System.out.println("Error - Assigning professor: ID not found in Profs Applied List");
-        }
-    }
-
-    // Admin withdraw Prof from course
-    public void withdrawProfessor(int toWithdraw){
-        if (professorsAssigned.contains(toWithdraw)) {
-            professorsAssigned.remove(professorsAssigned.indexOf(toWithdraw));
-        }
-        else {
-            System.out.println("Error - Withdraw Professor: Prof ID not found in professors assigned to course");
-        }
-    }
-
-
-
-    // *****  Student Enroll Sequence  ******
-
-    // Student applies to course
-    public void applyStudent(int toApply){
-        studentsApplied.add(toApply);
-    }
-    public void waitListStudent(int toWait){
-        studentsWaitListed.add(toWait);
-    }
-
-    // Remove Student from ApplyList or WaitList
-    public void rejectStudent(int toReject){
-        if(studentsApplied.contains(toReject)){
-            studentsApplied.remove(studentsApplied.indexOf(toReject));
-        }
-        else if(studentsWaitListed.contains(toReject)){
-            studentsWaitListed.remove(studentsWaitListed.indexOf(toReject));
-        }
-        else{
-            System.out.println("Error - Reject Student from Applied: Student ID not found in Students applied list or waitlist");
-        }
-    }
-
-    // Admin enrolls Student in Course and removes from applied list or waitlist
-    public void enrollStudent(int toAssign){
-        if (studentsApplied.contains(toAssign)){
-            studentsApplied.remove(studentsApplied.indexOf(toAssign));
-            studentsEnrolled.add(toAssign);
-        }
-        else if (studentsWaitListed.contains(toAssign)){
-            studentsWaitListed.remove(studentsWaitListed.indexOf(toAssign));
-            studentsEnrolled.add(toAssign);
-        }
-        else{
-            System.out.println("Error - Enrolling Student to Course: Student ID not in Students applied list or waitlist");
-        }
-    }
-
-    // Admin withdraws Student from course (withdrawal requests)
-    public void withdrawStudent(int toWithdraw){
-        if (studentsEnrolled.contains(toWithdraw)){
-            studentsEnrolled.remove(studentsEnrolled.indexOf(toWithdraw));
-        }
-        else{
-            System.out.println("Error - Withdrawing Student to Course: Student ID not found in Students enrolled in Course");
-        }
-    }
-
-    /**
-     * Puts all the required course info for public into a new object
-     * @return CourseItem containing all the public info
-     */
-    public CourseItem toPublic(){
-        return new CourseItem(this.coursecode, this.courseNum, this.department, this.classCode, this.title, this.description, this.time, this.maxSeats);
-    }
-
-    /**
-     * New Object for course display stuff
-     */
-    public class CourseItem{
-        private String code;
-        private String number;
-        private String department;
-        private char classCode;
-        private String title;
-        private String description;
-        private Time time;
-        private int maxSeats;
-        /*
-        private String prerequisites;
-        private String preclusions;
-         */
-
-        public CourseItem(String code, String number, String department, char classCode, String title, String description, Time time, int maxSeats) {
-            this.code = code;
-            this.number = number;
-            this.department = department;
-            this.classCode = classCode;
-            this.title = title;
-            this.description = description;
-            this.time = time;
-            this.maxSeats = maxSeats;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public String getDepartment() {
-            return department;
-        }
-
-        public char getClassCode() {
-            return classCode;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public Time getTime() {
-            return time;
-        }
-
-        public int getMaxSeats() {
-            return maxSeats;
-        }
-    }
 }
-
-

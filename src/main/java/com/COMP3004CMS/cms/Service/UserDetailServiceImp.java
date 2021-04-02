@@ -29,6 +29,10 @@ public class UserDetailServiceImp implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+    public User findUserByUserid(String userid){
+        return userRepository.findUserByUserid(userid);
+    }
+
     public void deleteById(String id){
         userRepository.deleteById(id);
     }

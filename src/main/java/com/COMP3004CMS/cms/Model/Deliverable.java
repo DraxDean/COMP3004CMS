@@ -1,13 +1,7 @@
 package com.COMP3004CMS.cms.Model;
 
-import com.COMP3004CMS.cms.Storage.SubList;
-import com.COMP3004CMS.cms.Storage.Submission;
-import com.COMP3004CMS.cms.utility.exceptions.MaxStudentSubmissions;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
-import java.util.Dictionary;
 
 /*
     What is a Deliverable?
@@ -17,68 +11,48 @@ import java.util.Dictionary;
     - needs to be created
     - needs to hold:
         * deliverable info
-        * done -- deadline
+        * deadline
         * deliverable requirements slot (from prof)
-        * Done -- submission slot (from student)
-        * done -- grade
+        * submission slot (from student)
+        * grade
     - needs to perform:
-        * Done -- deliverable creation
-        * deliverable update -- not sure what it entails b.g --
-        * Done -- deliverable submission
+        * deliverable creation
+        * deliverable update
+        * deliverable submission
         * assign deliverable grade
 */
 @Document(collection = "deliverable")
 public class Deliverable {
 
-    @Id
     // deliverable variables
-    /* can we please change these to ints */
+    @Id
     public String id;       //for MongoDB
     String title;
-    Date start;
-    Date deadline;
+    String start;
+    String deadline;
     // these two will definitely have to evolve into file-readers
     String requirements;
-    //Dictionary<Integer, SubList> submissions;
-    Dictionary<String, SubList> submissions;
+    String submission;
     // in format [A-]
     String grade;
 
-
-
     // constructors
-    public Deliverable() {}
+    public Deliverable() {
+    }
 
 
-    public Deliverable(String title, Date start, Date deadline, Dictionary<String, SubList> submissions) {
+    public Deliverable(String title, String start, String deadline) {
         this.title = title;
         this.start = start;
         this.deadline = deadline;
         requirements = "TO BE ANNOUNCED";
-        this.submissions = submissions;
+        submission = "STUDENT SUBMISSION SLOT";
         grade = "PENDING";
     }
 
-
     // *****  Prof Actions  *****
 
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
-    /*
-    public void setSubmission(String submission) {
-        this.submission = submission;
-    }*/
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public void submitDeadline(Date newDate){
+    public void submitDeadline(String newDate){
         deadline = newDate;
     }
     // Most Definitely will be a file in the future
@@ -92,18 +66,8 @@ public class Deliverable {
 
     // *****  Student Actions  *****
 
-    public void submitSubmission(String studentId, Submission doc) throws MaxStudentSubmissions {
-        //check to see if student already submitted anything
-        try {
-            SubList stuSubs = submissions.get(studentId);
-            if ( stuSubs == null){
-                stuSubs = new SubList();
-            }
-            stuSubs.addBack(doc);
-        } catch (NullPointerException en){
-            System.out.println("Error with added student submition to deliverable");
-        } catch (MaxStudentSubmissions em){
-            throw new MaxStudentSubmissions("Submition error for student id: "+studentId);
-        }
+    public void submitSubmission(String newSubmission){
+        submission = newSubmission;
     }
+
 }
