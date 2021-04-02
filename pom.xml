@@ -92,7 +92,7 @@
 		</dependency>
 		<!-- Thymeleaf stuff-->
 		<dependency>
-			<groupId> nz.net.ultraq.thymeleaf</groupId>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>${thymeleaf-layout-dialect.version}</version>
 		</dependency>
