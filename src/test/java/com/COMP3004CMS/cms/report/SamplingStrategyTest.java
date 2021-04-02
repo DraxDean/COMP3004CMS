@@ -42,4 +42,17 @@ class SamplingStrategyTest {
             assertNotEquals(datum.stu.age, 35);
         }
     }
+
+    @Test
+    void testAverageSampling() {
+        //run the average algorithm
+        //go through results and see if each datapoint = every 6 (66,66,85,66,76,66)
+        //process data
+        AverageSampling avg = new AverageSampling();
+        ArrayList<GradeData> processed = avg.getData(list);
+        //go over new array and check if they are all 25
+        for (GradeData datum: processed) {
+            assertEquals(452,datum.grade);
+        }
+    }
 }
