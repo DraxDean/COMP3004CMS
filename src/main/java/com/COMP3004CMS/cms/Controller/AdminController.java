@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.Year;
 import java.util.List;
 
 @Controller()
@@ -23,7 +24,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String getAdminHome() {
-        return "adminhomepage";
+        return "admin/adminhomepage";
     }
 
     //listing users by ID
@@ -31,7 +32,7 @@ public class AdminController {
     public String getApprove(Model model, @RequestParam("id") String id) {
         User user = userDetailServiceImp.findUserById(id);
         model.addAttribute("user", user);
-        return "userprofile";
+        return "admin/userprofile";
     }
     @GetMapping("/admin/user/all")
     public String getApprove(Model model) {
@@ -39,7 +40,7 @@ public class AdminController {
         List<User> professor = userDetailServiceImp.findAllByRoles("PROFESSOR");
         model.addAttribute("student", student);
         model.addAttribute("professor", professor);
-        return "userall";
+        return "admin/userall";
     }
 
     @GetMapping("/admin/user/request")
@@ -48,7 +49,7 @@ public class AdminController {
         List<User> pendingProf = userDetailServiceImp.findAllByRoles("PROFESSOR_PENDING");
         model.addAttribute("pending_student", pendingStudent);
         model.addAttribute("pending_prof", pendingProf);
-        return "approveuser";
+        return "admin/approveuser";
     }
 
     @GetMapping("/admin/user/delete")
@@ -70,7 +71,7 @@ public class AdminController {
     }
     @GetMapping("/admin/user/add")
     public String adminAddUser() {
-        return "adduser";
+        return "admin/adduser";
     }
 
     @PostMapping("/admin/user/add")
@@ -88,14 +89,14 @@ public class AdminController {
                             "There is already a user registered with the student number provided");
         }
         if (bindingResult.hasErrors()) {
-            return "redirect:/admin/user/add";
+
         } else {
             user.setPassword("123456");
             userDetailServiceImp.saveUser(user);
             userDetailServiceImp.approveUserById(user.getId());
-            return "redirect:/admin/user/all";
+
         }
-        //return "adduser";
+        return "redirect:/admin/user/all";
     }
 
     @GetMapping("/admin/course")
@@ -110,15 +111,22 @@ public class AdminController {
     public String showAllCourse(Model model) {
         List<Course> course = courseService.findAll();
         model.addAttribute("courses", course);
-        return "courseall";
+        return "admin/courseall";
     }
+
+    //admin add course
     @GetMapping("/admin/course/add")
-    public String getAddCourse() {
-        return "addcourse";
+    public String getAddCourse(Model model) {
+        List<User> professors = userDetailServiceImp.findAllByRoles("PROFESSOR");
+        model.addAttribute("profs", professors);
+        return "admin/addcourse";
     }
-    @PostMapping("/admin/courses/add")
-    public String postAddCourse(Course course, BindingResult bindingResult) {
+
+    @PostMapping("/admin/course/add")
+    public String postAddCourse(Course course, BindingResult bindingResult,
+                                @RequestParam("prof") String userid) {
         Course courseExists = courseService.findByCourseid(course.getCourseid());
+        User professors = userDetailServiceImp.findUserByUserid(userid);
         if (courseExists!= null) {
             bindingResult
                     .rejectValue("courseid", "error.course",
@@ -126,14 +134,58 @@ public class AdminController {
         }
         if (bindingResult.hasErrors()) {
         } else {
+            Course shortCourse = new Course(course.id, course.courseid, course.department,
+                    course.coursecode,course.title, course.maxSeats, course.term, course.year);
+            User shortUser = new User(professors.id, professors.userid, professors.firstname,
+                    professors.lastname,professors.getRoles());
+            course.setProfessor(shortUser);
+            professors.addCourse(shortCourse);
+            userDetailServiceImp.saveUser(professors);
             courseService.saveCourse(course);
         }
-        return "addcourse";
+        return "redirect:/admin/course/all";
     }
 
-    @PostMapping("/admin/courses/delete")
+    //admin delete a course
+    @GetMapping("/admin/course/delete")
     public String postAddCourse(@RequestParam("courseid") String courseid) {
-        courseService.deleteById(courseid);
+        courseService.deleteCourseByCourseid(courseid);
+        return "redirect:/admin/course/all";
+    }
+
+    @GetMapping("/admin/course/edit")
+    public String getEditCourse(Model model, @RequestParam("courseid") String courseid) {
+        Course course = courseService.findByCourseid(courseid);
+        List<User> professors = userDetailServiceImp.findAllByRoles("PROFESSOR");
+
+        model.addAttribute("profs", professors);
+        model.addAttribute("course", course);
+        return "admin/editcourse";
+    }
+
+    @PostMapping("/admin/course/edit")
+    public String postEditCourse(@RequestParam("department") String department, @RequestParam("coursecode") String coursecode,
+                                 @RequestParam("section") String section, @RequestParam("maxSeats") int maxSeats,
+                                 @RequestParam("description") String description,
+                                 @RequestParam("term") String term, @RequestParam("year") String year,
+                                 @RequestParam("courseid") String courseid, @RequestParam("prof") String userid){
+        Course course = courseService.findByCourseid(courseid);
+        User professors = userDetailServiceImp.findUserByUserid(userid);
+        User shortUser = new User(professors.id, professors.userid, professors.firstname,
+                professors.lastname,professors.getRoles());
+        course.setDepartment(department);
+        course.setCoursecode(coursecode);
+        course.setSection(section);
+        course.setMaxSeats(maxSeats);
+        course.setDescription(description);
+        course.setTerm(term);
+        course.setYear(year);
+        course.setProfessor(shortUser);
+        Course shortCourse = new Course(course.id, course.courseid, course.department,
+                course.coursecode,course.title, course.maxSeats, course.term, course.year);
+        professors.addCourse(shortCourse);
+        userDetailServiceImp.saveUser(professors);
+        courseService.saveCourse(course);
         return "redirect:/admin/course/all";
     }
 }

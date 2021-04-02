@@ -46,15 +46,24 @@ background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /*
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
 </div>
 
-<form method="post" id="data_send" th:action="@{/courses/addcourse}">
-    <input id="title" name="title" placeholder="Title" value="">
-    <input id="department" name="department" placeholder="Department" value="">
-    <input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
-    <input id="courseid" name="courseid"  placeholder="CNumber" value="">
-    <input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
+<form method="post" id="data_send" th:action="@{/admin/course/add}">
+    <br><label for="title"></label><input id="title" name="title" placeholder="Title" value="">
+    <br><label for="department"></label><input id="department" name="department" placeholder="Department" value="">
+    <br><label for="coursecode"></label><input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
+    <br><label for="section"></label><input id="section" name="section" placeholder="A" value="">
+    <br><label for="courseid"></label><input id="courseid" name="courseid"  placeholder="CNumber" value="">
+    <br><label for="maxSeats"></label><input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
+    <br><label for="description"></label><textarea id="description" name="description"  placeholder="description" value=""></textarea>
+    <br><label for="term"></label><input id="term" name="term" placeholder="term" value="">
+    <br><label for="yearint"></label><input id="yearint" name="yearint" placeholder="year" value="">
+    <br><label for="prof">Assign a primary professor</label>
+    <select class="form-control" name="prof" id="prof" value="">
+        <option th:each="prof : ${profs}" th:value="${prof.getUserid()}" th:text="${prof.getName()}"></option>
+    </select>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
 
 </form>
+
 <!-- FOOTER -->
 <nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
 

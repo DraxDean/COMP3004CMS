@@ -29,4 +29,7 @@ public class CourseService{
     public void deleteById(String id){
         courseRepository.deleteById(id);
     }
+    public void deleteCourseByCourseid(String id){
+        courseRepository.deleteCourseByCourseid(id);
+    }
 }

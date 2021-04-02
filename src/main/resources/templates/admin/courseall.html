@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Course</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<!-- START NAV -->
+<nav class="navbar has-shadow" style="background-color:#E0E0E0;box-shadow: none">
+    <div class="container" style="margin-left:15px">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/default">
+                <img src="https://southdundas.com/wp-content/uploads/2017/11/carleton_wide_colour_1844.png" alt="Carleton University" position="absolute" right="15px" />
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/default">
+                    Home
+                </a>
+                <a class="navbar-item" href="/courses">
+                    Courses
+                </a>
+                <a class="navbar-item" href="/logout">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<div class="line" style="background: rgb(0,0,0); /* Old browsers */
+background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
+</div>
+
+<div class="card events-card" style="width: 70%;left: 15%;top: 25%;position: absolute;">
+    <header class="card-header">
+        <p class="card-header-title">
+            Courses
+        </p>
+        <a href="#" class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                  </span>
+        </a>
+    </header>
+    <div class="card-table">
+        <div class="content">
+            <table class="table is-fullwidth is-striped">
+                <tbody>
+                <tr th:each="course:${courses}">
+                    <td width="5%"><i class="fa fa-bell-o"></i></td>
+                    <td th:text="${course.toString()}"></td>
+                    <td>
+                        <a class="button is-small is-primary" th:href="@{/admin/course(courseid=${course.getCourseid()})}">Detail</a>
+                        <a class="button is-small is-primary" th:href="@{/admin/course/edit(courseid=${course.getCourseid()})}">Edit</a>
+                        <a class="button is-small is-primary" th:href="@{/admin/course/delete(courseid=${course.getCourseid()})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <a href="/admin/course/add" class="card-footer-item">New Course</a>
+    </footer>
+</div>
+<!-- FOOTER -->
+<nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
+
+    <div class="navbar-brand">
+        <a class="navbar-item brand-text" href="../index.html" style="left:10px">
+            IT Support | Privacy Policy | Accessibility | Copyright 2019
+        </a>
+        <a class="navbar-item brand-text" href="../index.html" style="right:10px; top:6px; position:absolute">
+            IT Service Desk Support Email | 613-520-3700
+        </a>
+    </div>
+
+</nav>
+</body>
+</html>

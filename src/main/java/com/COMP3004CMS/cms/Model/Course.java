@@ -34,15 +34,17 @@ public class Course {
     public String courseid;     //CNumber
     public String department;
     public String coursecode;   //CarletonCode
+    public String section;
     public String title;
     public String description;
     public int maxSeats;
     public String term;
-    public Year year;
+    public String year;
 
     public String status;       //for displaying "register" or "drop"
     public String action;
     // using userId's to avoid storing whole object
+    User professor;
     ArrayList<User> professors;
     ArrayList<Integer> professorsAssigned;
 
@@ -64,12 +66,13 @@ public class Course {
         this.maxSeats = maxSeats;
     }
 
-    public Course(String id, String courseid, String department, String coursecode, String title, String term, Year year) {
+    public Course(String id, String courseid, String department, String coursecode, String title, int maxSeats, String term, String year) {
         this.id = id;
         this.courseid = courseid;
         this.department = department;
         this.coursecode = coursecode;
         this.title = title;
+        this.maxSeats = maxSeats;
         this.term = term;
         this.year = year;
     }
@@ -111,8 +114,13 @@ public class Course {
 
     // Prof Applies
     public void addProfessor(User prof){
+        if (this.getProfessors()==null) {
+            this.setProfessors(new ArrayList<User>());
+        }
         try{
-            professors.add(prof);
+            if (!professors.contains(prof)) {
+                professors.add(prof);
+            }
         } catch (Exception e){
             System.out.println("Error - adding Professor");
             e.printStackTrace();
@@ -245,11 +253,11 @@ public class Course {
         this.term = term;
     }
 
-    public Year getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Year year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -295,6 +303,22 @@ public class Course {
 
     public void setDeliverables(ArrayList<Deliverable> deliverables) {
         this.deliverables = deliverables;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public User getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(User professor) {
+        this.professor = professor;
     }
 
     @Override

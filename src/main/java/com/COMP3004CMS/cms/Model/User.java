@@ -19,6 +19,7 @@ public class User implements Subscriber{
     private String roles;
     List<Course> courseList;
     ArrayList<String> announcements;
+    public int grade;
 
     public User(){}
 
@@ -118,6 +119,14 @@ public class User implements Subscriber{
         this.lastname = lastname;
     }
 
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
     @Override
     public void update(String s) {
         if(announcements==null){
@@ -142,5 +151,9 @@ public class User implements Subscriber{
         return String.format(
                 "[First Name: %s, Last Name: %s, Student Number: %s]",
                 firstname, lastname, userid);
+    }
+
+    public String getName() {
+        return String.format("%s %s", firstname, lastname);
     }
 }
