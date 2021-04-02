@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Year;
 import java.util.List;
@@ -148,8 +149,15 @@ public class AdminController {
 
     //admin delete a course
     @GetMapping("/admin/course/delete")
-    public String postAddCourse(@RequestParam("courseid") String courseid) {
-        courseService.deleteCourseByCourseid(courseid);
+    public String postAddCourse(@RequestParam("courseid") String courseid,
+                                RedirectAttributes redirectAttrs) {
+        //can't delete course if there are students in
+        Boolean success = courseService.deleteCourseByCourseid(courseid);
+        if(!success){
+            String err = "Can't delete course when there are students in this course";
+            redirectAttrs.addFlashAttribute("message", err);
+
+        }
         return "redirect:/admin/course/all";
     }
 

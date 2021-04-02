@@ -61,6 +61,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     </header>
     <div class="card-table">
         <div class="content">
+            <p th:text="${message}"></p>
             <table class="table is-fullwidth is-striped">
                 <tbody>
                 <tr th:each="course:${courses}">

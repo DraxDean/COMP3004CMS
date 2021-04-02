@@ -29,7 +29,13 @@ public class CourseService{
     public void deleteById(String id){
         courseRepository.deleteById(id);
     }
-    public void deleteCourseByCourseid(String id){
-        courseRepository.deleteCourseByCourseid(id);
+    public boolean deleteCourseByCourseid(String id){
+        Course course = courseRepository.findByCourseid(id);
+        if (course.getStudents()!=null){
+            return false;
+        }else {
+            courseRepository.deleteCourseByCourseid(id);
+            return true;
+        }
     }
 }
