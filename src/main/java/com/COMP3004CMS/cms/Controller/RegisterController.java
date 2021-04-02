@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
 import java.util.List;
 
 @Controller()
@@ -30,7 +28,6 @@ public class RegisterController {
         User student = new User(temp.id, temp.userid, temp.firstname, temp.lastname, temp.getRoles());
         for(Course c: course){
             if(c.getStudents().contains(student)){
-
                 c.setStatus("Drop");
                 c.setAction("/drop");
             }else {
@@ -69,6 +66,7 @@ public class RegisterController {
         userDetailServiceImp.update(student);
         return "redirect:/register/search";
     }
+
     @GetMapping("/drop")
     public String dropStudent(@RequestParam("courseid") String courseid,
                               Authentication authentication) {

@@ -14,13 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class DashboardController {
@@ -56,13 +53,13 @@ public class DashboardController {
         model.addAttribute("courseid", courseid);
         return "dashboard/coursepage";
     }
-    //culearn course page
+
+    //culearn assignment page
     @GetMapping("/dashboard/deliverable")
     public String showDeliverable(Model model, @RequestParam("id") String deliverableid,
                                   Authentication authentication) {
         User user = userDetailServiceImp.findByUsername(authentication.getName());
         ArrayList<Action> actions = new ArrayList<>();
-
         if(user.getRoles().equals("PROFESSOR")){
             Action editAction = new Action();
             editAction.setAction("/dashboard/deliverable/edit?id="+deliverableid);
@@ -81,6 +78,7 @@ public class DashboardController {
         return "dashboard/deliverablepage";
     }
 
+    //prof add deliverable
     @GetMapping("/dashboard/deliverable/add")
     public String addDeliverable(Model model, @RequestParam("courseid") String courseid,
                                  Authentication authentication) {
@@ -91,6 +89,8 @@ public class DashboardController {
         model.addAttribute("courseid", courseid);
         return "dashboard/adddeliverable";
     }
+
+    //post add deliverable
     @PostMapping("/dashboard/deliverable/add")
     public String postDeliverable(Model model, @RequestParam("courseid") String courseid,
                                   Deliverable deliverable, BindingResult bindingResult) {
@@ -111,6 +111,42 @@ public class DashboardController {
         course.deleteDeliverable(deliverable);
         courseService.saveCourse(course);
         deliverableService.deleteDeliverableByDeliverableid(deliverable.getDeliverableid());
+        model.addAttribute("course", course);
+        return "redirect:/dashboard/course?courseid="+deliverable.courseid;
+    }
+
+    //prof add deliverable
+    @GetMapping("/dashboard/deliverable/edit")
+    public String editDeliverable(Model model, @RequestParam("id") String deliverableid,
+                                 Authentication authentication) {
+        Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        if(!user.getRoles().equals("PROFESSOR")){
+            return "redirect:/dashboard";
+        }
+        model.addAttribute("deliverable", deliverable);
+        return "dashboard/editdeliverable";
+    }
+
+    //post add deliverable
+    @PostMapping("/dashboard/deliverable/edit")
+    public String postEditDeliverable(Model model, @RequestParam("id") String deliverableid,
+                                      @RequestParam("title") String title,
+                                      @RequestParam("start") String start,
+                                      @RequestParam("deadline") String deadline,
+                                      @RequestParam("requirements") String requirements) {
+        Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
+        Course course = courseService.findByCourseid(deliverable.courseid);
+        course.deleteDeliverable(deliverable);
+        //setter
+        deliverable.setTitle(title);
+        deliverable.setStart(start);
+        deliverable.setDeadline(deadline);
+        deliverable.setRequirements(requirements);
+        //save
+        course.addDeliverable(deliverable);
+        courseService.saveCourse(course);
+        deliverableService.save(deliverable);
         model.addAttribute("course", course);
         return "redirect:/dashboard/course?courseid="+deliverable.courseid;
     }

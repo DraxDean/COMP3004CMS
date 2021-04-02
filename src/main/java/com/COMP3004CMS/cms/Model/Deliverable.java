@@ -44,7 +44,6 @@ public class Deliverable {
     public Deliverable() {
     }
 
-
     public Deliverable(String title, String start, String deadline) {
         this.title = title;
         this.start = start;

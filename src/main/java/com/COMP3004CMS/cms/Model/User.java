@@ -41,16 +41,7 @@ public class User implements Subscriber{
         }
         courseList.add(course);
     }
-    @Override
-    public boolean equals(Object v) {
-        boolean retVal = false;
 
-        if (v instanceof User){
-            User ptr = (User) v;
-            retVal = ptr.userid.equals(this.userid);
-        }
-        return retVal;
-    }
     public void dropCourse(Course course){
         courseList.remove(course);
     }
@@ -61,13 +52,6 @@ public class User implements Subscriber{
 
     public void setRoles(String roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "[First Name: %s, Last Name: %s, Student Number: %s]",
-                firstname, lastname, userid);
     }
 
     public List<Course> getCourseList() {
@@ -93,8 +77,6 @@ public class User implements Subscriber{
     public void setAnnouncements(ArrayList<String> announcements) {
         this.announcements = announcements;
     }
-
-
 
     public String getId() {
         return id;
@@ -144,5 +126,21 @@ public class User implements Subscriber{
         announcements.add(s);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = false;
 
+        if (obj instanceof User){
+            User ptr = (User) obj;
+            equals = ptr.userid.equals(this.userid);
+        }
+        return equals;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "[First Name: %s, Last Name: %s, Student Number: %s]",
+                firstname, lastname, userid);
+    }
 }
