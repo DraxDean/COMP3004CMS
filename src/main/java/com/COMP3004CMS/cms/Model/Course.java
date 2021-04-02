@@ -23,6 +23,7 @@ import com.COMP3004CMS.cms.Model.Student;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Year;
 import java.util.ArrayList;
 
 
@@ -33,16 +34,22 @@ public class Course {
     public String courseid;     //CNumber
     public String department;
     public String coursecode;   //CarletonCode
+    public String section;
     public String title;
     public String description;
     public int maxSeats;
+    public String term;
+    public String year;
 
+    public String status;       //for displaying "register" or "drop"
+    public String action;
     // using userId's to avoid storing whole object
-    ArrayList<Professor> professors;
+    User professor;
+    ArrayList<User> professors;
     ArrayList<Integer> professorsAssigned;
 
-    ArrayList<Student> students;
-    ArrayList<Student> waitlist;
+    ArrayList<User> students;
+    ArrayList<User> waitlist;
 
     ArrayList<Deliverable> deliverables;
 
@@ -50,7 +57,8 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseid, String department, String coursecode, String title, int maxSeats) {
+    public Course(String id, String courseid, String department, String coursecode, String title, int maxSeats) {
+        this.id = id;
         this.courseid = courseid;
         this.department = department;
         this.coursecode = coursecode;
@@ -58,46 +66,61 @@ public class Course {
         this.maxSeats = maxSeats;
     }
 
-    public ArrayList<Professor> getProfessors() {
+    public Course(String id, String courseid, String department, String coursecode, String title, int maxSeats, String term, String year) {
+        this.id = id;
+        this.courseid = courseid;
+        this.department = department;
+        this.coursecode = coursecode;
+        this.title = title;
+        this.maxSeats = maxSeats;
+        this.term = term;
+        this.year = year;
+    }
+
+    public ArrayList<User> getProfessors() {
         return professors;
     }
     public ArrayList<Integer> getProfessorsAssigned() {
         return professorsAssigned;
     }
-    public ArrayList<Student> getStudents() {
+    public ArrayList<User> getStudents() {
         return students;
     }
 
-    public ArrayList<Student> getWaitList() {
+    public ArrayList<User> getWaitList() {
         return waitlist;
     }
 
     // Observer Design Pattern stuff
 
     public void notifyStudentsDeliverableCreated(Deliverable d){
-        for (Student s : students){
+        for (User s : students){
             s.update("Deliverable " + d.title + " has been created.");
         }
     }
     public void notifyStudentsDeliverableGraded(Deliverable d){
-        for (Student s : students){
+        for (User s : students){
             s.update("Deliverable " + d.title + " has been graded.");
         }
     }
     public void notifyStudentsDeliverableDeadlineExtended(Deliverable d){
-        for (Student s : students){
+        for (User s : students){
             s.update("Deliverable " + d.title + " deadline has been extended to " + d.deadline);
         }
     }
 
 
-
     // ******  Prof Course Assignment  ******
 
     // Prof Applies
-    public void addProfessor(Professor prof){
+    public void addProfessor(User prof){
+        if (this.getProfessors()==null) {
+            this.setProfessors(new ArrayList<User>());
+        }
         try{
-            professors.add(prof);
+            if (!professors.contains(prof)) {
+                professors.add(prof);
+            }
         } catch (Exception e){
             System.out.println("Error - adding Professor");
             e.printStackTrace();
@@ -106,7 +129,7 @@ public class Course {
     }
 
     // Admin withdraw Prof from course
-    public void removeProfessor(Professor toWithdraw){
+    public void removeProfessor(User toWithdraw){
         if (professorsAssigned.contains(toWithdraw)) {
             professorsAssigned.remove(professorsAssigned);
         }
@@ -118,11 +141,18 @@ public class Course {
     // *****  Student Enroll Sequence  ******
 
     /* Add student to course, waitlist if full*/
-    public void addStudent(Student stu){
+    public void addStudent(User stu){
+        if (this.getStudents()==null) {
+            this.setStudents(new ArrayList<User>());
+        }
         try{
             if (students.size() > maxSeats){
+                if (this.getWaitList()==null) {
+                    this.setWaitlist(new ArrayList<User>());
+                }
                 waitListStudent(stu);
-            } else{
+            }else if (students.contains(stu)){
+            }else{
                 students.add(stu);
                 if(waitlist.contains(stu)) deWaitListStudent(stu);
             }
@@ -131,7 +161,8 @@ public class Course {
             e.printStackTrace();
         }
     }
-    public void removeStudent(Student stu){
+
+    public void removeStudent(User stu){
         try{
             students.remove(stu);
         } catch (Exception e){
@@ -140,14 +171,17 @@ public class Course {
         }
     }
 
-    public void waitListStudent(Student stu){
+    public void waitListStudent(User stu){
         waitlist.add(stu);
     }
-    public void deWaitListStudent(Student stu){
+    public void deWaitListStudent(User stu){
         waitlist.remove(stu);
     }
 
     public void addDeliverable(Deliverable newDeliverable) {
+        if(deliverables==null){
+            this.setDeliverables(new ArrayList<>());
+        }
         deliverables.add(newDeliverable);
         notifyStudentsDeliverableCreated(newDeliverable);
     }
@@ -211,14 +245,96 @@ public class Course {
         this.maxSeats = maxSeats;
     }
 
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setProfessors(ArrayList<User> professors) {
+        this.professors = professors;
+    }
+
+    public void setProfessorsAssigned(ArrayList<Integer> professorsAssigned) {
+        this.professorsAssigned = professorsAssigned;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setStudents(ArrayList<User> students) {
+        this.students = students;
+    }
+
+    public ArrayList<User> getWaitlist() {
+        return waitlist;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public void setWaitlist(ArrayList<User> waitlist) {
+        this.waitlist = waitlist;
+    }
+
+    public ArrayList<Deliverable> getDeliverables() {
+        return deliverables;
+    }
+
+    public void setDeliverables(ArrayList<Deliverable> deliverables) {
+        this.deliverables = deliverables;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public User getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(User professor) {
+        this.professor = professor;
+    }
+
     @Override
     public String toString() {
-        return "Course{" +
-                "id='" + courseid + '\'' +
-                ", department='" + department + '\'' +
-                ", coursecode='" + coursecode + '\'' +
-                ", title='" + title + '\'' +
-                ", maxSeats=" + maxSeats +
-                '}';
+        return department+coursecode + " [" + courseid+
+                "] " + title;
+    }
+
+    @Override
+    public boolean equals(Object v) {
+        boolean retVal = false;
+
+        if (v instanceof Course){
+            Course ptr = (Course) v;
+            retVal = ptr.courseid.equals(this.courseid);
+        }
+        return retVal;
     }
 }

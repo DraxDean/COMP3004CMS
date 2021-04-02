@@ -42,7 +42,7 @@
     <h1>Process Account Applicant</h1>
     <p>Professors: </p>
     <div th:each="prof:${pending_prof}">
-        <a th:href="@{/admin/user(id=${student.getId()})}" th:text="${prof.getUsername()}"></a>
+        <a th:href="@{/admin/user(id=${prof.getId()})}" th:text="${prof.getUsername()}"></a>
         <div>
             <a class="button is-small is-primary" th:href="@{/admin/user/approve(id=${prof.getId()})}" th:method="post">Approve</a>
         </div>
