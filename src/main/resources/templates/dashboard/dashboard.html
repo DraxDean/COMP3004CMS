@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,8 +28,8 @@
                 <a class="navbar-item" href="/dashboard">
                     Home
                 </a>
-                <a class="navbar-item" href="/courses/all">
-                    Courses
+                <a class="navbar-item" href="/register/search">
+                    Register Courses
                 </a>
                 <a class="navbar-item" href="/logout" style="">
                     Logout
@@ -117,58 +118,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             <div class="content">
                                 <table class="table is-fullwidth is-striped">
                                     <tbody>
-                                    <tr>
+                                    <tr th:each="course:${courses}">
                                         <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>Lorum ipsum dolem aire</td>
-                                        <td class="level-right"><a class="button is-small is-primary" href="#">Action</a></td>
+                                        <td>
+                                            <a th:href="@{/dashboard/course(courseid=${course.getCourseid()})}" th:text="${course.toString()}"></a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <footer class="card-footer">
-                            <a href="#" class="card-footer-item">View All</a>
-                        </footer>
                     </div>
                 </div>
                 <div class="column is-6">

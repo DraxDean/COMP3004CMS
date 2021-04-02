@@ -5,17 +5,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Course</title>
+    <title>Add Course</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
-
 <!-- START NAV -->
 <nav class="navbar has-shadow" style="background-color:#E0E0E0;box-shadow: none">
     <div class="container" style="margin-left:15px">
         <div class="navbar-brand">
-            <a class="navbar-item" href="/default">
+            <a class="navbar-item" href="/dashboard">
                 <img src="https://southdundas.com/wp-content/uploads/2017/11/carleton_wide_colour_1844.png" alt="Carleton University" position="absolute" right="15px" />
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" >
@@ -48,36 +46,24 @@ background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /*
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
 </div>
 
-<div class="card events-card" style="width: 70%;left: 15%;top: 25%;position: absolute;">
-    <header class="card-header">
-        <p class="card-header-title">
-            Courses
-        </p>
-        <a href="#" class="card-header-icon" aria-label="more options">
-                  <span class="icon">
-                    <i class="fa fa-angle-down" aria-hidden="true"></i>
-                  </span>
-        </a>
-    </header>
-    <div class="card-table">
-        <div class="content">
-            <table class="table is-fullwidth is-striped">
-                <tbody>
-                <tr th:each="course:${courses}">
-                    <td width="5%"><i class="fa fa-bell-o"></i></td>
-                    <td th:text="${course.toString()}">
-                        <h1 th:text="${course.id}"></h1>
-                    </td>
-                    <td class="level-right"><a class="button is-small is-primary" th:href="@{/courses(courseid=${course.getCourseid()})}">Detail</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <footer class="card-footer">
-        <a href="/courses/addcourse" class="card-footer-item">New Course</a>
-    </footer>
-</div>
+<form method="post" id="data_send" th:action="@{/admin/course/add}">
+    <br><label for="title"></label><input id="title" name="title" placeholder="Title" value="">
+    <br><label for="department"></label><input id="department" name="department" placeholder="Department" value="">
+    <br><label for="coursecode"></label><input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
+    <br><label for="section"></label><input id="section" name="section" placeholder="A" value="">
+    <br><label for="courseid"></label><input id="courseid" name="courseid"  placeholder="CNumber" value="">
+    <br><label for="maxSeats"></label><input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
+    <br><label for="description"></label><textarea id="description" name="description"  placeholder="description" value=""></textarea>
+    <br><label for="term"></label><input id="term" name="term" placeholder="term" value="">
+    <br><label for="yearint"></label><input id="yearint" name="yearint" placeholder="year" value="">
+    <br><label for="prof">Assign a primary professor</label>
+    <select class="form-control" name="prof" id="prof" value="">
+        <option th:each="prof : ${profs}" th:value="${prof.getUserid()}" th:text="${prof.getName()}"></option>
+    </select>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+
+</form>
+
 <!-- FOOTER -->
 <nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
 

@@ -65,7 +65,9 @@ public class UserDetailServiceImp implements UserDetailsService {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
     }
-
+    public void update(User user) {
+        userRepository.save(user);
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CourseRepository extends MongoRepository<Course, String> {
    Course findByCourseid(String courseid);
-
+   void deleteCourseByCourseid(String courseid);
    @Override
    void deleteById(String s);
 }
