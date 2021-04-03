@@ -2,7 +2,7 @@ package com.COMP3004CMS.cms.report;
 
 import java.util.ArrayList;
 
-public class SkipSampling implements SamplingStrategy{
+public class SkipSampling implements SamplingStrategy {
     @Override
     public ArrayList<GradeData> getData(ArrayList<GradeData> dIn) {
         int skipRate = 10;

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static com.COMP3004CMS.cms.report.Colour.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SamplingStrategyTest {
@@ -48,11 +49,65 @@ class SamplingStrategyTest {
         //run the average algorithm
         //go through results and see if each datapoint = every 6 (66,66,85,66,76,66)
         //process data
-        AverageSampling avg = new AverageSampling();
+        AverageGradeSampling avg = new AverageGradeSampling();
         ArrayList<GradeData> processed = avg.getData(list);
         //go over new array and check if they are all 25
         assertEquals((433.0/6),processed.get(0).grade);
         assertEquals((443.0/6),processed.get(1).grade);
 
+    }
+
+    @Test
+    void testRangeSegregation() {
+        //create sampling strategy,
+        SkipSampling skip = new SkipSampling();
+        //wrap sampling strategy
+        GradeRangeSegregation deco = new GradeRangeSegregation(skip, 75,80);
+
+
+        //call getdata on sampling strategy
+        ArrayList<GradeData> processed = deco.getData(list);
+        //check is samplig number good
+        for (GradeData datum: processed) {
+            assertEquals(75,datum.getGrade(),"checking if grade is 75 (middle range)");
+            assertEquals(RANGE_BLUE,datum.getColour(), "Checking if middle range grade gets corresponding colour label");
+        }
+        AverageGradeSampling avg = new AverageGradeSampling();
+
+        deco = new GradeRangeSegregation(avg, 73,75);
+        for (GradeData datum: processed) {
+
+            //check if range min is good
+            if (datum.getGrade() < 73){
+                assertEquals(RANGE_RED,datum.getColour(), "Checking if low range grade gets corresponding colour label");
+            }
+            //check if mid range is good,
+            if (datum.getGrade() > 73 && datum.getGrade() < 75 ){
+                assertEquals(RANGE_BLUE,datum.getColour(), "Checking if med range grade gets corresponding colour label");
+            }
+            //check if rangeMax is good,
+            if (datum.getGrade() >  75 ){
+                assertEquals(RANGE_GREEN,datum.getColour(), "Checking if high range grade gets corresponding colour label");
+            }
+        }
+        //Check Counts for ranges
+        int min = 0;
+        int max = 0;
+        for (GradeData datum: processed) {
+
+            //add min counter
+            if (deco.getGrade() < 73){
+                min++;
+            }
+
+            //add max counter
+            if (datum.getGrade() >  75 ){
+
+            }
+        }
+        //check if min count is good
+        assertEquals(min,deco.getMinViolationCount(), "Checking if min count is correct");
+        //check maxcount
+        assertEquals(max,deco.getMaxViolationCount(), "Checking if max count is correct");
     }
 }

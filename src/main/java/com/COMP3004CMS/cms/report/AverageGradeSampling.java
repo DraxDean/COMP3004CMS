@@ -1,5 +1,6 @@
 package com.COMP3004CMS.cms.report;
 
+
 import com.COMP3004CMS.cms.report.classRequirments.StudentInfo;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Sampling strategy for average grade over samplerate students (using 6 for now)
  */
-public class AverageSampling implements SamplingStrategy{
+public class AverageGradeSampling implements SamplingStrategy {
     @Override
     public ArrayList<GradeData> getData(ArrayList<GradeData> dIn) {
         int sampleRate = 6;

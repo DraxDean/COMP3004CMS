@@ -1,5 +1,7 @@
 package com.COMP3004CMS.cms.report;
 
+import com.COMP3004CMS.cms.report.GradeData;
+
 import java.util.ArrayList;
 
 
