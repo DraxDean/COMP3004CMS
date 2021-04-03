@@ -19,6 +19,8 @@ public class User implements Subscriber{
     private String roles;
     List<Course> courseList;
     ArrayList<String> announcements;
+
+    public String submission;
     public int grade;
 
     public User(){}
@@ -40,7 +42,9 @@ public class User implements Subscriber{
         if (this.getCourseList()==null) {
             this.setCourseList(new ArrayList<Course>());
         }
-        courseList.add(course);
+        if (!this.courseList.contains(course)){
+            courseList.add(course);
+        }
     }
 
     public void dropCourse(Course course){
@@ -123,8 +127,16 @@ public class User implements Subscriber{
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public String getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(String submission) {
+        this.submission = submission;
     }
 
     @Override

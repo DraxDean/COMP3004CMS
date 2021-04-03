@@ -154,7 +154,9 @@ public class Course {
             }else if (students.contains(stu)){
             }else{
                 students.add(stu);
-                if(waitlist.contains(stu)) deWaitListStudent(stu);
+                if(waitlist!=null) {
+                    if (waitlist.contains(stu)) deWaitListStudent(stu);
+                }
             }
         } catch (Exception e){
             System.out.println("Course addStudent - Error adding student");

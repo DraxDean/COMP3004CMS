@@ -1,6 +1,7 @@
 package com.COMP3004CMS.cms.Controller;
 
 import com.COMP3004CMS.cms.Model.Course;
+import com.COMP3004CMS.cms.Model.Deliverable;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.UserDetailServiceImp;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller()
@@ -27,6 +30,9 @@ public class RegisterController {
         User temp = userDetailServiceImp.findByUsername(authentication.getName());
         User student = new User(temp.id, temp.userid, temp.firstname, temp.lastname, temp.getRoles());
         for(Course c: course){
+            if (c.getStudents() == null){
+                c.setStudents(new ArrayList<>());
+            }
             if(c.getStudents().contains(student)){
                 c.setStatus("Drop");
                 c.setAction("/drop");
@@ -59,6 +65,14 @@ public class RegisterController {
         //should check for credit max
         Course shortCourse = new Course(course.id, course.courseid, course.department,
                 course.coursecode,course.title, course.maxSeats, course.term, course.year);
+        //
+        ArrayList<Deliverable> deliverables = course.getDeliverables();
+        if(deliverables != null){
+            for(Deliverable deliverable: deliverables){
+                deliverable.addStudent(shortUser);
+            }
+        }
+        course.setDeliverables(deliverables);
         course.addStudent(shortUser);
         student.addCourse(shortCourse);
         courseService.saveCourse(course);

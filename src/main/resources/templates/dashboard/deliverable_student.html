@@ -48,19 +48,14 @@
 <p>Requirement: </p>
 <p th:text="${deliverable.getRequirements()}" ></p>
 
-<br>
-<a th:href="@{/dashboard/deliverable/submissions(id=${deliverable.getDeliverableid()})}">Grade</a>
+<form method="post" id="data_send" th:action="@{/dashboard/deliverable/submit(id=${deliverable.getDeliverableid()})}">
+    <label for="submission"></label>
+    <textarea id="submission" name="submission" th:text="${submission.getSubmission()}"></textarea>
+    <button class="button is-small is-primary" type="submit" >Submit this deliverable</button>
+</form>
 
-
-<!-- could have a conditional button here-->
-<div th:each="action:${actions}">
-    <a class="button is-small is-primary"
-       th:href="@{${action.getAction()}}"
-       th:text="${action.getButton()}">
-    </a>
-</div>
-
-
+<p>Grade: </p>
+<p th:text="${submission.getGrade()}" ></p>
 
 </body>
 </html>

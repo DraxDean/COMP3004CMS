@@ -3,6 +3,7 @@ package com.COMP3004CMS.cms.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /*
@@ -36,9 +37,13 @@ public class Deliverable {
     String deadline;
     // these two will definitely have to evolve into file-readers
     String requirements;
+
+    ArrayList<User> students;
+    //the submission and grade will have to be associate to student
     String submission;
     // in format [A-]
     String grade;
+
 
     // constructors
     public Deliverable() {
@@ -145,6 +150,63 @@ public class Deliverable {
         this.courseid = courseid;
     }
 
+    public ArrayList<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(ArrayList<User> students) {
+        this.students = students;
+        for (User s :this.students){
+            s.setGrade(0);
+            s.setSubmission("");
+        }
+    }
+
+    public void addStudent(User s) {
+        if (this.getStudents()==null) {
+            this.setStudents(new ArrayList<User>());
+        }
+        try{
+            s.setGrade(null);
+            s.setSubmission("");
+            students.add(s);
+        } catch (Exception e){
+            System.out.println("Course addStudent - Error adding student");
+            e.printStackTrace();
+        }
+    }
+
+    public User findStudent(User stu){
+        for(User student : this.getStudents()){
+            if(student.equals(stu)){
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public void initalSubmission(){
+        for(User student : this.getStudents()){
+            student.setSubmission("");
+            student.setGrade(0);
+        }
+    }
+
+    public void undateSubmissionByStudent(User stu){
+        for(User student : this.getStudents()){
+            if(student.equals(stu)){
+                student.setSubmission(stu.getSubmission());
+            }
+        }
+    }
+    public void undateGradeByStudent(User stu, int grade){
+        for(User student : this.getStudents()){
+            if(student.equals(stu)){
+                student.setGrade(grade);
+                System.out.println("giving grade");
+            }
+        }
+    }
     @Override
     public boolean equals(Object obj) {
         boolean retVal = false;

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text ="${deliverable.getTitle()}"></title>
+    <title>Grading</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -45,19 +45,34 @@
 <p th:text="${deliverable.getStart()}" ></p>
 <p>Deadline: </p>
 <p th:text="${deliverable.getDeadline()}" ></p>
-<p>Requirement: </p>
-<p th:text="${deliverable.getRequirements()}" ></p>
-
-<br>
-<a th:href="@{/dashboard/deliverable/submissions(id=${deliverable.getDeliverableid()})}">Grade</a>
+<p>Submitted: </p>
+<p></p>
 
 
 <!-- could have a conditional button here-->
-<div th:each="action:${actions}">
-    <a class="button is-small is-primary"
-       th:href="@{${action.getAction()}}"
-       th:text="${action.getButton()}">
-    </a>
+<div >
+
+    <table style="width:100%">
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Student Number</th>
+            <th>Grade</th>
+            <th>Submit</th>
+        </tr>
+
+        <tr th:each="submission:${students_submissions}">
+           (userid=${submission.getUserid()})
+            <form th:action="@{/dashboard/deliverable/grade/{id}/user/{userid}(id=${deliverable.getDeliverableid()},userid=${submission.getUserid()})}" method="post">
+                <td th:text="${submission.getFirstname()}"></td>
+                <td th:text="${submission.getLastname()}"></td>
+                <td id="userid" name="userid" th:text="${submission.getUserid()}" th:value="${submission.getUserid()}"></td>
+                <td><input id="grade" name="grade" th:value="${submission.getGrade()}"></td>
+                <td><button type="submit">Submit</button></td>
+            </form>
+        </tr>
+    </table>
+
 </div>
 
 

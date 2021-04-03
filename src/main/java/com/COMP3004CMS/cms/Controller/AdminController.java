@@ -165,7 +165,8 @@ public class AdminController {
     public String getEditCourse(Model model, @RequestParam("courseid") String courseid) {
         Course course = courseService.findByCourseid(courseid);
         List<User> professors = userDetailServiceImp.findAllByRoles("PROFESSOR");
-
+        User professor = course.getProfessor();
+        professor.dropCourse(course);           //remove course
         model.addAttribute("profs", professors);
         model.addAttribute("course", course);
         return "admin/editcourse";
@@ -192,7 +193,7 @@ public class AdminController {
         Course shortCourse = new Course(course.id, course.courseid, course.department,
                 course.coursecode,course.title, course.maxSeats, course.term, course.year);
         professors.addCourse(shortCourse);
-        userDetailServiceImp.saveUser(professors);
+        userDetailServiceImp.update(professors);
         courseService.saveCourse(course);
         return "redirect:/admin/course/all";
     }
