@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -40,14 +41,20 @@ public class UserDetailServiceImp implements UserDetailsService {
     public void approveUserById(String id){
         Optional<User> user = userRepository.findById(id);
         if(!user.isPresent()){
-            //no user found
+            //no user `found`
         }else {
             User temp = user.get();
             if (temp.getRoles().equals("STUDENT_PENDING")) {
                 temp.setRoles("STUDENT");
+                ArrayList<String> a = new ArrayList<>();
+                a.add("Welcome! Your request has been approved and your Carleton student account has been created.");
+                temp.setAnnouncements(a);
             }
             if (temp.getRoles().equals("PROFESSOR_PENDING")) {
                 temp.setRoles("PROFESSOR");
+                ArrayList<String> a = new ArrayList<>();
+                a.add("Welcome! Your request has been approved and your Carleton professor account has been created.");
+                temp.setAnnouncements(a);
             }
             userRepository.save(temp);
         }
