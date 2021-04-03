@@ -27,7 +27,7 @@ public class GradeRangeSegregation implements  SamplingStrategy{
             if (datum.getGrade() < minRange){
                 datum.setColour(RANGE_RED);
                 minViolationCounter++;
-            } else if (datum.getGrade() < minRange){
+            } else if (datum.getGrade() < maxRange){
                 datum.setColour(RANGE_BLUE);
             } else {
                 datum.setColour(RANGE_GREEN);
@@ -36,5 +36,13 @@ public class GradeRangeSegregation implements  SamplingStrategy{
         }
 
         return out;
+    }
+
+    public int getMinViolationCount() {
+        return 0;
+    }
+
+    public int getMaxViolationCount() {
+        return 0;
     }
 }
