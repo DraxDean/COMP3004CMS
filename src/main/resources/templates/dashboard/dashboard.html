@@ -128,11 +128,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="column is-half">
+                    <div class="mt-5"></div>
                     <div class="card events-card">
                         <header class="card-header">
                             <p class="card-header-title">
-                                Announcement:
+                                Announcements:
                             </p>
                             <a href="#" class="card-header-icon" aria-label="more options">
                               <span class="icon">
@@ -150,44 +153,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                                             <a th:text="${announcement}"></a>
                                         </td>
                                     </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="column is-half">
-                    <div class="mt-5"></div>
-                    <div class="card events-card">
-                        <header class="card-header">
-                            <p class="card-header-title">
-                                Announcements:
-                            </p>
-                            <a href="#" class="card-header-icon" aria-label="more options">
-                          <span class="icon">
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                          </span>
-                            </a>
-                        </header>
-                        <div class="card-table">
-                            <div class="content">
-                                <table class="table is-fullwidth is-striped">
-                                    <tbody>
-                                    <tr>
-                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
-                                        <td>
-                                            <p>Placeholder Announcement</p>
-                                        </td>
-                                    </tr>
-
-<!--                                    <tr th:each="announcement: ${user.getAnnouncements()}">-->
-<!--                                        <td width="5%"><i class="fa fa-bell-o"></i></td>-->
-<!--                                        <td>-->
-<!--                                            <p th:text="${announcement}"></p>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
                                     </tbody>
                                 </table>
                             </div>
