@@ -101,7 +101,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             <div class="columns">
                 <div class="column is-12">
                     <div class="card events-card" style="padding-top:12px;">
-                        <p class="card-header-title">Submit</p>
+                        <p class="card-header-title">Submission</p>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     </div>
 </div>
 
-<!-- could have a conditional button here-->
+<!-- prof Buttons-->
 <div th:each="action:${actions}">
     <a class="button is-small is-primary"
        th:href="@{${action.getAction()}}"
