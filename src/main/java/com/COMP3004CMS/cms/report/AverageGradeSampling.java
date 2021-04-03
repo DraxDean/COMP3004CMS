@@ -18,7 +18,7 @@ public class AverageGradeSampling implements SamplingStrategy {
         try{
             for (int i = 1; i <= dIn.size(); i++){
                 //need to get first index
-                sample+= dIn.get(i-1).grade;
+                sample+= dIn.get(i-1).getGrade();
 
                 if (i % sampleRate == 0){
                     //add a new GradeData point with the average grade and age, can't do it with gender

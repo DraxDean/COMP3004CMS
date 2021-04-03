@@ -39,8 +39,8 @@ class SamplingStrategyTest {
         ArrayList<GradeData> processed = skip.getData(list);
         //go over new array and check if they are all 25
         for (GradeData datum: processed) {
-            assertEquals(25,datum.stu.age);
-            assertNotEquals(datum.stu.age, 35);
+            assertEquals(25,datum.getStu().age);
+            assertNotEquals(datum.getStu().age, 35);
         }
     }
 
@@ -52,8 +52,8 @@ class SamplingStrategyTest {
         AverageGradeSampling avg = new AverageGradeSampling();
         ArrayList<GradeData> processed = avg.getData(list);
         //go over new array and check if they are all 25
-        assertEquals((433.0/6),processed.get(0).grade);
-        assertEquals((443.0/6),processed.get(1).grade);
+        assertEquals((433.0/6),processed.get(0).getGrade());
+        assertEquals((443.0/6),processed.get(1).getGrade());
 
     }
 
@@ -113,7 +113,7 @@ class SamplingStrategyTest {
         for (GradeData datum: processed) {
 
             //add min counter
-            if (deco.getGrade() < 73){
+            if (datum.getGrade() < 73){
                 min++;
             }
 
