@@ -39,10 +39,10 @@ public class GradeRangeSegregation implements  SamplingStrategy{
     }
 
     public int getMinViolationCount() {
-        return 0;
+        return minViolationCounter;
     }
 
     public int getMaxViolationCount() {
-        return 0;
+        return maxViolationCounter;
     }
 }
