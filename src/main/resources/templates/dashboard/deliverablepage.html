@@ -105,19 +105,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                     </div>
                 </div>
             </div>
+            <div class="mt-5"></div>
+            <div class="columns">
+                <div class="column is-6">
+                    <div class="card events-card" style="text-align:center">
+                        <a th:each="action:${actions}"  class="button is-small is-primary" style="background-color:#CF112D;margin:15px"
+                           th:href="@{${action.getAction()}}"
+                           th:text="${action.getButton()}">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
 
     </div>
 </div>
 
-<!-- prof Buttons-->
-<div th:each="action:${actions}">
-    <a class="button is-small is-primary"
-       th:href="@{${action.getAction()}}"
-       th:text="${action.getButton()}">
-    </a>
-</div>
 
 
 </body>
