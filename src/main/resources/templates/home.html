@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+    ####    USED TO INCLUDE DIALECT + DECORATE TO PICK LAYOUT DESIRED TO WRAP   ####
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{mainlayout.html}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,6 +33,9 @@
                 <a class="navbar-item" href="/courses">
                     Courses
                 </a>
+                <div>
+                    You shouldn't be able to see this
+                </div>
                 <a class="navbar-item" href="/logout">
                     Logout
                 </a>
@@ -38,8 +45,24 @@
     </div>
 </nav>
 
+<div>
+    You shouldn't be able to see this
+</div>
+<!--
+    ####    CONTENT YOU WANT TO BE INJECTED INT LAYOUT   ####
+-->
+
+<section layout:fragment="test-menu">
+
     <h1>Hello</h1>
     <a href="login">log in </a>
     <a href="signup">Sign Up </a>
+
+</section>
+
+<div>
+    You shouldn't be able to see this
+</div>
+
 </body>
 </html>

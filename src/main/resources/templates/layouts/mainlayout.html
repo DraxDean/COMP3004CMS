@@ -18,12 +18,17 @@
 <div class="container">
     <div class="columns">
         <div class="columns is-3" th:replace="fragments/static/leftmenu.html"></div>
+
+        <!--
+            ####    CONTENT THAT IS INJECTED BY OTHER PAGE   ####
+           -->
         <section class="column is-9" layout:fragment="menu">
-            Content from page section will be placed here
+            CONTENT THAT IS INJECTED BY OTHER PAGE
+
+            you can't see anything in here
         </section>
-        <div>
-            stuuff
-        </div>
+
+
     </div>
 </div>
 
