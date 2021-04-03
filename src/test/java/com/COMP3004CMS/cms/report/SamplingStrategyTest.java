@@ -51,8 +51,8 @@ class SamplingStrategyTest {
         AverageSampling avg = new AverageSampling();
         ArrayList<GradeData> processed = avg.getData(list);
         //go over new array and check if they are all 25
-        for (GradeData datum: processed) {
-            assertEquals(452,datum.grade);
-        }
+        assertEquals((433.0/6),processed.get(0).grade);
+        assertEquals((443.0/6),processed.get(1).grade);
+
     }
 }

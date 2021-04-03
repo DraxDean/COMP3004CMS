@@ -11,7 +11,6 @@ public class SkipSampling implements SamplingStrategy{
 
         //catching if index goes out of bounds on lastone
         try{
-            //misses first index of sample
             for (int i = 0; i < size; i+= skipRate){
                 dataOut.add(dIn.get(i));
             }

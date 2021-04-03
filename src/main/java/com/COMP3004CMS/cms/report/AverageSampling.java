@@ -11,12 +11,13 @@ public class AverageSampling implements SamplingStrategy{
     @Override
     public ArrayList<GradeData> getData(ArrayList<GradeData> dIn) {
         int sampleRate = 6;
-        int sample = 0;
+        double sample = 0;
         ArrayList<GradeData> dataOut = new ArrayList<GradeData>();
 
         try{
             for (int i = 1; i <= dIn.size(); i++){
-                sample+= dIn.get(i).grade;
+                //need to get first index
+                sample+= dIn.get(i-1).grade;
 
                 if (i % sampleRate == 0){
                     //add a new GradeData point with the average grade and age, can't do it with gender
