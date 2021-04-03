@@ -72,9 +72,15 @@ class SamplingStrategyTest {
             assertEquals(75,datum.getGrade(),"checking if grade is 75 (middle range)");
             assertEquals(RANGE_BLUE,datum.getColour(), "Checking if middle range grade gets corresponding colour label");
         }
-        AverageGradeSampling avg = new AverageGradeSampling();
+    }
 
-        deco = new GradeRangeSegregation(avg, 73,75);
+    @Test
+    void testRangeSegregationAllRanges() {
+        AverageGradeSampling avg = new AverageGradeSampling();
+        GradeRangeSegregation deco = new GradeRangeSegregation(avg, 73,75);
+
+        ArrayList<GradeData> processed = deco.getData(list);
+
         for (GradeData datum: processed) {
 
             //check if range min is good
@@ -90,6 +96,17 @@ class SamplingStrategyTest {
                 assertEquals(RANGE_GREEN,datum.getColour(), "Checking if high range grade gets corresponding colour label");
             }
         }
+    }
+
+    @Test
+    void testRangeSegregationRangeCounts() {
+        AverageGradeSampling avg = new AverageGradeSampling();
+        GradeRangeSegregation deco = new GradeRangeSegregation(avg, 73,75);
+
+        ArrayList<GradeData> processed = deco.getData(list);
+
+
+        deco = new GradeRangeSegregation(avg, 73,75);
         //Check Counts for ranges
         int min = 0;
         int max = 0;
