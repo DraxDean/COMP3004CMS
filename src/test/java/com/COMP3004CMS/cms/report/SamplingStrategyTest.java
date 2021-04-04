@@ -133,15 +133,20 @@ class SamplingStrategyTest {
         GradeStrategySampler combined = new GradeStrategySampler();
 
         //create regular skip sampling
-        ArrayList<GradeData> processed = skip.getData(list);
+        ArrayList<GradeData> processed = avg.getData(list);
+        processed = skip.getData(processed);
         for (GradeData datum: processed) {
             System.out.println(datum.getGrade());
         }
 
         //print the average so can see
-
+        combined.addStrategy(avg);
+        combined.addStrategy(skip);
         //get pattern so can test
-
+        ArrayList<GradeData> combinedRes = combined.getData(list);
         //run the combined stratefy and see if they are the same
+        for (int i = 0; i < combinedRes.size(); i++){
+            assertEquals(processed.get(i).getGrade(), combinedRes.get(i).getGrade(),"Checking if sampling strategies were properly combined");
+        }
     }
 }
