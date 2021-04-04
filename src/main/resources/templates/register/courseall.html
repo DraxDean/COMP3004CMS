@@ -65,10 +65,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                 <tbody>
                 <tr th:each="course:${courses}">
                     <td width="5%"><i class="fa fa-bell-o"></i></td>
-                    <td th:text="${course.toString()}">
-                        <h1 th:text="${course.id}"></h1>
+                    <td>
+                        <a th:href="@{/register/course(courseid=${course.getCourseid()})}" th:text="${course.toString()}"></a>
                     </td>
-                    <td class="level-right"><a class="button is-small is-primary" th:href="@{/register/course(courseid=${course.getCourseid()})}">Detail</a></td>
                     <td class="level-right"><a class="button is-small is-primary"
                                                th:href="@{${course.getAction()}(courseid=${course.getCourseid()})}"
                                                th:text="${course.getStatus()}"></a></td>
