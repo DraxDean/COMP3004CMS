@@ -158,13 +158,13 @@ class SamplingStrategyTest {
         GenderSampling maleStrategy = new GenderSampling("Male");
         GenderSampling femaleStrategy = new GenderSampling("Female");
         //bad input
-        GenderSampling maleStrategy = new GenderSampling("Duck");
+        GenderSampling duckStrategy = new GenderSampling("Duck");
 
         //loop through result and check if filtered by male results
         combined.addStrategy(maleStrategy);
         ArrayList<GradeData> processed = combined.getData(list);
         for (GradeData datum: processed) {
-            assertEquals("Male", processed.get(i).getStu().gender,"Checking if male filter works");
+            assertEquals("Male", datum.getStu().gender,"Checking if male filter works");
         }
 
         //loop through male results and check if filter by female is empty
@@ -174,9 +174,16 @@ class SamplingStrategyTest {
 
         processed = combined.getData(processed);
         for (GradeData datum: processed) {
-            assertEquals("", processed.get(i).getStu().gender,"Checking if no criteria to be filtered");
+            assertEquals("", datum.getStu().gender,"Checking if no criteria to be filtered");
         }
         //get empty result for wring strategy
+        combined = new GradeStrategySampler();
+        combined.addStrategy(duckStrategy);
+
+        processed = combined.getData(processed);
+        for (GradeData datum: processed) {
+            assertEquals("", datum.getStu().gender,"Checking if no criteria to be filtered");
+        }
 
 
     }
