@@ -149,4 +149,35 @@ class SamplingStrategyTest {
             assertEquals(processed.get(i).getGrade(), combinedRes.get(i).getGrade(),"Checking if sampling strategies were properly combined");
         }
     }
+
+    @Test
+    void testGenderSampler() {
+        /*all samplers are now tested in context of composite */
+        GradeStrategySampler combined = new GradeStrategySampler();
+        //real genders
+        GenderSampling maleStrategy = new GenderSampling("Male");
+        GenderSampling femaleStrategy = new GenderSampling("Female");
+        //bad input
+        GenderSampling maleStrategy = new GenderSampling("Duck");
+
+        //loop through result and check if filtered by male results
+        combined.addStrategy(maleStrategy);
+        ArrayList<GradeData> processed = combined.getData(list);
+        for (GradeData datum: processed) {
+            assertEquals("Male", processed.get(i).getStu().gender,"Checking if male filter works");
+        }
+
+        //loop through male results and check if filter by female is empty
+        //clean sampling strategy
+        combined = new GradeStrategySampler();
+        combined.addStrategy(femaleStrategy);
+
+        processed = combined.getData(processed);
+        for (GradeData datum: processed) {
+            assertEquals("", processed.get(i).getStu().gender,"Checking if no criteria to be filtered");
+        }
+        //get empty result for wring strategy
+
+
+    }
 }
