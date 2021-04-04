@@ -123,6 +123,25 @@ class SamplingStrategyTest {
         //check if min count is good
         assertEquals(min,deco.getMinViolationCount(), "Checking if min count is correct");
         //check maxcount
-        //assertEquals(max,deco.getMaxViolationCount(), "Checking if max count is correct");
+        assertEquals(max,deco.getMaxViolationCount(), "Checking if max count is correct");
+    }
+
+    @Test
+    void testCombinationStrategySampler() {
+        AverageGradeSampling avg = new AverageGradeSampling();
+        SkipSampling skip = new SkipSampling();
+        GradeStrategySampler combined = new GradeStrategySampler();
+
+        //create regular skip sampling
+        ArrayList<GradeData> processed = skip.getData(list);
+        for (GradeData datum: processed) {
+            System.out.println(datum.getGrade());
+        }
+
+        //print the average so can see
+
+        //get pattern so can test
+
+        //run the combined stratefy and see if they are the same
     }
 }
