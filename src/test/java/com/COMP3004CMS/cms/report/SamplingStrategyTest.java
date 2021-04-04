@@ -136,7 +136,7 @@ class SamplingStrategyTest {
         ArrayList<GradeData> processed = avg.getData(list);
         processed = skip.getData(processed);
         for (GradeData datum: processed) {
-            System.out.println(datum.getGrade());
+            //System.out.println(datum.getGrade());
         }
 
         //print the average so can see
