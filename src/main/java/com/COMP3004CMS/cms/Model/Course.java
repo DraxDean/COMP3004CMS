@@ -23,7 +23,6 @@ import com.COMP3004CMS.cms.Model.Student;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -67,13 +66,13 @@ public class Course {
         this.maxSeats = maxSeats;
     }
 
-    public Course(String id, String courseid, String department, String coursecode, String title, int maxSeats, String term, String year) {
+    public Course(String id, String courseid, String department, String coursecode, String title, String section, String term, String year) {
         this.id = id;
         this.courseid = courseid;
         this.department = department;
         this.coursecode = coursecode;
         this.title = title;
-        this.maxSeats = maxSeats;
+        this.section = section;
         this.term = term;
         this.year = year;
     }

@@ -35,6 +35,8 @@ public class AdminController {
         model.addAttribute("user", user);
         return "admin/userprofile";
     }
+
+    //listing all users
     @GetMapping("/admin/user/all")
     public String getApprove(Model model) {
         List<User> student = userDetailServiceImp.findAllByRoles("STUDENT");
@@ -58,28 +60,34 @@ public class AdminController {
                              RedirectAttributes redirectAttributes) {
         Boolean success = userDetailServiceImp.deleteById(id);
         if(!success){
-            String err = "Can't delete user when they registerd in courses";
+            String err = "Can't delete user when they are in courses";
             redirectAttributes.addFlashAttribute("message", err);
         }
         return "redirect:/admin/user/all";
     }
+
+    //deny account application
     @GetMapping("/admin/user/deny")
     public String denyUser(@RequestParam("id") String id) {
         userDetailServiceImp.deleteById(id);
         return "redirect:/admin/user/request";
     }
 
+    //approve account application
     @GetMapping("/admin/user/approve")
     public String approveUser(@RequestParam("id") String id) {
         //System.out.println("Approving users...");
         userDetailServiceImp.approveUserById(id);
         return "redirect:/admin/user/request";
     }
+
+    //add user by admin
     @GetMapping("/admin/user/add")
     public String adminAddUser() {
         return "admin/adduser";
     }
 
+    //post add user by admin
     @PostMapping("/admin/user/add")
     public String adminAddUserPost(User user, BindingResult bindingResult) {
         User checkUsername = userDetailServiceImp.findByUsername(user.getUsername());
@@ -97,7 +105,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
 
         } else {
-            user.setPassword("123456");
+            user.setPassword("123456");     //initial password
             userDetailServiceImp.saveUser(user);
             userDetailServiceImp.approveUserById(user.getId());
 
@@ -105,6 +113,7 @@ public class AdminController {
         return "redirect:/admin/user/all";
     }
 
+    //see each courses
     @GetMapping("/admin/course")
     public String showAllCourse(Model model, @RequestParam("courseid") String courseid) {
         Course course = courseService.findByCourseid(courseid);
@@ -127,7 +136,7 @@ public class AdminController {
         model.addAttribute("profs", professors);
         return "admin/addcourse";
     }
-
+    //post admin add course
     @PostMapping("/admin/course/add")
     public String postAddCourse(Course course, BindingResult bindingResult,
                                 @RequestParam("prof") String userid) {
@@ -143,7 +152,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
         } else {
             Course shortCourse = new Course(course.id, course.courseid, course.department,
-                    course.coursecode,course.title, course.maxSeats, course.term, course.year);
+                    course.coursecode, course.title, course.section, course.term, course.year);
             User shortUser = new User(professors.id, professors.userid, professors.firstname,
                     professors.lastname,professors.getRoles());
             course.setProfessor(shortUser);
@@ -170,7 +179,6 @@ public class AdminController {
             String userid = course.getProfessor().getUserid();
             User professor = userDetailServiceImp.findUserByUserid(userid);
             professor.dropCourse(course);
-
         }
         return "redirect:/admin/course/all";
     }
@@ -213,7 +221,7 @@ public class AdminController {
         course.setYear(year);
         course.setProfessor(shortUser);
         Course shortCourse = new Course(course.id, course.courseid, course.department,
-                course.coursecode,course.title, course.maxSeats, course.term, course.year);
+                course.coursecode,course.title, course.section, course.term, course.year);
         professors.addCourse(shortCourse);
         userDetailServiceImp.update(professors);
         courseService.saveCourse(course);

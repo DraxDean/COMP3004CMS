@@ -52,18 +52,17 @@ public class RegisterController {
         return "courseprofile";
     }
 
-
+    //student register
     @GetMapping("/register")
     public String registerStudent(@RequestParam("courseid") String courseid,
                                   Authentication authentication) {
         Course course = courseService.findByCourseid(courseid);
-
         User student = userDetailServiceImp.findByUsername(authentication.getName());
         User shortUser = new User(student.id, student.userid, student.firstname, student.lastname,
                 student.getRoles());
         //should check for credit max
         Course shortCourse = new Course(course.id, course.courseid, course.department,
-                course.coursecode,course.title, course.maxSeats, course.term, course.year);
+                course.coursecode,course.title, course.section, course.term, course.year);
         //
         ArrayList<Deliverable> deliverables = course.getDeliverables();
         if(deliverables != null){
@@ -84,12 +83,8 @@ public class RegisterController {
                               Authentication authentication) {
         Course course = courseService.findByCourseid(courseid);
         User student = userDetailServiceImp.findByUsername(authentication.getName());
-        User shortUser = new User(student.id, student.userid, student.firstname, student.lastname,
-                student.getRoles());
-        course.removeStudent(shortUser);
-        Course shortCourse = new Course(course.id, course.courseid,course.department,
-                course.coursecode, course.title, course.maxSeats);
-        student.dropCourse(shortCourse);
+        course.removeStudent(student);
+        student.dropCourse(course);
         courseService.saveCourse(course);
         userDetailServiceImp.update(student);
         return "redirect:/register/search";

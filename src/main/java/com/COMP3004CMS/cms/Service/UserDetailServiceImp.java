@@ -1,6 +1,5 @@
 package com.COMP3004CMS.cms.Service;
 
-import com.COMP3004CMS.cms.Model.Course;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ public class UserDetailServiceImp implements UserDetailsService {
     @Autowired
     PasswordEncoder encoder;
 
-
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
@@ -41,16 +39,6 @@ public class UserDetailServiceImp implements UserDetailsService {
             return false;
         }else {
             userRepository.deleteById(id);
-            return true;
-        }
-    }
-    
-    public boolean deleteUserByUserid(String userid){
-        User user = userRepository.findUserByUserid(userid);
-        if (user.getCourseList()!=null){
-            return false;
-        }else {
-            userRepository.deleteUserByUserid(userid);
             return true;
         }
     }

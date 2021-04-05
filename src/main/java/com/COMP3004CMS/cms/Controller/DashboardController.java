@@ -79,15 +79,13 @@ public class DashboardController {
 
             ArrayList<User> students = deliverable.getStudents();
             model.addAttribute("students_submissions", students);
-
-        }else if(user.getRoles().equals("STUDENT")){
+        } else if(user.getRoles().equals("STUDENT")){
             Action submiutAction = new Action();
             submiutAction.setAction("/dashboard/deliverable/submit?id="+deliverableid);
             submiutAction.setButton("Submit this deliverable");
-
             User submission = deliverable.findStudent(user);
             model.addAttribute("submission", submission);
-        }else{
+        } else{
             return "redirect://default";
         }
         model.addAttribute("deliverable", deliverable);
