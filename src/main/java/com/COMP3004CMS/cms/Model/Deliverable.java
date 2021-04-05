@@ -167,9 +167,11 @@ public class Deliverable {
             this.setStudents(new ArrayList<User>());
         }
         try{
-            s.setGrade(null);
-            s.setSubmission("");
-            students.add(s);
+            if(!students.contains(s)) {
+                s.setGrade(0);
+                s.setSubmission("");
+                students.add(s);
+            }
         } catch (Exception e){
             System.out.println("Course addStudent - Error adding student");
             e.printStackTrace();
@@ -203,7 +205,6 @@ public class Deliverable {
         for(User student : this.getStudents()){
             if(student.equals(stu)){
                 student.setGrade(grade);
-                System.out.println("giving grade");
             }
         }
     }

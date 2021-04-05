@@ -27,8 +27,7 @@ public class RegisterController {
     @GetMapping("/register/search")
     public String getAllCourse(Model model, Authentication authentication) {
         List<Course> course = courseService.findAll();  //will change to findAllByTerm
-        User temp = userDetailServiceImp.findByUsername(authentication.getName());
-        User student = new User(temp.id, temp.userid, temp.firstname, temp.lastname, temp.getRoles());
+        User student = userDetailServiceImp.findByUsername(authentication.getName());
         for(Course c: course){
             if (c.getStudents() == null){
                 c.setStudents(new ArrayList<>());

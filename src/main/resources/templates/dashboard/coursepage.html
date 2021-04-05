@@ -126,6 +126,34 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             </p>
                         </header>
                     </div>
+                    <div class="card events-card" th:if="${announcements!=null}">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Announcement:
+                            </p>
+                            <a href="#" class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                            </a>
+                        </header>
+
+                        <!---displaying announcement---->
+                        <div class="card-table">
+                            <div class="content">
+                                <table>
+                                    <tbody>
+                                    <tr th:each="announcement:${announcements}">
+                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
+                                        <td class="level-left">
+                                            <a th:text="${announcement}"></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card">
                         <header class="card-header">
                             <a href="#"  class="card-header-title">
@@ -133,7 +161,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             </a>
                         </header>
                     </div>
-                    <div class="card">
+
+                    <div class="card" th:if="${action!=null}">
                         <header class="card-header">
                             <p class="card-header-title">
                                 Add Deliverable

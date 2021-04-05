@@ -42,13 +42,18 @@ public class User implements Subscriber{
         if (this.getCourseList()==null) {
             this.setCourseList(new ArrayList<Course>());
         }
+        System.out.println(course.courseid);
         if (!this.courseList.contains(course)){
             courseList.add(course);
         }
     }
 
     public void dropCourse(Course course){
-        courseList.remove(course);
+        if (this.getCourseList()!=null) {
+            if (this.getCourseList().contains(course)){
+                this.courseList.remove(course);
+            }
+        }
     }
 
     public String getRoles() {

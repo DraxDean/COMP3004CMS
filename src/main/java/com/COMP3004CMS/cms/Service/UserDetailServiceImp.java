@@ -1,5 +1,6 @@
 package com.COMP3004CMS.cms.Service;
 
+import com.COMP3004CMS.cms.Model.Course;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,26 @@ public class UserDetailServiceImp implements UserDetailsService {
         return userRepository.findUserByUserid(userid);
     }
 
-    public void deleteById(String id){
-        userRepository.deleteById(id);
+    public boolean deleteById(String id){
+        User user = userRepository.findUserById(id);
+        if (user.getCourseList()!=null){
+            return false;
+        }else {
+            userRepository.deleteById(id);
+            return true;
+        }
     }
-
+    
+    public boolean deleteUserByUserid(String userid){
+        User user = userRepository.findUserByUserid(userid);
+        if (user.getCourseList()!=null){
+            return false;
+        }else {
+            userRepository.deleteUserByUserid(userid);
+            return true;
+        }
+    }
+    
     public void approveUserById(String id){
         Optional<User> user = userRepository.findById(id);
         if(!user.isPresent()){
@@ -75,6 +92,7 @@ public class UserDetailServiceImp implements UserDetailsService {
     public void update(User user) {
         userRepository.save(user);
     }
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);

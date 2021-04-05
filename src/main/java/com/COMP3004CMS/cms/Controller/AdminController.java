@@ -54,8 +54,13 @@ public class AdminController {
     }
 
     @GetMapping("/admin/user/delete")
-    public String deleteUser(@RequestParam("id") String id) {
-        userDetailServiceImp.deleteById(id);
+    public String deleteUser(@RequestParam("id") String id,
+                             RedirectAttributes redirectAttributes) {
+        Boolean success = userDetailServiceImp.deleteById(id);
+        if(!success){
+            String err = "Can't delete user when they registerd in courses";
+            redirectAttributes.addFlashAttribute("message", err);
+        }
         return "redirect:/admin/user/all";
     }
     @GetMapping("/admin/user/deny")
@@ -126,7 +131,9 @@ public class AdminController {
     @PostMapping("/admin/course/add")
     public String postAddCourse(Course course, BindingResult bindingResult,
                                 @RequestParam("prof") String userid) {
-        Course courseExists = courseService.findByCourseid(course.getCourseid());
+        course.setCourseid();
+        Course courseExists = courseService.findCourseByDepartmentAndCoursecodeAndSection(course.getDepartment(),
+                course.getCoursecode(), course.getSection());
         User professors = userDetailServiceImp.findUserByUserid(userid);
         if (courseExists!= null) {
             bindingResult
@@ -140,8 +147,9 @@ public class AdminController {
             User shortUser = new User(professors.id, professors.userid, professors.firstname,
                     professors.lastname,professors.getRoles());
             course.setProfessor(shortUser);
+            System.out.println(shortCourse.courseid);
             professors.addCourse(shortCourse);
-            userDetailServiceImp.saveUser(professors);
+            userDetailServiceImp.update(professors);
             courseService.saveCourse(course);
         }
         return "redirect:/admin/course/all";
@@ -152,10 +160,16 @@ public class AdminController {
     public String postAddCourse(@RequestParam("courseid") String courseid,
                                 RedirectAttributes redirectAttrs) {
         //can't delete course if there are students in
+        Course course = courseService.findByCourseid(courseid);
         Boolean success = courseService.deleteCourseByCourseid(courseid);
         if(!success){
             String err = "Can't delete course when there are students in this course";
             redirectAttrs.addFlashAttribute("message", err);
+        }else {
+            //if delete, delete prof's course list as well
+            String userid = course.getProfessor().getUserid();
+            User professor = userDetailServiceImp.findUserByUserid(userid);
+            professor.dropCourse(course);
 
         }
         return "redirect:/admin/course/all";
@@ -165,8 +179,16 @@ public class AdminController {
     public String getEditCourse(Model model, @RequestParam("courseid") String courseid) {
         Course course = courseService.findByCourseid(courseid);
         List<User> professors = userDetailServiceImp.findAllByRoles("PROFESSOR");
-        User professor = course.getProfessor();
-        professor.dropCourse(course);           //remove course
+        User temp = course.getProfessor();
+        User professor = new User();
+        if (temp!=null){
+            professor = userDetailServiceImp.findUserByUserid(temp.getUserid());
+            if (professor!=null){
+                professor.dropCourse(course);
+            }
+        }
+        //              //remove course
+        userDetailServiceImp.update(professor);
         model.addAttribute("profs", professors);
         model.addAttribute("course", course);
         return "admin/editcourse";
