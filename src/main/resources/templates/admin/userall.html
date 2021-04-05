@@ -5,10 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Current Users</title>
+    <title>Course</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
+
 <!-- START NAV -->
 <nav class="navbar has-shadow" style="background-color:#E0E0E0;box-shadow: none">
     <div class="container" style="margin-left:15px">
@@ -39,29 +41,89 @@
     </div>
 </nav>
 
-<!---- body ----->
-<h1>Process Account Applicant</h1>
-<p>Professors: </p>
-<div th:each="prof:${professor}">
-    <a th:href="@{/admin/user(id=${prof.getId()})}" th:text="${prof.getUsername()}"></a>
-    <div>
-        <a class="button is-small is-primary" th:href="@{/admin/user/delete(id=${prof.getId()})}" >Delete</a>
+<div class="line" style="background: rgb(0,0,0); /* Old browsers */
+background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
+</div>
+
+<div class="container" style="margin-top:2.5%">
+    <div class="columns">
+        <div class="column is-9" style="margin-right:auto;margin-left:auto">
+
+        <section class="hero is-info welcome is-small">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        Users Lists
+                    </h1>
+                </div>
+            </div>
+        </section>
+        <div class="card events-card" style="margin-top:15px">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Professors:
+                </p>
+            </header>
+            <div class="card-table">
+                <div class="content">
+                    <table class="table is-fullwidth is-striped">
+                        <tbody>
+
+                        <tr th:each="prof:${professor}" style="display:flex">
+                            <td style="display:flex;width:50%">
+                                <p>Name: </p>
+                                <p th:text="${prof.getName()}" style="margin-left:15px"></p>
+                            </td>
+                            <td style="width:50%">
+                                <p style="float:left">Username: </p>
+                                <p th:text="${prof.getUsername()}" style="float:left;margin-left:15px"></p>
+                                <a class="button is-small is-primary" th:href="@{/admin/user/delete(id=${prof.getId()})}" style="float:right;margin-right:0px">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="/admin/user/add" class="card-footer-item">New Professor</a>
+            </footer>
+        </div>
+
+        <div class="card events-card" style="margin-top:15px">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Students:
+                </p>
+            </header>
+            <div class="card-table">
+                <div class="content">
+                    <table class="table is-fullwidth is-striped">
+                        <tbody>
+                        <tr th:each="student:${student}" style="display:flex">
+                            <td style="display:flex;width:50%">
+                                <p>Name: </p>
+                                <p th:text="${student.getName()}" style="margin-left:15px"></p>
+                            </td>
+                            <td style="width:50%">
+                                <p style="float:left">Username: </p>
+                                <p th:text="${student.getUsername()}" style="float:left;margin-left:15px"></p>
+                                <a class="button is-small is-primary" th:href="@{/admin/user/delete(id=${student.getId()})}" style="float:right;margin-right:0px">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="/admin/user/add" class="card-footer-item">New Student</a>
+            </footer>
+        </div>
+        </div>
     </div>
 </div>
-
-<p>Students: </p>
-<div th:each="student:${student}">
-    <a th:href="@{/admin/user(id=${student.getId()})}" th:text="${student.getUsername()}"></a>
-    <div>
-        <a class="button is-small is-primary" th:href="@{/admin/user/delete(id=${student.getId()})}">Delete</a>
-    </div>
-</div>
-
-<p>Add User: </p>
-<div>
-    <a class="button is-small is-primary" th:href="@{/admin/user/add}">Add User Account</a>
-</div>
-
 <!-- FOOTER -->
 <nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
 

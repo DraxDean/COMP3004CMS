@@ -59,7 +59,6 @@ public class Course {
     }
 
     /* Constructor with values*/
-
     public Course (int cnum, int maxS, String dep, int crsNum, String title, String desc) {
         CNumber = cnum;
         maxSeats = maxS;
