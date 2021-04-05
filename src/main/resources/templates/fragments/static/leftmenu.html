@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="columns is-3">
+    <aside class="menu is-hidden-mobile">
+        <p class="menu-label">
+            General
+        </p>
+        <ul class="menu-list">
+            <li><a class="is-active">Dashboard</a></li>
+            <li><a>Customers</a></li>
+            <li><a>Other</a></li>
+        </ul>
+        <p class="menu-label">
+            Administration
+        </p>
+        <ul class="menu-list">
+            <li><a>Course Management</a></li>
+            <li>
+                <a>Courses</a>
+                <ul>
+                    <li><a th:href="@{add/course}">Add a Course</a></li>
+                    <li><a>TODO: pull list</a></li>
+                    <li><a>ExampleCourse1</a></li>
+                    <li><a>ExampleCourse2</a></li>
+                    <li><a>ExampleLab1</a></li>
+                </ul>
+            </li>
+            <li><a>Authentication</a></li>
+        </ul>
+        <p class="menu-label">
+            Transactions
+        </p>
+        <ul class="menu-list">
+            <li><a>Payments</a></li>
+            <li><a>Transfers</a></li>
+            <li><a>Balance</a></li>
+            <li><a>Reports</a></li>
+        </ul>
+    </aside>
+</div>
+</body>
+</html>

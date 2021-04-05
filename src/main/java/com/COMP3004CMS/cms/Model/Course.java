@@ -339,4 +339,26 @@ public class Course {
         }
         return retVal;
     }
+
+    public CourseItem toPublic(){
+            return new CourseItem(this.courseid, this.department, this.coursecode, this.title, this.description, this.maxSeats);
+    }
+
+    public class CourseItem{ //for MongoDB
+        public String courseid;     //CNumber
+        public String department;
+        public String coursecode;   //CarletonCode
+        public String title;
+        public String description;
+        public int maxSeats;
+
+        public CourseItem(String courseid, String department, String coursecode, String title, String description, int maxSeats) {
+            this.courseid = courseid;
+            this.department = department;
+            this.coursecode = coursecode;
+            this.title = title;
+            this.description = description;
+            this.maxSeats = maxSeats;
+        }
+    }
 }

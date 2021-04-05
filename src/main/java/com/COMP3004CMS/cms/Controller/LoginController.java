@@ -55,6 +55,9 @@ public class LoginController {
             return "signup";
         } else {
             userDetailServiceImp.saveUser(user);
+            ArrayList<String> a = userDetailServiceImp.findByUsername("admin").getAnnouncements();
+            a.add("A new user creation: (" + user.userid + ") has been requested.");
+            userDetailServiceImp.findByUsername("admin").setAnnouncements(a);
             return "redirect:/login";
         }
     }

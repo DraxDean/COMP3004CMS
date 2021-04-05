@@ -38,26 +38,89 @@
         </div>
     </div>
 </nav>
+<div class="line" style="background: rgb(0,0,0); /* Old browsers */
+background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
+</div>
 
-<p>Title: </p>
-<p th:text="${deliverable.getTitle()}" ></p>
-<p>Start: </p>
-<p th:text="${deliverable.getStart()}" ></p>
-<p>Deadline: </p>
-<p th:text="${deliverable.getDeadline()}" ></p>
-<p>Requirement: </p>
-<p th:text="${deliverable.getRequirements()}" ></p>
+<div class="container" style = "margin-top:2.5%">
+    <div class="columns">
+        <div class="column is-9" style="margin-left:auto;margin-right:auto">
+            <section class="hero is-info welcome is-small">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 th:text="${deliverable.getTitle()}" ></h1>
+                    </div>
+                </div>
+            </section>
+            <div class="mt-5"></div>
+            <div class="columns">
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title">Start:</p>
+                            <p th:text="${deliverable.getStart()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
 
-<br>
-<a th:href="@{/dashboard/deliverable/submissions(id=${deliverable.getDeliverableid()})}">Grade</a>
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title">Deadline:</p>
+                            <p th:text="${deliverable.getDeadline()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5"></div>
+            <div class="columns">
+
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px;">
+                        <header class="card-header">
+                            <p class="card-header-title">Grade:</p>
+                            <p th:text="${deliverable.getGrade()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px;">
+                        <header class="card-header">
+                            <p class="card-header-title">Requirements: </p>
+                            <p th:text="${deliverable.getRequirements()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5"></div>
+            <div class="columns">
+                <div class="column is-12">
+                    <div class="card events-card" style="padding-top:12px;">
+                        <p class="card-header-title">Submission</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5"></div>
+            <div class="columns">
+                <div class="column is-6">
+                    <div class="card events-card" style="text-align:center">
+                        <a th:each="action:${actions}"  class="button is-small is-primary" style="background-color:#CF112D;margin:15px"
+                           th:href="@{${action.getAction()}}"
+                           th:text="${action.getButton()}">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
 
-<!-- could have a conditional button here-->
-<div th:each="action:${actions}">
-    <a class="button is-small is-primary"
-       th:href="@{${action.getAction()}}"
-       th:text="${action.getButton()}">
-    </a>
+    </div>
 </div>
 
 

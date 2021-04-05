@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Deliverable</title>
+    <title>Add Course</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -38,8 +38,6 @@
         </div>
     </div>
 </nav>
-
-
 <div class="line" style="background: rgb(0,0,0); /* Old browsers */
 background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
 background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
@@ -47,14 +45,71 @@ background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /*
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
 </div>
 
-<form method="post" id="data_send" th:action="@{/dashboard/deliverable/edit(id=${deliverable.getDeliverableid()})}">
-    <input id="title" name="title" placeholder="Title" th:value="${deliverable.getTitle()}">
-    <input id="start" name="start" placeholder="start" th:value="${deliverable.getStart()}">
-    <input id="deadline" name="deadline" placeholder="deadline" th:value="${deliverable.getDeadline()}">
-    <input id="requirements" name="requirements"  placeholder="requirements" th:value="${deliverable.getRequirements()}">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
 
-</form>
+<div class="columns is-centered">
+    <div class="column is-5-tablet is-5-desktop is-3-widescreen">
+        <div class="card has-text-centered " style="background-color: #E0E0E0;top:30%">
+            <form method="post" id="data_send" th:action="@{/dashboard/deliverable/edit(id=${deliverable.getDeliverableid()})}">
+                <div style="position:relative; background-color:#CF112D; border-radius: 6px 6px 0px 0px">
+                    <h2 style="text-align:center; color:#FFFFFF; font-size: 150%; padding-top: 5px; padding-bottom: 5px;">Edit Deliverable</h2>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column ">
+                        <div class="field is-vertical" >
+                            <div class="field-label is-normal">
+                                <label class="label" style="padding-left: 15px;padding-top: 15px;text-align: left;">Info</label>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="title" name="title" placeholder="Title" th:value="${deliverable.getTitle()}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="start" name="start" placeholder="start" th:value="${deliverable.getStart()}">
+                                        <p class="control is-expanded has-icons-left has-icons-right">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="deadline" name="deadline" placeholder="deadline" th:value="${deliverable.getDeadline()}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="requirements" name="requirements" placeholder="requirements" th:value="${deliverable.getRequirements()}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background-color:#212121;border-radius:0px 0px 6px 6px;padding-top:5px;padding-bottom:5px">
+                    <div class="control">
+                        <button class="button is-medium is-rounded is-success" type = submit style="background-color:#616161;border:none;color:#FFFFFF;">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
 <!-- FOOTER -->
 <nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
 
