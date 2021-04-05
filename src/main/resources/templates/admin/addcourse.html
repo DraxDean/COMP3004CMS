@@ -24,13 +24,13 @@
         </div>
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="/default">
+                <a class="navbar-item" href="/dashboard">
                     Home
                 </a>
-                <a class="navbar-item" href="/courses">
-                    Courses
+                <a class="navbar-item" href="/register/search">
+                    Register Courses
                 </a>
-                <a class="navbar-item" href="/logout">
+                <a class="navbar-item" href="/logout" style="">
                     Logout
                 </a>
             </div>
@@ -38,7 +38,6 @@
         </div>
     </div>
 </nav>
-
 <div class="line" style="background: rgb(0,0,0); /* Old browsers */
 background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(224,0,34,1) 98%); /* FF3.6-15 */
 background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /* Chrome10-25,Safari5.1-6 */
@@ -46,23 +45,110 @@ background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /*
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
 </div>
 
-<form method="post" id="data_send" th:action="@{/admin/course/add}">
-    <br><label for="title"></label><input id="title" name="title" placeholder="Title" value="">
-    <br><label for="department"></label><input id="department" name="department" placeholder="Department" value="">
-    <br><label for="coursecode"></label><input id="coursecode" name="coursecode" placeholder="CarletonCode" value="">
-    <br><label for="section"></label><input id="section" name="section" placeholder="A" value="">
-    <br><label for="courseid"></label><input id="courseid" name="courseid"  placeholder="CNumber" value="">
-    <br><label for="maxSeats"></label><input id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
-    <br><label for="description"></label><textarea id="description" name="description"  placeholder="description" value=""></textarea>
-    <br><label for="term"></label><input id="term" name="term" placeholder="term" value="">
-    <br><label for="yearint"></label><input id="yearint" name="yearint" placeholder="year" value="">
-    <br><label for="prof">Assign a primary professor</label>
-    <select class="form-control" name="prof" id="prof" value="">
-        <option th:each="prof : ${profs}" th:value="${prof.getUserid()}" th:text="${prof.getName()}"></option>
-    </select>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
 
-</form>
+<div class="columns is-centered">
+    <div class="column is-5-tablet is-5-desktop is-3-widescreen">
+        <div class="card has-text-centered " style="background-color: #E0E0E0;top:5%">
+            <form method="post" id="data_send" th:action="@{/admin/course/add}">
+                <div style="position:relative; background-color:#CF112D; border-radius: 6px 6px 0px 0px">
+                    <h2 style="text-align:center; color:#FFFFFF; font-size: 150%; padding-top: 5px; padding-bottom: 5px;">Add Course</h2>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column ">
+                        <div class="field is-vertical" >
+                            <div class="field-label is-normal">
+                                <label class="label" style="padding-left: 15px;padding-top: 15px;text-align: left;">Info</label>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="title" name="title" placeholder="Title" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="department" name="department" placeholder="department" value="">
+                                        <p class="control is-expanded has-icons-left has-icons-right">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="section" name="section" placeholder="A" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="coursecode" name="coursecode" placeholder="CNumber" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="maxSeats" name="maxSeats" placeholder="maxSeats" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <textarea class="input is-medium" id="description" name="description" placeholder="description" value=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="term" name="term" placeholder="term" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <input class="input is-medium" id="yearint" name="yearint" placeholder="year" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
+                                        <label for="prof">Assign a primary professor</label>
+                                        <select class="form-control" name="prof" id="prof" value="">
+                                            <option th:each="prof : ${profs}" th:value="${prof.getUserid()}" th:text="${prof.getName()}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background-color:#212121;border-radius:0px 0px 6px 6px;padding-top:5px;padding-bottom:5px">
+                    <div class="control">
+                        <button class="button is-medium is-rounded is-success" type = submit style="background-color:#616161;border:none;color:#FFFFFF;">
+                            Add
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+
+
 
 <!-- FOOTER -->
 <nav class="navbar has-shadow" style="bottom:0px; position:absolute; width:100%; background-color:#E0E0E0">
@@ -79,3 +165,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
 </nav>
 </body>
 </html>
+
