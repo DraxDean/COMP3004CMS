@@ -33,6 +33,7 @@ public class DashboardController {
         User user = userDetailServiceImp.findByUsername(authentication.getName());
         List<Course> courseList = user.getCourseList();
         ArrayList<String> announcement = user.getAnnouncements();
+        model.addAttribute("user", user);
         model.addAttribute("announcements", announcement);
         model.addAttribute("courses", courseList);
         return "dashboard/dashboard";
