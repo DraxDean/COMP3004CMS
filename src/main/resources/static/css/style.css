@@ -847,7 +847,7 @@ a.box:active {
   color: #fff;
 }
 .button.is-primary {
-  background-color: #00d1b2;
+  background-color: #CF112D;
   border-color: transparent;
   color: #fff;
 }
@@ -4123,7 +4123,7 @@ button.dropdown-item.is-active {
   color: #363636;
 }
 .menu-list a.is-active {
-  background-color: #3273dc;
+  background-color: #CF112D;
   color: #fff;
 }
 .menu-list li ul {
