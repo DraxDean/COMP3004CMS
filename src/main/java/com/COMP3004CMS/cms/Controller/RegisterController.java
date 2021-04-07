@@ -4,6 +4,7 @@ import com.COMP3004CMS.cms.Model.Course;
 import com.COMP3004CMS.cms.Model.Deliverable;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
+import com.COMP3004CMS.cms.Service.DeliverableService;
 import com.COMP3004CMS.cms.Service.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,7 +22,8 @@ public class RegisterController {
     private UserDetailServiceImp userDetailServiceImp;
     @Autowired
     private CourseService courseService;
-
+    @Autowired
+    private DeliverableService deliverableService;
 
     //listing all course
     @GetMapping("/register/search")
@@ -66,8 +68,10 @@ public class RegisterController {
         //
         ArrayList<Deliverable> deliverables = course.getDeliverables();
         if(deliverables != null){
-            for(Deliverable deliverable: deliverables){
+            for(Deliverable d: deliverables){
+                Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(d.getDeliverableid());
                 deliverable.addStudent(shortUser);
+                deliverableService.save(deliverable);
             }
         }
         course.setDeliverables(deliverables);

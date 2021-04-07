@@ -156,7 +156,6 @@ public class AdminController {
             User shortUser = new User(professors.id, professors.userid, professors.firstname,
                     professors.lastname,professors.getRoles());
             course.setProfessor(shortUser);
-            System.out.println(shortCourse.courseid);
             professors.addCourse(shortCourse);
             userDetailServiceImp.update(professors);
             courseService.saveCourse(course);

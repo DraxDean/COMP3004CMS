@@ -35,11 +35,16 @@ public class UserDetailServiceImp implements UserDetailsService {
 
     public boolean deleteById(String id){
         User user = userRepository.findUserById(id);
-        if (user.getCourseList()!=null){
-            return false;
-        }else {
+        if (user.getCourseList()==null) {
             userRepository.deleteById(id);
             return true;
+        }else {
+            if (!user.getCourseList().isEmpty()){
+                return false;
+            }else {
+                userRepository.deleteById(id);
+                return true;
+            }
         }
     }
     
