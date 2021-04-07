@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+    ####    USED TO INCLUDE DIALECT + DECORATE TO PICK LAYOUT DESIRED TO WRAP   ####
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/mainlayout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+
+<!--
+    ####    CONTENT YOU WANT TO BE INJECTED INT LAYOUT   ####
+-->
+
+<section layout:fragment="menu">
+
+                    <!-- display options for the chart
+                        - average
+                        - skip
+                        -gender
+                            male female
+                    -->
+                    <div class="box">
+                        <div class="title">Carleton Grade Report</div>
+                            <div class="columns">
+                                <div class="column is-four-fifths is-primary">
+                                    <div class="box">
+                                        content
+                                    </div>
+                                </div>
+                                <div class="column is-one-fifth is-right">
+                                    <form th:action="@{/getreport}" th:method="post">
+                                        <ul>
+                                            <li>
+                                                <label class="checkbox" >
+                                                    <input type="checkbox" name="skip" id="skip">
+                                                    Skip
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label class="checkbox">
+                                                    <input  type="checkbox" name="avg" id="avg">
+                                                    Average
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <div class="select is-small" name="gender" id="gender">
+                                                    <select>
+                                                        <option value="ALL">All</option>
+                                                        <option value="MALE">Male</option>
+                                                        <option value="FEMALE">Female</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <button class="button is-medium is-rounded is-success">
+                                            SUBMIT
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                    </div>
+
+</section>
+
+<div>
+    You shouldn't be able to see this
+</div>
+
+</body>
+</html>

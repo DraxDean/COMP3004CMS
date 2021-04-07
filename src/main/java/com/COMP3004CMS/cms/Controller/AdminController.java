@@ -146,13 +146,14 @@ public class AdminController {
         }
         return "redirect:/admin/course/all";
     }
-
+//606123a8b1053e09cbe25298
     //admin delete a course
     @GetMapping("/admin/course/delete")
     public String postAddCourse(@RequestParam("courseid") String courseid,
                                 RedirectAttributes redirectAttrs) {
         //can't delete course if there are students in
-        Boolean success = courseService.deleteCourseByCourseid(courseid);
+        //Boolean success = courseService.deleteCourseByCourseid(courseid);
+        boolean success = courseService.deleteCourseByCourseMongoID(courseid);
         if(!success){
             String err = "Can't delete course when there are students in this course";
             redirectAttrs.addFlashAttribute("message", err);

@@ -36,6 +36,16 @@ public class User implements Subscriber{
         this.roles = roles;
     }
 
+    public User(String id, String userid, String username, String password, String firstname, String lastname, String roles) {
+        this.id = id;
+        this.userid = userid;
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.roles = roles;
+    }
+
     public void addCourse(Course course){
         if (this.getCourseList()==null) {
             this.setCourseList(new ArrayList<Course>());

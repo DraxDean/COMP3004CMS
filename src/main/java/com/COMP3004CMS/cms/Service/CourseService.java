@@ -40,4 +40,9 @@ public class CourseService{
             return true;
         }
     }
+
+    public boolean deleteCourseByCourseMongoID(String id){
+            courseRepository.deleteCourseByCourseid(id);
+            return true;
+    }
 }
