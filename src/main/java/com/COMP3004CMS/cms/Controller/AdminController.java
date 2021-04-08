@@ -24,7 +24,9 @@ public class AdminController {
     private CourseService courseService;
 
     @GetMapping("/admin")
-    public String getAdminHome() {
+    public String getAdminHome(Model model) {
+        User user = userDetailServiceImp.findByUsername("admin");
+        model.addAttribute("announcements", user.getAnnouncements());
         return "admin/adminhomepage";
     }
 

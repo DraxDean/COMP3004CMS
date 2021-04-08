@@ -81,11 +81,21 @@ public class User implements Subscriber{
     }
 
     public ArrayList<String> getAnnouncements() {
+        if (announcements==null){
+            this.announcements = new ArrayList<>();
+        }
         return announcements;
     }
 
     public void setAnnouncements(ArrayList<String> announcements) {
         this.announcements = announcements;
+    }
+
+    public void addAnnouncements(String announcements) {
+        if (this.announcements==null){
+            this.announcements = new ArrayList<>();
+        }
+        this.announcements.add(announcements);
     }
 
     public String getId() {
