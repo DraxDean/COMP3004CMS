@@ -2,6 +2,7 @@ package com.COMP3004CMS.cms.Service;
 
 import com.COMP3004CMS.cms.Model.Course;
 import com.COMP3004CMS.cms.Repository.CourseRepository;
+import com.COMP3004CMS.cms.Visitor.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class CourseService{
     }
 
     public void saveCourse(Course course) {
+        course.accept(new LogManager());
         courseRepository.save(course);
     }
 

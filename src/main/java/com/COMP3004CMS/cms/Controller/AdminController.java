@@ -4,6 +4,7 @@ import com.COMP3004CMS.cms.Model.Course;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.UserDetailServiceImp;
+import com.COMP3004CMS.cms.Visitor.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class AdminController {
     public String getAdminHome(Model model) {
         User user = userDetailServiceImp.findByUsername("admin");
         model.addAttribute("announcements", user.getAnnouncements());
+        LogManager lm = new LogManager();
+        model.addAttribute("logs", lm.getLogs());
         return "admin/adminhomepage";
     }
 
