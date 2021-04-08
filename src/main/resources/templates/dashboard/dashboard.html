@@ -72,7 +72,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             </li>
                         </ul>
                     </li>
-                    <li><a>Authentication</a></li>
                 </ul>
                 <p class="menu-label">
                     Administration
@@ -89,8 +88,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             <section class="hero is-info welcome is-small">
                 <div class="hero-body">
                     <div class="container">
-                        <h1 class="title">
-                            Hello, [[${#httpServletRequest.remoteUser}]]
+                        <h1 class="title" th:text="${'Hello, '+user.getName()}">
+
                         </h1>
                         <h2 class="subtitle">
                             I hope you are having a great day!

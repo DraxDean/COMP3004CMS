@@ -25,7 +25,6 @@ public class UserDetailServiceImp implements UserDetailsService {
     @Autowired
     PasswordEncoder encoder;
 
-
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
@@ -34,10 +33,21 @@ public class UserDetailServiceImp implements UserDetailsService {
         return userRepository.findUserByUserid(userid);
     }
 
-    public void deleteById(String id){
-        userRepository.deleteById(id);
+    public boolean deleteById(String id){
+        User user = userRepository.findUserById(id);
+        if (user.getCourseList()==null) {
+            userRepository.deleteById(id);
+            return true;
+        }else {
+            if (!user.getCourseList().isEmpty()){
+                return false;
+            }else {
+                userRepository.deleteById(id);
+                return true;
+            }
+        }
     }
-
+    
     public void approveUserById(String id){
         Optional<User> user = userRepository.findById(id);
         if(!user.isPresent()){
@@ -75,6 +85,7 @@ public class UserDetailServiceImp implements UserDetailsService {
     public void update(User user) {
         userRepository.save(user);
     }
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
