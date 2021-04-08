@@ -78,7 +78,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             <div class="mt-5"></div>
             <div class="columns">
 
-                <div class="column is-6">
+                <div th:if="${submission!=null}" class="column is-6">
                     <div class="card events-card" style="padding-top:12px;">
                         <header class="card-header">
                             <p class="card-header-title">Grade:</p>
@@ -86,6 +86,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             <p th:if="${students_submissions!=null}" th:text="${deliverable.getGrade()}"
                                style="margin-top:12px;margin-right:12px"></p>
                         </header>
+                    </div>
+                </div>
+
+                <div th:if="${students_submissions!=null}" class="column is-6">
+                    <div class="card events-card" style="text-align:center">
+                        <a th:each="action:${actions}"  class="button is-small is-primary" style="background-color:#CF112D;margin:15px"
+                           th:href="@{${action.getAction()}}"
+                           th:text="${action.getButton()}">
+                        </a>
                     </div>
                 </div>
 
@@ -103,21 +112,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             <!----prof only: student submission---->
             <div  class="columns">
                 <div class="column is-12">
-                    <div class="card events-card" style="padding-top:12px;">
+                    <div class="card events-card" style="padding-top:12px;text-align:center">
                         <p class="card-header-title">Submission</p>
 
                         <!-----Student only:----->
-                        <div th:if="${submission!=null}" class="card" style="padding-top:12px;">
+                        <div th:if="${submission!=null}" class="card" style="padding:12px;">
                             <form method="post" id="data_send" th:action="@{/dashboard/deliverable/submit(id=${deliverable.getDeliverableid()})}">
                                 <label for="submission"></label>
-                                <textarea id="submission" name="submission" th:text="${submission.getSubmission()}"></textarea>
+                                <textarea id="submission" name="submission" style="width:100%;height:200px;margin-bottom: 6px;" th:text="${submission.getSubmission()}"></textarea>
                                 <button class="button is-small is-primary" type="submit" >Submit this deliverable</button>
                             </form>
-                            <br>
                         </div>
 
                         <!----prof only:----->
-                        <div th:if="${students_submissions!=null}">
+                        <div th:if="${students_submissions!=null}" style="padding:12px 6px;">
                             <table style="width:100%">
                                <tr>
                                    <th>Firstname</th>
@@ -143,18 +151,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                     </div>
 
                 </div>
-            </div>
-            <div class="mt-5"></div>
-            <div class="columns">
-                <div class="column is-6">
-                    <div class="card events-card" style="text-align:center">
-                        <a th:each="action:${actions}"  class="button is-small is-primary" style="background-color:#CF112D;margin:15px"
-                           th:href="@{${action.getAction()}}"
-                           th:text="${action.getButton()}">
-                        </a>
-                    </div>
-                </div>
-
             </div>
         </div>
 
