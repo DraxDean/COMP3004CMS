@@ -14,10 +14,6 @@ public class DeliverableService {
         deliverableRepository.save(deliverable);
     }
 
-    public Deliverable findDeliverableById(String id){
-        return deliverableRepository.findDeliverableById(id);
-    }
-
     public Deliverable findDeliverableByDeliverableid(String id){
         return deliverableRepository.findDeliverableByDeliverableid(id);
     }

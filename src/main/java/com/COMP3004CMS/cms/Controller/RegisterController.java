@@ -26,23 +26,15 @@ public class RegisterController {
         List<Course> course = courseService.findAll();  //will change to findAllByTerm
         User temp = userDetailServiceImp.findByUsername(authentication.getName());
         User student = new User(temp.id, temp.userid, temp.firstname, temp.lastname, temp.getRoles());
-        try{
-            for(Course c: course){
-                System.out.println(c.id);
-                System.out.println(c.courseid);
-                System.out.println(c.coursecode);
-                if(c.getStudents().contains(student)){
-                    c.setStatus("Drop");
-                    c.setAction("/drop");
-                }else {
-                    c.setStatus("Register");
-                    c.setAction("/register");
-                }
+        for(Course c: course){
+            if(c.getStudents().contains(student)){
+                c.setStatus("Drop");
+                c.setAction("/drop");
+            }else {
+                c.setStatus("Register");
+                c.setAction("/register");
             }
-        } catch (NullPointerException en){
-            en.printStackTrace();
         }
-
         model.addAttribute("courses", course);
         return "register/courseall";
     }

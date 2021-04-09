@@ -44,6 +44,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                         <div style="position:relative; background-color:#CF112D; border-radius: 6px 6px 0px 0px">
                             <h2 style="text-align:center; color:#FFFFFF; font-size: 150%; padding-top: 5px; padding-bottom: 5px;">Login</h2>
                         </div>
+                        <div th:if="${param.error!=null}">
+                            <div class="alert alert-danger">
+                                <span>Invalid username or password </span>
+                            </div>
+                        </div>
                         <div class="field"  style="padding-left:15px;padding-right:15px;padding-top:15px;">
                             <label for="username" >Username:</label>
                             <div class="control has-icons-left">

@@ -12,10 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +27,13 @@ public class DashboardController {
     @Autowired
     private DeliverableService deliverableService;
 
+    //get dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model, Authentication authentication) {
         User user = userDetailServiceImp.findByUsername(authentication.getName());
         List<Course> courseList = user.getCourseList();
         ArrayList<String> announcement = user.getAnnouncements();
+        model.addAttribute("user", user);
         model.addAttribute("announcements", announcement);
         model.addAttribute("courses", courseList);
         return "dashboard/dashboard";
@@ -44,14 +45,18 @@ public class DashboardController {
                              Authentication authentication) {
         Course course = courseService.findByCourseid(courseid);
         User user = userDetailServiceImp.findByUsername(authentication.getName());
-
-        Action action = new Action();
         if(user.getRoles().equals("PROFESSOR")){
+            Action action = new Action();
             action.setAction("/dashboard/deliverable/add?courseid="+courseid);
             action.setButton("Add Deliverable");
+            model.addAttribute("action", action);
+        }
+        if(user.getRoles().equals("STUDENT")){
+            User student = course.getStudentsByUid(user.getUserid());
+            ArrayList<String> announcement = student.getAnnouncements();
+            model.addAttribute("announcements", announcement);
         }
         model.addAttribute("course", course);
-        model.addAttribute("action", action);
         model.addAttribute("courseid", courseid);
         return "dashboard/coursepage";
     }
@@ -61,26 +66,35 @@ public class DashboardController {
     public String showDeliverable(Model model, @RequestParam("id") String deliverableid,
                                   Authentication authentication) {
         User user = userDetailServiceImp.findByUsername(authentication.getName());
+        Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
         ArrayList<Action> actions = new ArrayList<>();
         if(user.getRoles().equals("PROFESSOR")){
             Action editAction = new Action();
             editAction.setAction("/dashboard/deliverable/edit?id="+deliverableid);
             editAction.setButton("Edit Deliverable");
-
             Action deleteAction = new Action();
             deleteAction.setAction("/dashboard/deliverable/delete?id="+deliverableid);
             deleteAction.setButton("Delete Deliverable");
-
             actions.add(editAction);
             actions.add(deleteAction);
+
+            ArrayList<User> students = deliverable.getStudents();
+            model.addAttribute("students_submissions", students);
+        } else if(user.getRoles().equals("STUDENT")){
+            Action submiutAction = new Action();
+            submiutAction.setAction("/dashboard/deliverable/submit?id="+deliverableid);
+            submiutAction.setButton("Submit this deliverable");
+            User submission = deliverable.findStudent(user);
+            model.addAttribute("submission", submission);
+        } else{
+            return "redirect://default";
         }
-        Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
         model.addAttribute("deliverable", deliverable);
         model.addAttribute("actions", actions);
         return "dashboard/deliverablepage";
     }
 
-    //prof add deliverable
+    //Get prof add deliverable
     @GetMapping("/dashboard/deliverable/add")
     public String addDeliverable(Model model, @RequestParam("courseid") String courseid,
                                  Authentication authentication) {
@@ -98,6 +112,8 @@ public class DashboardController {
                                   Deliverable deliverable, BindingResult bindingResult) {
         Course course = courseService.findByCourseid(courseid);
         deliverable.setDeliverableid();
+        deliverable.setStudents(course.getStudents());
+        deliverable.initalSubmission();
         course.addDeliverable(deliverable);
         courseService.saveCourse(course);
         deliverableService.save(deliverable);
@@ -117,7 +133,7 @@ public class DashboardController {
         return "redirect:/dashboard/course?courseid="+deliverable.courseid;
     }
 
-    //prof add deliverable
+    //get mapping prof edit deliverable
     @GetMapping("/dashboard/deliverable/edit")
     public String editDeliverable(Model model, @RequestParam("id") String deliverableid,
                                  Authentication authentication) {
@@ -130,13 +146,14 @@ public class DashboardController {
         return "dashboard/editdeliverable";
     }
 
-    //post add deliverable
+    //post edit deliverable
     @PostMapping("/dashboard/deliverable/edit")
     public String postEditDeliverable(Model model, @RequestParam("id") String deliverableid,
                                       @RequestParam("title") String title,
                                       @RequestParam("start") String start,
                                       @RequestParam("deadline") String deadline,
-                                      @RequestParam("requirements") String requirements) {
+                                      @RequestParam("requirements") String requirements,
+                                      @RequestParam("grade") String grade) {
         Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
         Course course = courseService.findByCourseid(deliverable.courseid);
         course.deleteDeliverable(deliverable);
@@ -145,6 +162,7 @@ public class DashboardController {
         deliverable.setStart(start);
         deliverable.setDeadline(deadline);
         deliverable.setRequirements(requirements);
+        deliverable.setGrade(grade);        //
         //save
         course.addDeliverable(deliverable);
         courseService.saveCourse(course);
@@ -152,4 +170,39 @@ public class DashboardController {
         model.addAttribute("course", course);
         return "redirect:/dashboard/course?courseid="+deliverable.courseid;
     }
+
+    //post student answer deliverable
+    @PostMapping("/dashboard/deliverable/submit")
+    public String postDeliverable(Model model, @RequestParam("id") String deliverableid,
+                                  @RequestParam("submission") String submission,
+                                  Authentication authentication) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
+        User stuSubmission = deliverable.findStudent(user);
+        stuSubmission.setSubmission(submission);
+        deliverable.undateSubmissionByStudent(stuSubmission);
+
+        deliverableService.save(deliverable);
+        model.addAttribute("deliverable", deliverable);
+        return "redirect:/dashboard/deliverable?id="+deliverable.getDeliverableid();
+    }
+
+    //post prof giving marks
+    @PostMapping("/dashboard/deliverable/grade/{id}/user/{userid}")
+    public String postDeliverableGrade(Authentication authentication, RedirectAttributes redirectAttributes,
+                                       @PathVariable("id") String deliverableid,
+                                       @PathVariable("userid") String userid,
+                                       @RequestParam("grade") int grade) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        User student =  userDetailServiceImp.findUserByUserid(userid);
+        if(!user.getRoles().equals("PROFESSOR")){
+            return "redirect:/dashboard";
+        }
+        Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
+        deliverable.undateGradeByStudent(student, grade);
+
+        deliverableService.save(deliverable);
+        return "redirect:/dashboard/deliverable?id="+deliverableid;
+    }
+
 }
