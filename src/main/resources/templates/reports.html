@@ -41,13 +41,13 @@
                                             <li>
                                                 <label class="checkbox" >
 
-                                                    <input type="checkbox" name="skip" id="skip" th:checked="${skip}">
+                                                    <input type="checkbox" name="skip" id="skip" th:checked="${req.skip}">
                                                     Skip
                                                 </label>
                                             </li>
                                             <li>
                                                 <label class="checkbox">
-                                                    <input  type="checkbox" name="avg" id="avg" th:checked="${avg}">
+                                                    <input  type="checkbox" name="avg" id="avg" th:checked="${req.avg}">
                                                     Average
                                                 </label>
                                             </li>
@@ -69,10 +69,10 @@
                                         <div class="columns">
 
                                             <div class="column">
-                                                <input class="input is-small" id="minRange" name="minRange" placeholder="Lower" value="0">
+                                                <input class="input is-small" id="minRange" name="minRange" placeholder="Lower" th:value="${req.minRange}">
                                             </div>
                                             <div class="column">
-                                                <input class="input is-small" id="maxRange" name="maxRange" placeholder="Upper" value="99">
+                                                <input class="input is-small" id="maxRange" name="maxRange" placeholder="Upper" th:value="${req.maxRange}">
                                             </div>
 
                                         </div>
