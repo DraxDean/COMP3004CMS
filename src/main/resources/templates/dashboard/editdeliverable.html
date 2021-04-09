@@ -85,6 +85,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             <div class="field is-vertical" >
                                 <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field">
+                                        <input class="input is-medium" id="grade" name="grade" placeholder="grade out of" th:value="${deliverable.getGrade()}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <div class="field">
                                         <input class="input is-medium" id="requirements" name="requirements" placeholder="requirements" th:value="${deliverable.getRequirements()}">
                                     </div>
                                 </div>

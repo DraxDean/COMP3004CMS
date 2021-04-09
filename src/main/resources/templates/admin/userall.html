@@ -26,11 +26,17 @@
         </div>
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="/default">
+                <a class="navbar-item" href="/admin">
                     Home
                 </a>
-                <a class="navbar-item" href="/courses">
+                <a class="navbar-item" href="/admin/course/all">
                     Courses
+                </a>
+                <a class="navbar-item" href="/admin/user/all">
+                    Users
+                </a>
+                <a class="navbar-item" href="/admin/user/request">
+                    Process User Request
                 </a>
                 <a class="navbar-item" href="/logout">
                     Logout
@@ -58,6 +64,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                     <h1 class="title">
                         Users Lists
                     </h1>
+                    <p th:text="${message}"></p>
                 </div>
             </div>
         </section>
@@ -75,7 +82,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                         <tr th:each="prof:${professor}" style="display:flex">
                             <td style="display:flex;width:50%">
                                 <p>Name: </p>
-                                <p th:text="${prof.getName()}" style="margin-left:15px"></p>
+                                <a th:href="@{/admin/user(id=${prof.getId()})}" th:text="${prof.getName()}" style="margin-left:15px"></a>
                             </td>
                             <td style="width:50%">
                                 <p style="float:left">Username: </p>
@@ -105,7 +112,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                         <tr th:each="student:${student}" style="display:flex">
                             <td style="display:flex;width:50%">
                                 <p>Name: </p>
-                                <p th:text="${student.getName()}" style="margin-left:15px"></p>
+                                <a th:href="@{/admin/user(id=${student.getId()})}" th:text="${student.getName()}" style="margin-left:15px"></a>
                             </td>
                             <td style="width:50%">
                                 <p style="float:left">Username: </p>

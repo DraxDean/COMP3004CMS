@@ -23,8 +23,8 @@ import com.COMP3004CMS.cms.Model.Student;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Year;
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 @Document(collection = "courses")
@@ -66,13 +66,13 @@ public class Course {
         this.maxSeats = maxSeats;
     }
 
-    public Course(String id, String courseid, String department, String coursecode, String title, int maxSeats, String term, String year) {
+    public Course(String id, String courseid, String department, String coursecode, String title, String section, String term, String year) {
         this.id = id;
         this.courseid = courseid;
         this.department = department;
         this.coursecode = coursecode;
         this.title = title;
-        this.maxSeats = maxSeats;
+        this.section = section;
         this.term = term;
         this.year = year;
     }
@@ -86,6 +86,14 @@ public class Course {
     public ArrayList<User> getStudents() {
         return students;
     }
+    public User getStudentsByUid(String userid) {
+        for(User student: this.students){
+            if(userid.equals(student.getUserid())){
+                return student;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<User> getWaitList() {
         return waitlist;
@@ -98,6 +106,13 @@ public class Course {
             s.update("Deliverable " + d.title + " has been created.");
         }
     }
+
+    public void notifyStudentsDeliverableDeleted(Deliverable d){
+        for (User s : students){
+            s.update("Deliverable " + d.title + " has been deleted.");
+        }
+    }
+    
     public void notifyStudentsDeliverableGraded(Deliverable d){
         for (User s : students){
             s.update("Deliverable " + d.title + " has been graded.");
@@ -154,7 +169,9 @@ public class Course {
             }else if (students.contains(stu)){
             }else{
                 students.add(stu);
-                if(waitlist.contains(stu)) deWaitListStudent(stu);
+                if(waitlist!=null) {
+                    if (waitlist.contains(stu)) deWaitListStudent(stu);
+                }
             }
         } catch (Exception e){
             System.out.println("Course addStudent - Error adding student");
@@ -187,6 +204,7 @@ public class Course {
     }
     public void deleteDeliverable(Deliverable newDeliverable) {
         deliverables.remove(newDeliverable);
+        notifyStudentsDeliverableDeleted(newDeliverable);
     }
 
     public String getId() {
@@ -201,8 +219,8 @@ public class Course {
         return courseid;
     }
 
-    public void setCourseid(String courseid) {
-        this.courseid = courseid;
+    public void setCourseid(){
+        this.courseid = UUID.randomUUID().toString().replace("-","").substring(0,6);
     }
 
     public String getDepartment() {
@@ -323,8 +341,8 @@ public class Course {
 
     @Override
     public String toString() {
-        return department+coursecode + " [" + courseid+
-                "] " + title;
+        return department+coursecode+section+" "+title+" "
+                +term+" "+year;
     }
 
     @Override

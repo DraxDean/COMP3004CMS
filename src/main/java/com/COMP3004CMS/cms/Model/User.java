@@ -19,6 +19,8 @@ public class User implements Subscriber{
     private String roles;
     List<Course> courseList;
     ArrayList<String> announcements;
+
+    public String submission;
     public int grade;
 
     public User(){}
@@ -40,11 +42,18 @@ public class User implements Subscriber{
         if (this.getCourseList()==null) {
             this.setCourseList(new ArrayList<Course>());
         }
-        courseList.add(course);
+        System.out.println(course.courseid);
+        if (!this.courseList.contains(course)){
+            courseList.add(course);
+        }
     }
 
     public void dropCourse(Course course){
-        courseList.remove(course);
+        if (this.getCourseList()!=null) {
+            if (this.getCourseList().contains(course)){
+                this.courseList.remove(course);
+            }
+        }
     }
 
     public String getRoles() {
@@ -72,11 +81,21 @@ public class User implements Subscriber{
     }
 
     public ArrayList<String> getAnnouncements() {
+        if (announcements==null){
+            this.announcements = new ArrayList<>();
+        }
         return announcements;
     }
 
     public void setAnnouncements(ArrayList<String> announcements) {
         this.announcements = announcements;
+    }
+
+    public void addAnnouncements(String announcements) {
+        if (this.announcements==null){
+            this.announcements = new ArrayList<>();
+        }
+        this.announcements.add(announcements);
     }
 
     public String getId() {
@@ -123,8 +142,16 @@ public class User implements Subscriber{
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public String getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(String submission) {
+        this.submission = submission;
     }
 
     @Override

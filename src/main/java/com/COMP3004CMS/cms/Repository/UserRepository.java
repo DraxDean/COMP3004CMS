@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<User, String> {
     User findByUsername(String username);
-
     User findUserById(String id);
     List<User> findAllByRoles(String roles);
 
@@ -19,4 +18,5 @@ public interface UserRepository extends MongoRepository<User, String> {
     void deleteById(String s);
 
     User findUserByUserid(String userid);
+    void deleteUserByUserid(String userid);
 }

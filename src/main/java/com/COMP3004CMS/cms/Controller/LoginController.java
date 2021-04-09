@@ -38,7 +38,7 @@ public class LoginController {
     }
 
     @GetMapping("/signup")
-    public String getSignup(Model model) {
+    public String getSignup() {
         //com.COMP3004CMS.cms.Model.User user = new com.COMP3004CMS.cms.Model.User();
         return "signup";
     }
@@ -55,9 +55,9 @@ public class LoginController {
             return "signup";
         } else {
             userDetailServiceImp.saveUser(user);
-            ArrayList<String> a = userDetailServiceImp.findByUsername("admin").getAnnouncements();
-            a.add("A new user creation: (" + user.userid + ") has been requested.");
-            userDetailServiceImp.findByUsername("admin").setAnnouncements(a);
+            User admin = userDetailServiceImp.findByUsername("admin");
+            admin.addAnnouncements("A new user creation: (" + user.userid + ") has been requested.");
+            userDetailServiceImp.update(admin);
             return "redirect:/login";
         }
     }

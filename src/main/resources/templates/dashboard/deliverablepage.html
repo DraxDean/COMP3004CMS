@@ -78,12 +78,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             <div class="mt-5"></div>
             <div class="columns">
 
-                <div class="column is-6">
+                <div th:if="${submission!=null}" class="column is-6">
                     <div class="card events-card" style="padding-top:12px;">
                         <header class="card-header">
                             <p class="card-header-title">Grade:</p>
-                            <p th:text="${deliverable.getGrade()}" style="margin-top:12px;margin-right:12px"></p>
+                            <p th:if="${submission!=null}" th:text="${submission.getGrade()}" style="margin-top:12px;margin-right:12px"></p>
+                            <p th:if="${students_submissions!=null}" th:text="${deliverable.getGrade()}"
+                               style="margin-top:12px;margin-right:12px"></p>
                         </header>
+                    </div>
+                </div>
+
+                <div th:if="${students_submissions!=null}" class="column is-6">
+                    <div class="card events-card" style="text-align:center">
+                        <a th:each="action:${actions}"  class="button is-small is-primary" style="background-color:#CF112D;margin:15px"
+                           th:href="@{${action.getAction()}}"
+                           th:text="${action.getButton()}">
+                        </a>
                     </div>
                 </div>
 
@@ -98,24 +109,48 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             </div>
 
             <div class="mt-5"></div>
-            <div class="columns">
+            <!----prof only: student submission---->
+            <div  class="columns">
                 <div class="column is-12">
-                    <div class="card events-card" style="padding-top:12px;">
+                    <div class="card events-card" style="padding-top:12px;text-align:center">
                         <p class="card-header-title">Submission</p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-5"></div>
-            <div class="columns">
-                <div class="column is-6">
-                    <div class="card events-card" style="text-align:center">
-                        <a th:each="action:${actions}"  class="button is-small is-primary" style="background-color:#CF112D;margin:15px"
-                           th:href="@{${action.getAction()}}"
-                           th:text="${action.getButton()}">
-                        </a>
-                    </div>
-                </div>
 
+                        <!-----Student only:----->
+                        <div th:if="${submission!=null}" class="card" style="padding:12px;">
+                            <form method="post" id="data_send" th:action="@{/dashboard/deliverable/submit(id=${deliverable.getDeliverableid()})}">
+                                <label for="submission"></label>
+                                <textarea id="submission" name="submission" style="width:100%;height:200px;margin-bottom: 6px;" th:text="${submission.getSubmission()}"></textarea>
+                                <button class="button is-small is-primary" type="submit" >Submit this deliverable</button>
+                            </form>
+                        </div>
+
+                        <!----prof only:----->
+                        <div th:if="${students_submissions!=null}" style="padding:12px 6px;">
+                            <table style="width:100%">
+                               <tr>
+                                   <th>Firstname</th>
+                                   <th>Lastname</th>
+                                   <th>Student Number</th>
+                                   <th>Submission</th>
+                                   <th>Grade</th>
+                                   <th>Submit</th>
+                               </tr>
+                               <!-----here submission is in User()------>
+                                <tr th:each="submission:${students_submissions}">
+                                    <form th:action="@{/dashboard/deliverable/grade/{id}/user/{userid}(id=${deliverable.getDeliverableid()},userid=${submission.getUserid()})}" method="post">
+                                        <td th:text="${submission.getFirstname()}"></td>
+                                        <td th:text="${submission.getLastname()}"></td>
+                                        <td id="userid" name="userid" th:text="${submission.getUserid()}" th:value="${submission.getUserid()}"></td>
+                                        <td th:text="${submission.getSubmission()}"></td>
+                                        <td><input id="grade" name="grade" th:value="${submission.getGrade()}"></td>
+                                        <td><button type="submit">Submit</button></td>
+                                    </form>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
