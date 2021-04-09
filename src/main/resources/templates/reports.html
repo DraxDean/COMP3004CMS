@@ -35,23 +35,28 @@
                                     </div>
                                 </div>
                                 <div class="column is-one-fifth is-right">
-                                    <form th:action="@{/getreport}" th:method="post">
+                                    <form th:action="@{/reports}" th:method="post">
+                                        <label class="label">Sampling</label>
                                         <ul>
                                             <li>
                                                 <label class="checkbox" >
-                                                    <input type="checkbox" name="skip" id="skip">
+
+                                                    <input type="checkbox" name="skip" id="skip" th:checked="${skip}">
                                                     Skip
                                                 </label>
                                             </li>
                                             <li>
                                                 <label class="checkbox">
-                                                    <input  type="checkbox" name="avg" id="avg">
+                                                    <input  type="checkbox" name="avg" id="avg" th:checked="${avg}">
                                                     Average
                                                 </label>
                                             </li>
                                             <li>
-                                                <div class="select is-small" name="gender" id="gender">
-                                                    <select>
+                                                <div class="select is-small" >
+                                                    <div th:if="${gender}">
+
+                                                    </div>
+                                                    <select name="gender" id="gender">
                                                         <option value="ALL">All</option>
                                                         <option value="MALE">Male</option>
                                                         <option value="FEMALE">Female</option>
@@ -59,7 +64,19 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <button class="button is-medium is-rounded is-success">
+                                        <br>
+                                        <label class="label">Grade Range</label>
+                                        <div class="columns">
+
+                                            <div class="column">
+                                                <input class="input is-small" id="minRange" name="minRange" placeholder="Lower" value="0">
+                                            </div>
+                                            <div class="column">
+                                                <input class="input is-small" id="maxRange" name="maxRange" placeholder="Upper" value="99">
+                                            </div>
+
+                                        </div>
+                                        <button class="button is-medium is-rounded is-success" type="submit">
                                             SUBMIT
                                         </button>
                                     </form>
