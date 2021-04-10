@@ -62,6 +62,8 @@ public class ReportRequest {
             if (skip){
                 out.put("skip", 1);
             }
+
+            /* ####     AVERAGE ALWAYS HAS TO GO LAST   ### */
             //add avg if contains
             if (avg){
                 out.put("avg", 1);

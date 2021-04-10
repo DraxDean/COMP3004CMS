@@ -57,17 +57,25 @@ class ReportGeneratorTest {
 
     @Test
     void testAvgReportReq() {
+        ReportRequest req = new ReportRequest(min, max,true,true,"ALL");
+        ArrayList<GradeData> res = rg.getReport(req, list);
+
+        // run seperate strategies
+        SamplingStrategy avg = new AverageGradeSampling();
+        SamplingStrategy skip = new SkipSampling();
+
+        ArrayList<GradeData> processed = avg.getData(list);
+        processed = skip.getData(processed);
+
+        //see is seperate strategy matches combined strategy
+        for (int i = 0; i < res.size(); i++){
+            assertEquals(res.get(i).getGrade(), processed.get(i).getGrade(),"Checking if sampling strategies were properly combined");
+        }
+
     }
 
     @Test
     void testGenderReportReq() {
-    }
 
-    @Test
-    void test2ReportReq() {
-    }
-
-    @Test
-    void test3ReportReq() {
     }
 }

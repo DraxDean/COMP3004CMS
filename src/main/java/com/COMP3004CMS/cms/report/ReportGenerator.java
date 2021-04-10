@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Builds a an algorith combination using request parameters provided
+ */
+
 public class ReportGenerator {
 
     public ArrayList<GradeData> getReport(ReportRequest req, ArrayList<GradeData> dataIn){
