@@ -62,14 +62,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             <div class="field is-horizontal">
                                 <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field">
-                                        <input class="input is-medium" id="title" name="title" placeholder="Title" value="">
+                                        <input class="input is-medium" id="title" name="title" placeholder="Title" value="" required="">
                                     </div>
                                 </div>
                             </div>
                             <div class="field is-vertical" >
                                 <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field">
-                                        <input class="input is-medium" id="start" name="start" placeholder="start" value="">
+                                        <input class="input is-medium" id="start" name="start" placeholder="start" value="" required="">
                                         <p class="control is-expanded has-icons-left has-icons-right">
                                         </p>
                                     </div>
@@ -78,22 +78,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             <div class="field is-vertical" >
                                 <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field">
-                                        <input class="input is-medium" id="deadline" name="deadline" placeholder="deadline" value="">
+                                        <input class="input is-medium" id="deadline" name="deadline" placeholder="deadline" value="" required="">
                                     </div>
                                 </div>
                             </div>
                             <div class="field is-vertical" >
                                 <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field">
-                                        <input class="input is-medium" id="grade" name="grade" placeholder="grade out of" value="">
+                                        <input class="input is-medium" id="grade" name="grade" placeholder="grade out of" value="" required="">
                                     </div>
                                 </div>
                             </div>
                             <div class="field is-vertical" >
                                 <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
                                     <div class="field">
-                                        <textarea class="input is-medium" id="requirements" name="requirements" placeholder="requirements" value=""></textarea>
+                                        <textarea class="input is-medium" id="requirements" name="requirements" placeholder="requirements" value="" required=""></textarea>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="field is-vertical" >
+                                <div class="field-body" style="margin-left: 15px;margin-right: 15px;">
+                                    <label for="type">Type:</label>
+
+                                    <select name="type" id="type">
+                                        <option value="LONG">Long Answer Assignment</option>
+                                        <option value="SHORT">Short Answer Assignment</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

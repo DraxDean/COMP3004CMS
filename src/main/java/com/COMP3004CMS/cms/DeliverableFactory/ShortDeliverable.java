@@ -7,26 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.UUID;
 
-/*
-    What is a Deliverable?
-    Prof created requirements to be fulfilled and submitted in a course by a deadline and graded
-
-    Deliverable Requirements:
-    - needs to be created
-    - needs to hold:
-        * deliverable info
-        * deadline
-        * deliverable requirements slot (from prof)
-        * submission slot (from student)
-        * grade
-    - needs to perform:
-        * deliverable creation
-        * deliverable update
-        * deliverable submission
-        * assign deliverable grade
-*/
-public class Deliverable {
-
+//to override sth
+public class ShortDeliverable extends Deliverable{
     // deliverable variables
     public String id;       //for MongoDB
     public String deliverableid;
@@ -46,10 +28,11 @@ public class Deliverable {
 
 
     // constructors
-    public Deliverable() {
+    public ShortDeliverable() {
+        longanwser = false;
     }
 
-    public Deliverable(String title, String start, String deadline) {
+    public ShortDeliverable(String title, String start, String deadline) {
         this.title = title;
         this.start = start;
         this.deadline = deadline;

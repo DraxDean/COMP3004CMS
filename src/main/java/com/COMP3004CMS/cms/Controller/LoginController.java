@@ -76,4 +76,8 @@ public class LoginController {
     @GetMapping("/error")
     public String error() {return "test";}
 
+    @GetMapping("/forgetpassword")
+    public String forgetpassword(){
+        return "forgetpassword";
+    }
 }

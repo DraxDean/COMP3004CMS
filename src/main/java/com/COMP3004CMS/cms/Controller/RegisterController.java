@@ -25,6 +25,15 @@ public class RegisterController {
     @Autowired
     private DeliverableService deliverableService;
 
+    //seeing course detail info
+    @GetMapping("/register/audit")
+    public String getAudit(Model model, Authentication authentication) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        List<Course> courseList = user.getCourseList();
+        model.addAttribute("user", user);
+        model.addAttribute("courses", courseList);
+        return "register/myaudit";
+    }
     //listing all course
     @GetMapping("/register/search")
     public String getAllCourse(Model model, Authentication authentication) {

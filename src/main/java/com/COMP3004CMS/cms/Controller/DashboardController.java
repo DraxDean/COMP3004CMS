@@ -108,9 +108,11 @@ public class DashboardController {
 
     //post add deliverable
     @PostMapping("/dashboard/deliverable/add")
-    public String postDeliverable(Model model, @RequestParam("courseid") String courseid,
-                                  Deliverable deliverable, BindingResult bindingResult) {
+    public String postDeliverable(@RequestParam("courseid") String courseid,
+                                  @RequestParam("type") String type,
+                                  Deliverable deliverable, BindingResult bindingResult, Model model) {
         Course course = courseService.findByCourseid(courseid);
+        //Deliverable deliverable = DeliverableFactory.createByType(type, d);
         deliverable.setDeliverableid();
         deliverable.setStudents(course.getStudents());
         deliverable.initalSubmission();
@@ -203,6 +205,37 @@ public class DashboardController {
 
         deliverableService.save(deliverable);
         return "redirect:/dashboard/deliverable?id="+deliverableid;
+    }
+
+    @GetMapping("/dashboard/course/grade")
+    public String getCourseGrade(Authentication authentication, Model model,
+                                  @RequestParam("id") String courseid) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        if(!user.getRoles().equals("PROFESSOR")){
+            return "redirect:/dashboard";
+        }
+        Course course = courseService.findByCourseid(courseid);
+        model.addAttribute("students", course.getStudents());
+        model.addAttribute("course", course);
+        return "dashboard/finalgrade";
+    }
+
+    @PostMapping("/dashboard/course/grade/{id}/{userid}")
+    public String postCourseGrade(Authentication authentication, RedirectAttributes redirectAttributes,
+                                       @PathVariable("id") String courseid,
+                                       @PathVariable("userid") String userid,
+                                       @RequestParam("grade") int grade) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        User student =  userDetailServiceImp.findUserByUserid(userid);
+        if(!user.getRoles().equals("PROFESSOR")){
+            return "redirect:/dashboard";
+        }
+        Course course = courseService.findByCourseid(courseid);
+        course.undateGradeByStudent(student, grade);
+        student.undateGradeByCourse(course, grade);
+        userDetailServiceImp.update(student);
+        courseService.saveCourse(course);
+        return "redirect:/dashboard/course/grade?id="+courseid;
     }
 
 }

@@ -24,7 +24,7 @@
         </div>
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="/dashboard">
+                <a class="navbar-item" href="/default">
                     Home
                 </a>
                 <a class="navbar-item" href="/register/search">
@@ -74,7 +74,36 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                         </header>
                     </div>
                 </div>
+            </div>
 
+            <div class="columns">
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title">Primary Professor:</p>
+                            <p th:text="${course.getProfessor().getName()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title">Term:</p>
+                            <p th:text="${course.getTerm()+course.getYear()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="column is-12" style = "padding:0px">
+                <div class="card events-card" style="padding-top:12px">
+                    <header class="card-header">
+                        <p class="card-header-title">Title:</p>
+                        <p th:text="${course.getTitle()}" style="margin-top:12px;margin-right:12px"></p>
+                    </header>
+                </div>
             </div>
             <div class="column is-12" style = "padding:0px">
                 <div class="card events-card" style="padding-top:12px">
