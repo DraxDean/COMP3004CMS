@@ -1,5 +1,6 @@
 package com.COMP3004CMS.cms.Controller;
 
+import com.COMP3004CMS.cms.report.GradeData;
 import com.COMP3004CMS.cms.report.ReportGenerator;
 import com.COMP3004CMS.cms.report.ReportRequest;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class ReportController {
             System.out.println(req.skip);
             //check the gender type
             ReportGenerator report = new ReportGenerator();
-            ArrayList product = report.getReport(req);
+            ArrayList<GradeData> product = report.getReport(req, new ArrayList<>());
 
 
         } catch (Exception e){

@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static com.COMP3004CMS.cms.report.Colour.RANGE_BLUE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReportGeneratorTest {
     ArrayList<GradeData> list;
     ReportGenerator rg;
-    double min = 50;
-    double max = 75;
+    int min = 70;
+    int max = 80;
 
     @BeforeEach
     public void setUp() {
@@ -39,12 +40,17 @@ class ReportGeneratorTest {
     @Test
     void testSkipReportReq() {
        ReportRequest req = new ReportRequest(min, max,true,false,"ALL");
-       ArrayList<GradeData> res = rg.getReport(req);
+       ArrayList<GradeData> res = rg.getReport(req, list);
         //go over new array and check if they are all 25
         for (GradeData r: res) {
-            System.out.println(r.getGrade());
-            assertEquals(25,r.getGrade());
+            assertEquals(25,r.getStu().age);
             assertNotEquals(r.getStu().age, 35);
+        }
+        //test decorator is working
+        for (GradeData r: res) {
+            assertEquals(75,r.getGrade(),"checking if grade is 75 (middle range)");
+            System.out.println(r.getColour());
+            assertEquals(RANGE_BLUE,r.getColour(), "Checking if middle range grade gets corresponding colour label");
         }
 
     }
