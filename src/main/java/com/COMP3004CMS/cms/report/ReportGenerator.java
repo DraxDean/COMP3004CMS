@@ -2,9 +2,12 @@ package com.COMP3004CMS.cms.report;
 
 import java.util.ArrayList;
 
-public class ReportGenerator<E> {
+public class ReportGenerator {
 
-    public ArrayList<E> getReport(ReportRequest req){
-        return new ArrayList<E>();
+    public ArrayList<GradeData> getReport(ReportRequest req){
+        //check report request to see what is required
+        //build required report based on request
+
+        return new ArrayList<GradeData>();
     }
 }

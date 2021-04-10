@@ -58,7 +58,7 @@ public class RegisterController {
                 student.getRoles());
         //should check for credit max
         Course shortCourse = new Course(course.id, course.courseid, course.department,
-                course.coursecode,course.title, course.maxSeats, course.term, course.year);
+                course.coursecode, course.title, course.section, course.term, course.year);
         course.addStudent(shortUser);
         student.addCourse(shortCourse);
         courseService.saveCourse(course);

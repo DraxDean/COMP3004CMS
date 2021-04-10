@@ -136,7 +136,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
         } else {
             Course shortCourse = new Course(course.id, course.courseid, course.department,
-                    course.coursecode,course.title, course.maxSeats, course.term, course.year);
+                    course.coursecode, course.title, course.section, course.term, course.year);
             User shortUser = new User(professors.id, professors.userid, professors.firstname,
                     professors.lastname,professors.getRoles());
             course.setProfessor(shortUser);
@@ -190,7 +190,7 @@ public class AdminController {
         course.setYear(year);
         course.setProfessor(shortUser);
         Course shortCourse = new Course(course.id, course.courseid, course.department,
-                course.coursecode,course.title, course.maxSeats, course.term, course.year);
+                course.coursecode, course.title, course.section, course.term, course.year);
         professors.addCourse(shortCourse);
         userDetailServiceImp.saveUser(professors);
         courseService.saveCourse(course);
