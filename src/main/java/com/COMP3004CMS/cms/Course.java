@@ -17,10 +17,8 @@ package com.COMP3004CMS.cms;
         * assign course grade
 */
 
-import com.COMP3004CMS.cms.FactoryMethodDeliverable.DeliverableFactory;
-
 import java.util.ArrayList;
-import com.COMP3004CMS.cms.FactoryMethodDeliverable.Deliverable;
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Deliverable;
 
 public class Course {
 

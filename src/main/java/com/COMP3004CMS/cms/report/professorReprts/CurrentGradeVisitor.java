@@ -2,45 +2,40 @@ package com.COMP3004CMS.cms.report.professorReprts;
 
 
 
-import com.COMP3004CMS.cms.FactoryMethodDeliverable.LongDeliverable;
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Deliverable;
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.LongDeliverable;
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Quiz;
+import com.COMP3004CMS.cms.Model.Course;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 public class CurrentGradeVisitor implements Visitor{
-/*
-    //sorted map of grade ranges
-    //key = string of grade range
-    //integer = number of entries in that range
-    public TreeMap<String, Integer> export(ArrayList<Deliverable> args){
-        TreeMap<String, Integer> gradesRange = new TreeMap<>();
-        GradeConverter converter = new GradeConverter();
-        //average grade for student
-        //counter for amount of deliverables
-        int counter = 0;
-        for (Deliverable d: args) {
-           counter++;
-            //calculate the average grade for each student
-            //go through each of the submissions
-            //HashMap<String, Double> currentStudentGrades = d.accept(this);
-            //currentStudentGrades.forEach((k, v) -> {
-                //String gradeRange  = converter.convertToNumberRange(v);
-                /*if(gradeRange)
-              //      }
 
+    /**
+     * Get the average grade for each student across all delierable grades in the course
+     * @param course course containing arrayList of deliverables
+     * @return hashmap of every student num as key and associated average grade values
+     */
+    @Override
+    public HashMap<String, Double> visitCourse(Course course) {
+        HashMap<String, Double> totalStudentGrades =  new HashMap<>();
+        double deliverableNum = course.getDeliverables().size();
+        for (Deliverable d: course.getDeliverables()) {
+            HashMap<String, Double> grade = d.accept(this);
+            //go through all student grades and add to total grades
+            grade.forEach((k,v) -> {
+                if (!totalStudentGrades.containsKey(k)){
+                    totalStudentGrades.put(k,(v/deliverableNum));
+                } else {
+                    totalStudentGrades.put(k, totalStudentGrades.get(k)+(v/deliverableNum));
+                }
+            });
+        }
 
-
-            //get last submission of each of them
-            //check if convert is already in range
-
-
-        //});
-
+        //go into inputs af
+        return totalStudentGrades;
     }
-        return gradesRange;
-    }
-    */
-
 
     @Override
     public HashMap<String, Double> visitLongDeliverable(LongDeliverable ld) {
@@ -52,35 +47,11 @@ public class CurrentGradeVisitor implements Visitor{
         return gradesByStu;
     }
 
-    /*
-    public HashMap<String, Double> visitShortDeliverable(ShortDeliverable sd){
-        return  HashMap<String, Double> totalStudentGrades = new HashMap<String, Double>();
+    @Override
+    public HashMap<String, Double> visitQuiz(Quiz ld) {
+        return null;
     }
 
-     */
-/*
-    public TreeMap<String, Integer> visitCourse(Course course){
-        TreeMap<String, Integer> gradesRange = new TreeMap<>();
-        GradeConverter converter = new GradeConverter();
-        HashMap<String, Double> totalStudentGrades = new HashMap<>();
-        //average grade for student
-        //counter for amount of deliverables
-        int counter = 0;
-        for (Deliverable d: course.getDeliverables()) {
-            counter++;
-            //calculate the average grade for each student
-            //go through each of the submissions
-            HashMap<String, Double> currentStudentGrades = d.accept(this);
-            //add current student grade of deliverable to master list of each students grade
-            currentStudentGrades.forEach((k, v) -> totalStudentGrades.put(k,totalStudentGrades.get(k)+v));
-
-                    //get last submission of each of them
-                    //check if convert is already in range
-
-
-        }
-
- */
 
 
 }

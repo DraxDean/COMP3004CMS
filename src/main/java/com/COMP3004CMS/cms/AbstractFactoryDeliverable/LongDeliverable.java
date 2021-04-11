@@ -1,33 +1,19 @@
-package com.COMP3004CMS.cms.DeliverableFactory;
+package com.COMP3004CMS.cms.AbstractFactoryDeliverable;
 
 import com.COMP3004CMS.cms.Model.User;
+import com.COMP3004CMS.cms.Storage.SubList;
+import com.COMP3004CMS.cms.Storage.Submission;
+import com.COMP3004CMS.cms.report.professorReprts.Visitor;
+import com.COMP3004CMS.cms.utility.exceptions.MaxStudentSubmissions;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
-/*
-    What is a Deliverable?
-    Prof created requirements to be fulfilled and submitted in a course by a deadline and graded
-
-    Deliverable Requirements:
-    - needs to be created
-    - needs to hold:
-        * deliverable info
-        * deadline
-        * deliverable requirements slot (from prof)
-        * submission slot (from student)
-        * grade
-    - needs to perform:
-        * deliverable creation
-        * deliverable update
-        * deliverable submission
-        * assign deliverable grade
-*/
-public class Deliverable {
-
+public class LongDeliverable implements Deliverable{
     // deliverable variables
+    @Id
     public String id;       //for MongoDB
     public String deliverableid;
     public String courseid;
@@ -42,24 +28,24 @@ public class Deliverable {
     String submission;
     // in format [A-]
     String grade;
-    boolean longanwser;
 
-
+    HashMap<String, SubList> submissions;
 
 
     // constructors
-    public Deliverable() {
+    public LongDeliverable() {
     }
 
-    public Deliverable(String title, String start, String deadline) {
+    public LongDeliverable(String courseid, String title, String start, String deadline) {
         this.title = title;
         this.start = start;
         this.deadline = deadline;
+        this.courseid = courseid;
         requirements = "TO BE ANNOUNCED";
         submission = "STUDENT SUBMISSION SLOT";
         grade = "PENDING";
+        submissions = new HashMap<>();
     }
-
     // *****  Prof Actions  *****
 
     public void submitDeadline(String newDate){
@@ -78,14 +64,6 @@ public class Deliverable {
 
     public void submitSubmission(String newSubmission){
         submission = newSubmission;
-    }
-
-    public boolean isLonganwser() {
-        return longanwser;
-    }
-
-    public void setLonganwser(boolean longanwser) {
-        this.longanwser = longanwser;
     }
 
     public String getId() {
@@ -169,6 +147,8 @@ public class Deliverable {
         for (User s :this.students){
             s.setGrade(0);
             s.setSubmission("");
+            /*adding student id to submissions container */
+            submissions.put(s.getUserid(), new SubList());
         }
     }
 
@@ -181,6 +161,8 @@ public class Deliverable {
                 s.setGrade(0);
                 s.setSubmission("");
                 students.add(s);
+                /*adding student id to submissions container */
+                submissions.put(s.getUserid(), new SubList());
             }
         } catch (Exception e){
             System.out.println("Course addStudent - Error adding student");
@@ -195,6 +177,11 @@ public class Deliverable {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean findByUserId(String userId) {
+        return false;
     }
 
     public void initalSubmission(){
@@ -218,11 +205,12 @@ public class Deliverable {
             }
         }
     }
+
     @Override
     public boolean equals(Object obj) {
         boolean retVal = false;
-        if (obj instanceof Deliverable){
-            Deliverable ptr = (Deliverable) obj;
+        if (obj instanceof com.COMP3004CMS.cms.Model.Deliverable){
+            com.COMP3004CMS.cms.Model.Deliverable ptr = (com.COMP3004CMS.cms.Model.Deliverable) obj;
             retVal = ptr.deliverableid.equals(this.deliverableid);
         }
         return retVal;
@@ -231,5 +219,60 @@ public class Deliverable {
     @Override
     public String toString() {
         return title + " (start: " + start + " deadline: " + deadline+")";
+    }
+
+
+    /*
+
+
+    Different function for changes
+
+    */
+
+    public HashMap<String, SubList> getSubmissions() {
+        return submissions;
+    }
+
+    public void studentSubmit(String studentId, Submission sub) throws MaxStudentSubmissions {
+        try{
+            SubList studentSubs = submissions.get(studentId);
+            studentSubs.addBack(sub);
+            submissions.put(studentId, studentSubs);
+        }
+        catch (NullPointerException en){
+            en.printStackTrace();
+        }
+    }
+
+    public void gradeDeliverable(User prof, String studentId, int grade){
+        if (checkProfessor(prof)){
+            gradeSubmition(studentId, grade);
+        }
+    }
+
+    public void gradeSubmition(String studentId, int grade) {
+        try{
+            //find submission list that corrsponds to userId
+            SubList studentSubs = submissions.get(studentId);
+            //get submission and grade it
+            if (studentSubs.getLast() == null){
+
+            }
+            Submission sub = studentSubs.getLast();
+            sub.setGrade(grade);
+            submissions.put(studentId, studentSubs);
+        }
+        catch (NullPointerException en){
+            en.printStackTrace();
+        }
+    }
+
+    public boolean checkProfessor(User prof) {
+        return prof.getRoles().equals("PROFESSOR");
+    }
+
+    @Override
+    public HashMap<String, Double> accept(Visitor visitor) {
+        return visitor.visitLongDeliverable(this);
     }
 }

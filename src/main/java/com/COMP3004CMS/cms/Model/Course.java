@@ -17,11 +17,13 @@ package com.COMP3004CMS.cms.Model;
         * assign course grade
 */
 
+import com.COMP3004CMS.cms.report.professorReprts.Visitor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.COMP3004CMS.cms.FactoryMethodDeliverable.Deliverable;
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Deliverable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 
@@ -369,6 +371,14 @@ public class Course {
     public CourseItem toPublic(){
             return new CourseItem(this.courseid, this.department, this.coursecode, this.title, this.description, this.maxSeats);
     }
+
+    /** #####################
+     *      FOR VISITOR
+      #####################*/
+    public HashMap<String, Double> accept(Visitor visitor) {
+        return visitor.visitCourse(this);
+    }
+
 
     public class CourseItem{ //for MongoDB
         public String courseid;     //CNumber

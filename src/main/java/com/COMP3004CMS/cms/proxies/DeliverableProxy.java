@@ -1,7 +1,7 @@
 package com.COMP3004CMS.cms.proxies;
 
 
-import com.COMP3004CMS.cms.FactoryMethodDeliverable.Deliverable;
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Deliverable;
 import com.COMP3004CMS.cms.Service.DeliverableService;
 
 public class DeliverableProxy extends DeliverableService {
