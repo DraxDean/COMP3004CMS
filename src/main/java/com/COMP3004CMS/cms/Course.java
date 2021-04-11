@@ -17,7 +17,10 @@ package com.COMP3004CMS.cms;
         * assign course grade
 */
 
+import com.COMP3004CMS.cms.FactoryMethodDeliverable.DeliverableFactory;
+
 import java.util.ArrayList;
+import com.COMP3004CMS.cms.FactoryMethodDeliverable.Deliverable;
 
 public class Course {
 
@@ -107,17 +110,17 @@ public class Course {
     // Observer Design Pattern stuff
     public void notifyStudentsDeliverableCreated(Deliverable d){
         for (Student s : students){
-            s.update("Deliverable " + d.title + " has been created.");
+            s.update("Deliverable " + d.getTitle()+ " has been created.");
         }
     }
     public void notifyStudentsDeliverableGraded(Deliverable d){
         for (Student s : students){
-            s.update("Deliverable " + d.title + " has been graded.");
+            s.update("Deliverable " + d.getTitle() + " has been graded.");
         }
     }
     public void notifyStudentsDeliverableDeadlineExtended(Deliverable d){
         for (Student s : students){
-            s.update("Deliverable " + d.title + " deadline has been extended to " + d.deadline);
+            s.update("Deliverable " + d.getTitle()+ " deadline has been extended to " + d.getDeadline());
         }
     }
 

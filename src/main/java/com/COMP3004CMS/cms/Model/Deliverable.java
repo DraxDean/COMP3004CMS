@@ -1,9 +1,13 @@
 package com.COMP3004CMS.cms.Model;
 
+import com.COMP3004CMS.cms.Storage.SubList;
+import com.COMP3004CMS.cms.Storage.Submission;
+import com.COMP3004CMS.cms.utility.exceptions.MaxStudentSubmissions;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 /*
@@ -44,6 +48,8 @@ public class Deliverable {
     // in format [A-]
     String grade;
 
+    HashMap<String, SubList> submissions;
+
 
     // constructors
     public Deliverable() {
@@ -56,6 +62,7 @@ public class Deliverable {
         requirements = "TO BE ANNOUNCED";
         submission = "STUDENT SUBMISSION SLOT";
         grade = "PENDING";
+        submissions = new HashMap<>();
     }
 
     // *****  Prof Actions  *****
@@ -159,6 +166,8 @@ public class Deliverable {
         for (User s :this.students){
             s.setGrade(0);
             s.setSubmission("");
+            /*adding student id to submissions container */
+            submissions.put(s.getUserid(), new SubList());
         }
     }
 
@@ -171,6 +180,8 @@ public class Deliverable {
                 s.setGrade(0);
                 s.setSubmission("");
                 students.add(s);
+                /*adding student id to submissions container */
+                submissions.put(s.getUserid(), new SubList());
             }
         } catch (Exception e){
             System.out.println("Course addStudent - Error adding student");
@@ -208,6 +219,7 @@ public class Deliverable {
             }
         }
     }
+
     @Override
     public boolean equals(Object obj) {
         boolean retVal = false;
@@ -221,5 +233,55 @@ public class Deliverable {
     @Override
     public String toString() {
         return title + " (start: " + start + " deadline: " + deadline+")";
+    }
+
+
+    /*
+
+
+    Different function for changes
+
+    */
+
+    public HashMap<String, SubList> getSubmissions() {
+        return submissions;
+    }
+
+    public void studentSubmit(String studentId, Submission sub) throws MaxStudentSubmissions{
+        try{
+            SubList studentSubs = submissions.get(studentId);
+            studentSubs.addBack(sub);
+            submissions.put(studentId, studentSubs);
+        }
+        catch (NullPointerException en){
+            en.printStackTrace();
+        }
+    }
+
+    public void gradeDeliverable(User prof, String studentId, int grade){
+        if (checkProfessor(prof)){
+            gradeSubmition(studentId, grade);
+        }
+    }
+
+    private void gradeSubmition(String studentId, int grade) {
+        try{
+            //find submission list that corrsponds to userId
+            SubList studentSubs = submissions.get(studentId);
+            //get submission and grade it
+            if (studentSubs.getLast() == null){
+
+            }
+            Submission sub = studentSubs.getLast();
+            sub.setGrade(grade);
+            submissions.put(studentId, studentSubs);
+        }
+        catch (NullPointerException en){
+            en.printStackTrace();
+        }
+    }
+
+    private boolean checkProfessor(User prof) {
+        return prof.getRoles().equals("PROFESSOR");
     }
 }

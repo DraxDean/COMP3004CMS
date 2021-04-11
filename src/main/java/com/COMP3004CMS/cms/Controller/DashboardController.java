@@ -2,7 +2,7 @@ package com.COMP3004CMS.cms.Controller;
 
 import com.COMP3004CMS.cms.Model.Action;
 import com.COMP3004CMS.cms.Model.Course;
-import com.COMP3004CMS.cms.Model.Deliverable;
+import com.COMP3004CMS.cms.FactoryMethodDeliverable.Deliverable;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.DeliverableService;
@@ -127,12 +127,12 @@ public class DashboardController {
     @GetMapping("/dashboard/deliverable/delete")
     public String deleteDeliverable(Model model, @RequestParam("id") String deliverableid) {
         Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
-        Course course = courseService.findByCourseid(deliverable.courseid);
+        Course course = courseService.findByCourseid(deliverable.getCourseid());
         course.deleteDeliverable(deliverable);
         courseService.saveCourse(course);
         deliverableService.deleteDeliverableByDeliverableid(deliverable.getDeliverableid());
         model.addAttribute("course", course);
-        return "redirect:/dashboard/course?courseid="+deliverable.courseid;
+        return "redirect:/dashboard/course?courseid="+deliverable.getCourseid();
     }
 
     //get mapping prof edit deliverable
@@ -157,7 +157,7 @@ public class DashboardController {
                                       @RequestParam("requirements") String requirements,
                                       @RequestParam("grade") String grade) {
         Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
-        Course course = courseService.findByCourseid(deliverable.courseid);
+        Course course = courseService.findByCourseid(deliverable.getCourseid());
         course.deleteDeliverable(deliverable);
         //setter
         deliverable.setTitle(title);
@@ -170,7 +170,7 @@ public class DashboardController {
         courseService.saveCourse(course);
         deliverableService.save(deliverable);
         model.addAttribute("course", course);
-        return "redirect:/dashboard/course?courseid="+deliverable.courseid;
+        return "redirect:/dashboard/course?courseid="+deliverable.getCourseid();
     }
 
     //post student answer deliverable

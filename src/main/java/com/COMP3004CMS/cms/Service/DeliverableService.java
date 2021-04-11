@@ -1,6 +1,6 @@
 package com.COMP3004CMS.cms.Service;
 
-import com.COMP3004CMS.cms.Model.Deliverable;
+import com.COMP3004CMS.cms.FactoryMethodDeliverable.Deliverable;
 import com.COMP3004CMS.cms.Repository.DeliverableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

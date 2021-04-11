@@ -19,6 +19,7 @@ package com.COMP3004CMS.cms.Model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.COMP3004CMS.cms.FactoryMethodDeliverable.Deliverable;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -73,6 +74,8 @@ public class Course {
         this.section = section;
         this.term = term;
         this.year = year;
+        //cant add any student is not set
+        maxSeats = 200;
     }
 
     public String getGrade() {
@@ -207,6 +210,7 @@ public class Course {
         }
         deliverables.add(newDeliverable);
         notifyStudentsDeliverableCreated(newDeliverable);
+
     }
     public void deleteDeliverable(Deliverable newDeliverable) {
         deliverables.remove(newDeliverable);

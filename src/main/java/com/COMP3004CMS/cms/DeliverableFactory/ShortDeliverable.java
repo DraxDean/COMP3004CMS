@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 //to override sth
-public class ShortDeliverable extends Deliverable{
+public class ShortDeliverable extends com.COMP3004CMS.cms.Model.Deliverable {
     // deliverable variables
     public String id;       //for MongoDB
     public String deliverableid;

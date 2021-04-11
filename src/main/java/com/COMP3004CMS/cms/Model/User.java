@@ -141,6 +141,7 @@ public class User implements Subscriber{
         return grade;
     }
 
+    /* what about multiple deliverables, or multiple courses? */
     public void setGrade(Integer grade) {
         this.grade = grade;
     }

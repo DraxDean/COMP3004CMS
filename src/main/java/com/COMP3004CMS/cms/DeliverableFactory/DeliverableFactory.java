@@ -3,6 +3,8 @@ package com.COMP3004CMS.cms.DeliverableFactory;
 //DeliverableFactory deliverableFactory = new DeliverableFactory();
 //Deliverable deliverable = deliverableFactory.QuizDeliverable();
 
+import com.COMP3004CMS.cms.Model.Deliverable;
+
 public class DeliverableFactory {
 
     public static Deliverable createByType(String type, Deliverable deliverable) {
