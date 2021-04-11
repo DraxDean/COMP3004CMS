@@ -49,7 +49,12 @@ public class CurrentGradeVisitor implements Visitor{
 
     @Override
     public HashMap<String, Double> visitQuiz(Quiz ld) {
-        return null;
+        HashMap<String, Double> gradesByStu = new HashMap<>();
+        ld.getSubmissions().forEach((k,v)-> {
+            //grab the last submission that the student did
+            gradesByStu.put(k, v.getLast().getGrade());
+        });
+        return gradesByStu;
     }
 
 
