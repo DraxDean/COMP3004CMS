@@ -17,7 +17,7 @@ package com.COMP3004CMS.cms.Model;
         * assign course grade
 */
 
-import com.COMP3004CMS.cms.report.professorReprts.Visitor;
+import com.COMP3004CMS.cms.report.professorReports.Visitor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Deliverable;

@@ -1,4 +1,4 @@
-package com.COMP3004CMS.cms.report.professorReprts;
+package com.COMP3004CMS.cms.report.professorReports;
 
 
 import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Deliverable;

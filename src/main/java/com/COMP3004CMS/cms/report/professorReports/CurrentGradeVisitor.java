@@ -1,4 +1,4 @@
-package com.COMP3004CMS.cms.report.professorReprts;
+package com.COMP3004CMS.cms.report.professorReports;
 
 
 
@@ -7,7 +7,6 @@ import com.COMP3004CMS.cms.AbstractFactoryDeliverable.LongDeliverable;
 import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Quiz;
 import com.COMP3004CMS.cms.Model.Course;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CurrentGradeVisitor implements Visitor{

@@ -3,7 +3,7 @@ package com.COMP3004CMS.cms.AbstractFactoryDeliverable;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Storage.SubList;
 import com.COMP3004CMS.cms.Storage.Submission;
-import com.COMP3004CMS.cms.report.professorReprts.Visitor;
+import com.COMP3004CMS.cms.report.professorReports.Visitor;
 import com.COMP3004CMS.cms.utility.exceptions.InvalidSubmissionType;
 import com.COMP3004CMS.cms.utility.exceptions.MaxStudentSubmissions;
 
@@ -69,7 +69,7 @@ public interface Deliverable {
 
     void gradeDeliverable(User prof, String studentId, int grade);
 
-    void gradeSubmition(String studentId, int grade);
+    String[] gradeSubmition(String studentId, int grade);
 
     boolean checkProfessor(User prof);
 

@@ -1,12 +1,9 @@
 package com.COMP3004CMS.cms.AbstractFactoryDeliverable;
 
 import com.COMP3004CMS.cms.Model.User;
-import com.COMP3004CMS.cms.Model.submissionTypes.LongAnswer;
-import com.COMP3004CMS.cms.Model.submissionTypes.MixedFormat;
-import com.COMP3004CMS.cms.Model.submissionTypes.MultipleChoice;
 import com.COMP3004CMS.cms.Storage.SubList;
 import com.COMP3004CMS.cms.Storage.Submission;
-import com.COMP3004CMS.cms.report.professorReprts.Visitor;
+import com.COMP3004CMS.cms.report.professorReports.Visitor;
 import com.COMP3004CMS.cms.utility.exceptions.InvalidSubmissionType;
 import com.COMP3004CMS.cms.utility.exceptions.MaxStudentSubmissions;
 import org.springframework.data.annotation.Id;
@@ -217,7 +214,7 @@ public class Quiz implements Deliverable{
         }
     }
 
-    public void gradeSubmition(String studentId, int grade) {
+    public String[] gradeSubmition(String studentId, int grade) {
         try{
             //find submission list that corrsponds to userId
             SubList studentSubs = submissions.get(studentId);
@@ -228,10 +225,12 @@ public class Quiz implements Deliverable{
             Submission sub = studentSubs.getLast();
             sub.setGrade(grade);
             submissions.put(studentId, studentSubs);
+
         }
         catch (NullPointerException en){
             en.printStackTrace();
         }
+        return new String[] {studentId, String.valueOf(grade)};
     }
 
     public boolean checkProfessor(User prof) {
