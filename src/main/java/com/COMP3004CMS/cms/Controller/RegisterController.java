@@ -1,7 +1,7 @@
 package com.COMP3004CMS.cms.Controller;
 
 import com.COMP3004CMS.cms.Model.Course;
-import com.COMP3004CMS.cms.Model.Deliverable;
+import com.COMP3004CMS.cms.Model.DeliverableFactory.Deliverable;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.DeliverableService;
@@ -25,6 +25,15 @@ public class RegisterController {
     @Autowired
     private DeliverableService deliverableService;
 
+    //seeing course detail info
+    @GetMapping("/register/audit")
+    public String getAudit(Model model, Authentication authentication) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        List<Course> courseList = user.getCourseList();
+        model.addAttribute("user", user);
+        model.addAttribute("courses", courseList);
+        return "register/myaudit";
+    }
     //listing all course
     @GetMapping("/register/search")
     public String getAllCourse(Model model, Authentication authentication) {
