@@ -10,7 +10,4 @@ import java.util.ArrayList;
 
 @Document(collection = "users")
 public class Student extends User implements Loggable {
-    public void accept(LogManager lm) {
-        lm.log(this);
-    }
 }

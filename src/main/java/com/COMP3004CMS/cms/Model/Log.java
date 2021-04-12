@@ -12,33 +12,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Log {
 
     // variables
+    public static int staticId;
     @Id
-    public String logid;       //for MongoDB
-    public String userid;
+    public int logid;       //for MongoDB
+    public String id;
     public String timestamp;
 
     // constructors
     public Log() {
     }
 
-    public Log(String logd, String userd, String timestampd) {
-        this.logid = logd;
-        this.userid = userd;
+    public Log(String id, String timestampd) {
+        this.logid = staticId++;
+        this.id = id;
         this.timestamp = timestampd;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        boolean retVal = false;
-        if (obj instanceof Log){
-            Log ptr = (Log) obj;
-            retVal = ptr.logid.equals(this.logid);
-        }
-        return retVal;
-    }
-
-    @Override
     public String toString() {
-        return timestamp + " (user: " + userid + " logid: " + logid+")";
+        return timestamp + " (user: " + id + " logid: " + logid+")";
     }
 }
