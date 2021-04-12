@@ -13,25 +13,7 @@ import java.util.UUID;
 @TypeAlias("long")
 public class LongDeliverable extends Deliverable{
     // deliverable variables
-
-    boolean longanwser;
-
-
     // constructors
     public LongDeliverable() {
-        longanwser = true;
     }
-
-
-    // *****  Prof Actions  *****
-
-
-    public boolean isLonganwser() {
-        return longanwser;
-    }
-
-    public void setLonganwser(boolean longanwser) {
-        this.longanwser = longanwser;
-    }
-
 }

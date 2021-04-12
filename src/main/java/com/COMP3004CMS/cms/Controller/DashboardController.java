@@ -184,8 +184,6 @@ public class DashboardController {
         User user = userDetailServiceImp.findByUsername(authentication.getName());
         Deliverable deliverable = deliverableService.findDeliverableByDeliverableid(deliverableid);
         User stuSubmission = deliverable.findStudent(user);
-        //System.out.println(deliverable.getClass().getName());
-
         stuSubmission.setSubmission(submission);
         deliverable.undateSubmissionByStudent(stuSubmission);
 

@@ -13,22 +13,9 @@ import java.util.UUID;
 @TypeAlias("short")
 public class ShortDeliverable extends Deliverable{
     // deliverable variables
-    boolean shortanswer;
-
 
     // constructors
     public ShortDeliverable() {
-        shortanswer = false;
     }
 
-
-    // *****  Prof Actions  *****
-
-    public boolean isShortanswer() {
-        return shortanswer;
-    }
-
-    public void setShortanswer(boolean shortanswer) {
-        this.shortanswer = shortanswer;
-    }
 }
