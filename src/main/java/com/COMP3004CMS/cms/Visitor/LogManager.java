@@ -9,7 +9,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class LogManager {
-    static ArrayList<String> logs = new ArrayList<>();
+
+    static ArrayList<String> logs;
+
+    //constructors
+    public LogManager(){
+        logs = new ArrayList<>();
+    }
+    public LogManager(ArrayList<String> s){
+        logs = s;
+    }
+
+
     public void log(Course course) {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         logs.add("time: " + timeStamp + ", course: "+ course.getDepartment() + course.getCoursecode());
