@@ -3,7 +3,7 @@
     ####    USED TO INCLUDE DIALECT + DECORATE TO PICK LAYOUT DESIRED TO WRAP   ####
 -->
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layouts/mainlayout.html}">
+      layout:decorate="~{layouts/graphlayout.html}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,8 @@
     ####    CONTENT YOU WANT TO BE INJECTED INT LAYOUT   ####
 -->
 
-<section layout:fragment="menu">
+<section layout:fragment="menu-graph">
+    <div class="pt-6"></div>
 
                     <!-- display options for the chart
                         - average
@@ -26,6 +27,9 @@
                         -gender
                             male female
                     -->
+                    <div th:replace="fragments/dynamic/grade_distribution_columnchart.html"></div>
+                    <div th:replace="fragments/dynamic/grade_distribution_piechart.html"></div>
+                    <div th:replace="fragments/dynamic/grade_distribution_histogram.html"></div>
                     <div class="box">
                         <div class="title">Carleton Grade Report</div>
                             <div class="columns">
@@ -82,9 +86,86 @@
                                     </form>
 
                                 </div>
+
+
                             </div>
 
+
                     </div>
+    <script th:inline="javascript">
+        var real_data = /*[[${chartData}]]*/'noValue';
+
+        $(document).ready(function() {
+            google.charts.load('current', {
+                packages : [ 'corechart', 'bar' ]
+            });
+            google.charts.setOnLoadCallback(drawColumnChart);
+            google.charts.setOnLoadCallback(drawPieChart);
+            google.charts.setOnLoadCallback(drawHistogramChart);
+        });
+
+        function drawColumnChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Grade Range');
+            data.addColumn('number', 'Amount');
+            Object.keys(real_data).forEach(function(key) {
+                data.addRow([ key, real_data[key] ]);
+            });
+            var options = {
+                title : 'Grade Distribution',
+                hAxis : {
+                    title : 'Grade Ranges',
+                },
+                vAxis : {
+                    title : 'Number of Students'
+                },
+                bars: 'vertical',
+                bar: { groupWidth: "90%" },
+                colors: ['#1b9e77', '#d95f02', '#7570b3'],
+                animation: {
+                    "startup": true,
+                    duration:500,
+                    easing: 'out',
+                },
+            };
+            var chart = new google.visualization.ColumnChart(document
+                .getElementById('columnchart'));
+            chart.draw(data, options);
+        }
+
+        function drawPieChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Grade Ranges');
+            data.addColumn('number', 'Amount');
+            Object.keys(real_data).forEach(function(key) {
+                data.addRow([ key, real_data[key] ]);
+            });
+            var options = {
+                title : 'Grade Distribution'
+            };
+            var chart = new google.visualization.PieChart(document
+                .getElementById('piechart'));
+            chart.draw(data, options);
+        }
+
+        function drawHistogramChart() {
+            var data = new google.visualization.DataTable();
+            data.addColmn(["Grade Range", "Amount"])
+            Object.keys(real_data).forEach(function(key) {
+                data.addColumn([ key, real_data[key] ]);
+            });
+
+
+            var options = {
+                title: 'Lengths of dinosaurs, in meters',
+                legend: { position: 'none' },
+            };
+
+            var chart = new google.visualization.Histogram(document.getElementById('histogram'));
+            chart.draw(data, options);
+        }
+    </script>
+
 
 </section>
 

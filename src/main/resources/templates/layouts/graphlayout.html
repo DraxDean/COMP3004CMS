@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">CMS HOME</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <!--
     Template home page, menubar + sideBar +test footer
@@ -14,17 +16,17 @@
 <body>
 <!-- fragment for menu bar-->
 <div th:replace="fragments/static/navbar.html"></div>
-<div class="container">
-    <div class="columns">
+<div class="container is-full-desktop">
+    <div class="columns is-main">
         <div class="columns is-3" th:replace="fragments/static/leftmenu.html"></div>
-        <section class="column is-9" layout:fragment="menu">
+        <section class="column is-9" layout:fragment="menu-graph">
             Content from page section will be placed here
         </section>
     </div>
-    <div th:replace="fragments/static/footer.html"></div>
 </div>
 
 
 <script async type="text/javascript" src="../js/bulma.js"></script>
 </body>
+<div th:replace="fragments/static/footer.html"></div>
 </html>

@@ -137,6 +137,8 @@ public class AdminController {
         } else {
             Course shortCourse = new Course(course.id, course.courseid, course.department,
                     course.coursecode, course.title, course.section, course.term, course.year);
+
+
             User shortUser = new User(professors.id, professors.userid, professors.firstname,
                     professors.lastname,professors.getRoles());
             course.setProfessor(shortUser);
