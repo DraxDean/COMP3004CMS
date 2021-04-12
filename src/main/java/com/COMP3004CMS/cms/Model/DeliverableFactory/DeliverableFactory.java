@@ -1,4 +1,4 @@
-package com.COMP3004CMS.cms.DeliverableFactory;
+package com.COMP3004CMS.cms.Model.DeliverableFactory;
 
 //DeliverableFactory deliverableFactory = new DeliverableFactory();
 //Deliverable deliverable = deliverableFactory.QuizDeliverable();

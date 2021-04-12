@@ -19,6 +19,7 @@ package com.COMP3004CMS.cms.Model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.COMP3004CMS.cms.Model.DeliverableFactory.Deliverable;
 
 import java.util.ArrayList;
 import java.util.UUID;
