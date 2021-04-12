@@ -40,7 +40,7 @@ public class LogManager {
         }
     }
 
-    @PostMapping("/admin/logs/add")
+//    @PostMapping("/admin/logs/add")
     public void log(Course course) {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         try {
@@ -51,18 +51,17 @@ public class LogManager {
         }
     }
     //post add deliverable
-    @PostMapping("/dashboard/deliverable/add")
-    public String postLog(Model model, Log log, BindingResult bindingResult) {
-        logService.saveLog(log);
-        return "redirect:/admin";
-    }
+//    public String postLog(Model model, Log log, BindingResult bindingResult) {
+//        logService.saveLog(log);
+//        return "redirect:/admin";
+//    }
 
     public void log(User user) {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         try {
             Log log = new Log(user.getId(), timeStamp);
             System.out.println(log);
-            logService.addLog(new Log(user.getId(), timeStamp));
+            logService.addLog(log);
         }
         catch(Exception e) {
             System.out.println(e);
