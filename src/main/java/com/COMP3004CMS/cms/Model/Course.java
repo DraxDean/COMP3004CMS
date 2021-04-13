@@ -17,12 +17,10 @@ package com.COMP3004CMS.cms.Model;
         * assign course grade
 */
 
-import com.COMP3004CMS.cms.Model.Deliverable;
-import com.COMP3004CMS.cms.Model.Professor;
-import com.COMP3004CMS.cms.Model.Student;
 import com.COMP3004CMS.cms.Visitor.LogManager;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.COMP3004CMS.cms.Model.DeliverableFactory.Deliverable;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -41,6 +39,7 @@ public class Course {
     public int maxSeats;
     public String term;
     public String year;
+    public String grade;
 
     public String status;       //for displaying "register" or "drop"
     public String action;
@@ -78,6 +77,14 @@ public class Course {
         this.year = year;
     }
 
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
     public ArrayList<User> getProfessors() {
         return professors;
     }
@@ -104,24 +111,24 @@ public class Course {
 
     public void notifyStudentsDeliverableCreated(Deliverable d){
         for (User s : students){
-            s.update("Deliverable " + d.title + " has been created.");
+            s.update("Deliverable " + d.getTitle() + " has been created.");
         }
     }
 
     public void notifyStudentsDeliverableDeleted(Deliverable d){
         for (User s : students){
-            s.update("Deliverable " + d.title + " has been deleted.");
+            s.update("Deliverable " + d.getTitle() + " has been deleted.");
         }
     }
     
     public void notifyStudentsDeliverableGraded(Deliverable d){
         for (User s : students){
-            s.update("Deliverable " + d.title + " has been graded.");
+            s.update("Deliverable " + d.getTitle() + " has been graded.");
         }
     }
     public void notifyStudentsDeliverableDeadlineExtended(Deliverable d){
         for (User s : students){
-            s.update("Deliverable " + d.title + " deadline has been extended to " + d.deadline);
+            s.update("Deliverable " + d.getTitle() + " deadline has been extended to " + d.getDeadline());
         }
     }
 
@@ -381,6 +388,14 @@ public class Course {
             this.title = title;
             this.description = description;
             this.maxSeats = maxSeats;
+        }
+    }
+
+    public void undateGradeByStudent(User stu, int grade){
+        for(User student : this.getStudents()){
+            if(student.equals(stu)){
+                student.setGrade(grade);
+            }
         }
     }
 }

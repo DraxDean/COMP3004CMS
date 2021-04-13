@@ -1,6 +1,7 @@
 package com.COMP3004CMS.cms.Service;
 
 import com.COMP3004CMS.cms.Model.Course;
+import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Repository.CourseRepository;
 import com.COMP3004CMS.cms.Visitor.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,17 @@ public class CourseService{
 
     public boolean deleteCourseByCourseid(String id){
         Course course = courseRepository.findByCourseid(id);
-        if (course.getStudents()!=null){
-            return false;
-        }else {
+
+        if (course.getStudents()==null) {
             courseRepository.deleteCourseByCourseid(id);
             return true;
+        }else {
+            if (!course.getStudents().isEmpty()){
+                return false;
+            }else {
+                courseRepository.deleteCourseByCourseid(id);
+                return true;
+            }
         }
     }
 }

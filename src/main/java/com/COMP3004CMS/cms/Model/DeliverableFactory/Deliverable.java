@@ -1,5 +1,6 @@
-package com.COMP3004CMS.cms.Model;
+package com.COMP3004CMS.cms.Model.DeliverableFactory;
 
+import com.COMP3004CMS.cms.Model.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -77,7 +78,7 @@ public class Deliverable {
     public void submitSubmission(String newSubmission){
         submission = newSubmission;
     }
-
+    
     public String getId() {
         return id;
     }
