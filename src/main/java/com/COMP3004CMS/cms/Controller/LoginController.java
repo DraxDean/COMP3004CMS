@@ -45,6 +45,13 @@ public class LoginController {
 
     @PostMapping("/signup")
     public String getSignup(User user, BindingResult bindingResult) {
+
+        System.out.println(user.getRoles());
+        user.setRoles("ADMIN");
+        System.out.println(user.getRoles());
+
+        //User adminNew= new User("1234", "1", "admin", "password", "admin", "admin", "ADMIN");
+        //userDetailServiceImp.saveUser(adminNew);
         User userExists = userDetailServiceImp.findByUsername(user.getUsername());
         if (userExists != null) {
             bindingResult
@@ -54,7 +61,9 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "signup";
         } else {
+
             userDetailServiceImp.saveUser(user);
+            System.out.println("SAVED");
             User admin = userDetailServiceImp.findByUsername("admin");
             admin.addAnnouncements("A new user creation: (" + user.userid + ") has been requested.");
             userDetailServiceImp.update(admin);

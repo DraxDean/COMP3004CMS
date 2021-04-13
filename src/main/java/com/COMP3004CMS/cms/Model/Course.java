@@ -65,6 +65,7 @@ public class Course {
         this.coursecode = coursecode;
         this.title = title;
         this.maxSeats = maxSeats;
+        students = new ArrayList<>();
     }
 
     public Course(String id, String courseid, String department, String coursecode, String title, String section, String term, String year) {
@@ -78,6 +79,7 @@ public class Course {
         this.year = year;
         //cant add any student is not set
         maxSeats = 200;
+        students = new ArrayList<>();
     }
 
     public String getGrade() {

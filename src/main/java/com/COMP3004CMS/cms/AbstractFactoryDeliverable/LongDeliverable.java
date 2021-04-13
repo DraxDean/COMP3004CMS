@@ -143,6 +143,10 @@ public class LongDeliverable implements Deliverable{
     }
 
     public void setStudents(ArrayList<User> students) {
+        //check if arrayList is empty
+        if (students == null || students.isEmpty()){
+            return;
+        }
         this.students = students;
         for (User s :this.students){
             s.setGrade(0);

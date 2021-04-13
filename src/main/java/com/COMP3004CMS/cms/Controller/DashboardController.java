@@ -1,5 +1,7 @@
 package com.COMP3004CMS.cms.Controller;
 
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.DeliverableFactory;
+import com.COMP3004CMS.cms.AbstractFactoryDeliverable.LongFactory;
 import com.COMP3004CMS.cms.Model.Action;
 import com.COMP3004CMS.cms.Model.Course;
 import com.COMP3004CMS.cms.AbstractFactoryDeliverable.Deliverable;
@@ -110,10 +112,24 @@ public class DashboardController {
     @PostMapping("/dashboard/deliverable/add")
     public String postDeliverable(@RequestParam("courseid") String courseid,
                                   @RequestParam("type") String type,
-                                  Deliverable deliverable, BindingResult bindingResult, Model model) {
+                                  @RequestParam("title") String title,
+                                  @RequestParam("start") String start,
+                                  @RequestParam("deadline") String deadline,
+                                  @RequestParam("grade") String grade,
+                                  @RequestParam("requirements") String requirements,
+                                  Model model) {
+        Deliverable deliverable = null;
         Course course = courseService.findByCourseid(courseid);
-        //Deliverable deliverable = DeliverableFactory.createByType(type, d);
+        if (type.equals("LONG")){
+            DeliverableFactory factory = new LongFactory();
+            deliverable = factory.create(courseid, title, start,deadline);
+        }
         deliverable.setDeliverableid();
+        if (course.getStudents() ==null){
+            System.out.println("Course is null");
+        }else {
+            deliverable.setStudents(course.getStudents());
+        }
         deliverable.setStudents(course.getStudents());
         deliverable.initalSubmission();
         course.addDeliverable(deliverable);
