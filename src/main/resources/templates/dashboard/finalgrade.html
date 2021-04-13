@@ -39,34 +39,46 @@
     </div>
 </nav>
 
-
-
-<!-- could have a conditional button here-->
-<div >
-
-    <table style="width:100%">
-        <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Student Number</th>
-            <th>Grade</th>
-            <th>Submit</th>
-        </tr>
-
-        <tr th:each="student:${students}">
-            <form th:action="@{/dashboard/course/grade/{id}/{userid}(id=${course.getCourseid()},userid=${student.getUserid()})}" method="post">
-                <td th:text="${student.getFirstname()}"></td>
-                <td th:text="${student.getLastname()}"></td>
-                <td id="userid" name="userid" th:text="${student.getUserid()}" th:value="${student.getUserid()}"></td>
-                <td><input id="grade" name="grade" th:value="${student.getGrade()}"></td>
-                <td><button type="submit">Submit</button></td>
-            </form>
-        </tr>
-    </table>
-
+<div class="container" style = "margin-top:2.5%;margin-right:auto;margin-left:auto">
+    <div class="columns">
+        <div class="column is-12">
+            <section class="hero is-info welcome is-small">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 th:text ="${course.getDepartment()+course.getCoursecode()}"></h1>
+                        <p>Final Grades</p>
+                    </div>
+                </div>
+            </section>
+            <div class="mt-5"></div>
+            <div class="columns">
+                <div class="column is-12">
+                    <div class="card events-card">
+                        <!---displaying grades---->
+                        <div class="card-table">
+                            <div class="content">
+                                <table>
+                                    <tbody>
+                                    <tr th:each="student:${students}">
+                                        <td width="5%"><i class="fa fa-bell-o"></i></td>
+                                        <form th:action="@{/dashboard/course/grade/{id}/{userid}(id=${course.getCourseid()},userid=${student.getUserid()})}" method="post">
+                                            <td th:text="${student.getFirstname()}"></td>
+                                            <td th:text="${student.getLastname()}"></td>
+                                            <td id="userid" name="userid" th:text="${student.getUserid()}" th:value="${student.getUserid()}"></td>
+                                            <td><input id="grade" name="grade" th:value="${student.getGrade()}"></td>
+                                            <td><button type="submit">Submit</button></td>
+                                        </form>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 
 </body>
 </html>

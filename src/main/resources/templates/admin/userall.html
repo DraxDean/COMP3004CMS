@@ -54,21 +54,21 @@ background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(224,0,34,1) 98%); /*
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e00022',GradientType=1 ); height: 6px;width: 100%; box-shadow: 0 2px 0 0 whitesmoke;">
 </div>
 
-<div class="container" style="margin-top:2.5%">
+<div class="container" style="margin-top:1.5%">
     <div class="columns">
         <div class="column is-9" style="margin-right:auto;margin-left:auto">
 
         <section class="hero is-info welcome is-small">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">
+                    <h1 class="title" style="margin-bottom:0px">
                         Users Lists
                     </h1>
                     <p th:text="${message}"></p>
                 </div>
             </div>
         </section>
-        <div class="card events-card" style="margin-top:15px">
+        <div class="card events-card" style="margin-top:15px;max-height:40vh;overflow-y:scroll">
             <header class="card-header">
                 <p class="card-header-title">
                     Professors:
@@ -99,7 +99,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             </footer>
         </div>
 
-        <div class="card events-card" style="margin-top:15px">
+        <div class="card events-card" style="margin-top:15px;max-height:40vh;overflow-y:scroll">
             <header class="card-header">
                 <p class="card-header-title">
                     Students:

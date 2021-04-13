@@ -9,6 +9,7 @@ import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.DeliverableService;
 import com.COMP3004CMS.cms.Service.UserDetailServiceImp;
+import com.COMP3004CMS.cms.Visitor.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class DashboardController {
         User user = userDetailServiceImp.findByUsername(authentication.getName());
         List<Course> courseList = user.getCourseList();
         ArrayList<String> announcement = user.getAnnouncements();
+        user.accept(new LogManager());
         model.addAttribute("user", user);
         model.addAttribute("announcements", announcement);
         model.addAttribute("courses", courseList);

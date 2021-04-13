@@ -17,6 +17,7 @@ package com.COMP3004CMS.cms.Model;
         * assign course grade
 */
 
+import com.COMP3004CMS.cms.Visitor.LogManager;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.COMP3004CMS.cms.Model.DeliverableFactory.Deliverable;
@@ -131,6 +132,11 @@ public class Course {
         }
     }
 
+    // Visitor design pattern
+
+    public void accept(LogManager lm) {
+        lm.log(this);
+    }
 
     // ******  Prof Course Assignment  ******
 

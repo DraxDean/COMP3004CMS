@@ -89,7 +89,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
             </section>
             <div class="mt-5"></div>
             <div class="columns">
-                <div class="column is-6">
+                <div class="column is-6" style="overflow-y:scroll;max-height:70vh;">
                     <div class="card events-card">
                         <header class="card-header">
                             <p class="card-header-title">
@@ -121,7 +121,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                     </div>
                 </div>
 
-                <div class="column is-6">
+                <div class="column is-6"  style="overflow-y:scroll;max-height:70vh;">
                     <div class="card">
                         <header class="card-header">
                             <p class="card-header-title">
@@ -149,7 +149,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                                     <tr th:each="announcement:${announcements}">
                                         <td width="5%"><i class="fa fa-bell-o"></i></td>
                                         <td class="level-left">
-                                            <a th:text="${announcement}"></a>
+                                            <p th:text="${announcement}"></p>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -164,7 +164,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             </p>
                             <p>
                                 <a class="button is-small is-primary"
-                                   th:href="@{/dashboard/course/grade(id=${course.getCourseid()})}">
+                                   th:href="@{/dashboard/course/grade(id=${course.getCourseid()})}"
+                                   style="margin-top:9px;margin-right:12px">
                                     Submit Final Grade
                                 </a>
                             </p>
@@ -181,7 +182,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             <p>
                                 <a class="button is-small is-primary"
                                    th:href="@{${action.getAction()}}"
-                                   th:text="${action.getButton()}">
+                                   th:text="${action.getButton()}"
+                                   style="margin-top:9px;margin-right:12px">
                                 </a>
                             </p>
 
