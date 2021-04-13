@@ -2,7 +2,9 @@ package com.COMP3004CMS.cms.Controller;
 
 import com.COMP3004CMS.cms.Model.Action;
 import com.COMP3004CMS.cms.Model.Course;
-import com.COMP3004CMS.cms.Model.Deliverable;
+import com.COMP3004CMS.cms.Model.DeliverableFactory.Deliverable;
+import com.COMP3004CMS.cms.Model.DeliverableFactory.DeliverableFactory;
+import com.COMP3004CMS.cms.Model.DeliverableFactory.ShortDeliverable;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.DeliverableService;
@@ -81,14 +83,15 @@ public class DashboardController {
             ArrayList<User> students = deliverable.getStudents();
             model.addAttribute("students_submissions", students);
         } else if(user.getRoles().equals("STUDENT")){
-            Action submiutAction = new Action();
-            submiutAction.setAction("/dashboard/deliverable/submit?id="+deliverableid);
-            submiutAction.setButton("Submit this deliverable");
+            Action submitAction = new Action();
+            submitAction.setAction("/dashboard/deliverable/submit?id="+deliverableid);
+            submitAction.setButton("Submit this deliverable");
             User submission = deliverable.findStudent(user);
             model.addAttribute("submission", submission);
         } else{
             return "redirect://default";
         }
+        model.addAttribute("short", deliverable instanceof ShortDeliverable);
         model.addAttribute("deliverable", deliverable);
         model.addAttribute("actions", actions);
         return "dashboard/deliverablepage";
@@ -108,9 +111,11 @@ public class DashboardController {
 
     //post add deliverable
     @PostMapping("/dashboard/deliverable/add")
-    public String postDeliverable(Model model, @RequestParam("courseid") String courseid,
-                                  Deliverable deliverable, BindingResult bindingResult) {
+    public String postDeliverable(@RequestParam("courseid") String courseid,
+                                  @RequestParam("type") String type,
+                                  Deliverable d, BindingResult bindingResult, Model model) {
         Course course = courseService.findByCourseid(courseid);
+        Deliverable deliverable = DeliverableFactory.createByType(type, d);
         deliverable.setDeliverableid();
         deliverable.setStudents(course.getStudents());
         deliverable.initalSubmission();
@@ -203,6 +208,37 @@ public class DashboardController {
 
         deliverableService.save(deliverable);
         return "redirect:/dashboard/deliverable?id="+deliverableid;
+    }
+
+    @GetMapping("/dashboard/course/grade")
+    public String getCourseGrade(Authentication authentication, Model model,
+                                  @RequestParam("id") String courseid) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        if(!user.getRoles().equals("PROFESSOR")){
+            return "redirect:/dashboard";
+        }
+        Course course = courseService.findByCourseid(courseid);
+        model.addAttribute("students", course.getStudents());
+        model.addAttribute("course", course);
+        return "dashboard/finalgrade";
+    }
+
+    @PostMapping("/dashboard/course/grade/{id}/{userid}")
+    public String postCourseGrade(Authentication authentication, RedirectAttributes redirectAttributes,
+                                       @PathVariable("id") String courseid,
+                                       @PathVariable("userid") String userid,
+                                       @RequestParam("grade") int grade) {
+        User user = userDetailServiceImp.findByUsername(authentication.getName());
+        User student =  userDetailServiceImp.findUserByUserid(userid);
+        if(!user.getRoles().equals("PROFESSOR")){
+            return "redirect:/dashboard";
+        }
+        Course course = courseService.findByCourseid(courseid);
+        course.undateGradeByStudent(student, grade);
+        student.undateGradeByCourse(course, grade);
+        userDetailServiceImp.update(student);
+        courseService.saveCourse(course);
+        return "redirect:/dashboard/course/grade?id="+courseid;
     }
 
 }
