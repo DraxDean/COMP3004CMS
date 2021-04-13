@@ -1,7 +1,6 @@
 package com.COMP3004CMS.cms.Service;
 
 import com.COMP3004CMS.cms.Model.User;
-import com.COMP3004CMS.cms.Repository.LogRepository;
 import com.COMP3004CMS.cms.Repository.UserRepository;
 import com.COMP3004CMS.cms.Visitor.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,6 @@ public class UserDetailServiceImp implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private LogService logService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -86,10 +83,10 @@ public class UserDetailServiceImp implements UserDetailsService {
     public void saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-        user.accept(new LogManager(logService.getLogs()));
+        user.accept(new LogManager());
     }
     public void update(User user) {
-        user.accept(new LogManager(logService.getLogs()));
+        user.accept(new LogManager());
         userRepository.save(user);
     }
     
