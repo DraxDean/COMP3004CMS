@@ -164,7 +164,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             </p>
                             <p>
                                 <a class="button is-small is-primary"
-                                   th:href="@{/dashboard/course/grade(id=${course.getCourseid()})}">
+                                   th:href="@{/dashboard/course/grade(id=${course.getCourseid()})}"
+                                   style="margin-top:9px;margin-right:12px">
                                     Submit Final Grade
                                 </a>
                             </p>
@@ -181,7 +182,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
                             <p>
                                 <a class="button is-small is-primary"
                                    th:href="@{${action.getAction()}}"
-                                   th:text="${action.getButton()}">
+                                   th:text="${action.getButton()}"
+                                   style="margin-top:9px;margin-right:12px">
                                 </a>
                             </p>
 
