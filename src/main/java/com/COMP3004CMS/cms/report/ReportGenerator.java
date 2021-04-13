@@ -22,7 +22,7 @@ public class ReportGenerator {
         request.forEach((key, value) -> {
            switch (key){
 
-               case "avg":
+               case "samplingAverage":
                    SamplingStrategy avg = new AverageGradeSampling();
                    strategies.addStrategy(avg);
                    break;

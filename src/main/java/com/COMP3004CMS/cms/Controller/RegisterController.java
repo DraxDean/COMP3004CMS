@@ -1,7 +1,8 @@
 package com.COMP3004CMS.cms.Controller;
 
 import com.COMP3004CMS.cms.Model.Course;
-import com.COMP3004CMS.cms.Model.Deliverable;
+
+import com.COMP3004CMS.cms.Model.DeliverableFactory.Deliverable;
 import com.COMP3004CMS.cms.Model.User;
 import com.COMP3004CMS.cms.Service.CourseService;
 import com.COMP3004CMS.cms.Service.DeliverableService;

@@ -66,7 +66,7 @@ public class ReportRequest {
             /* ####     AVERAGE ALWAYS HAS TO GO LAST   ### */
             //add avg if contains
             if (avg){
-                out.put("avg", 1);
+                out.put("samplingAverage", 1);
             }
         } catch (NullPointerException en){
             System.out.println("Error: ReportRequest: get request, nullpointer");

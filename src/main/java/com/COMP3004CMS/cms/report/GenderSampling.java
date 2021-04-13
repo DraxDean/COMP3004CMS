@@ -21,7 +21,7 @@ public class GenderSampling implements SamplingStrategy{
         try{
             for (GradeData datum: dIn) {
                 String check = datum.getStu().gender;
-                if (check.toLowerCase() == gender){
+                if (check.equalsIgnoreCase(gender)){
                     dataOut.add(datum);
                 }
             }
