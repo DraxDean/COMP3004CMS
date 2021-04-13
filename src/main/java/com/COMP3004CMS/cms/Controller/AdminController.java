@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.Year;
 import java.util.List;
 
 @Controller()
@@ -24,7 +23,11 @@ public class AdminController {
     private CourseService courseService;
 
     @GetMapping("/admin")
-    public String getAdminHome() {
+    public String getAdminHome(Model model) {
+        User user = userDetailServiceImp.findByUsername("admin");
+        model.addAttribute("announcements", user.getAnnouncements());
+        LogManager lm = new LogManager();
+        model.addAttribute("logs", lm.getLogs());
         return "admin/adminhomepage";
     }
 
@@ -35,6 +38,8 @@ public class AdminController {
         model.addAttribute("user", user);
         return "admin/userprofile";
     }
+
+    //listing all users
     @GetMapping("/admin/user/all")
     public String getApprove(Model model) {
         List<User> student = userDetailServiceImp.findAllByRoles("STUDENT");
@@ -54,27 +59,38 @@ public class AdminController {
     }
 
     @GetMapping("/admin/user/delete")
-    public String deleteUser(@RequestParam("id") String id) {
-        userDetailServiceImp.deleteById(id);
+    public String deleteUser(@RequestParam("id") String id,
+                             RedirectAttributes redirectAttributes) {
+        Boolean success = userDetailServiceImp.deleteById(id);
+        if(!success){
+            String err = "Can't delete user when they are in courses";
+            redirectAttributes.addFlashAttribute("message", err);
+        }
         return "redirect:/admin/user/all";
     }
+
+    //deny account application
     @GetMapping("/admin/user/deny")
     public String denyUser(@RequestParam("id") String id) {
         userDetailServiceImp.deleteById(id);
         return "redirect:/admin/user/request";
     }
 
+    //approve account application
     @GetMapping("/admin/user/approve")
     public String approveUser(@RequestParam("id") String id) {
         //System.out.println("Approving users...");
         userDetailServiceImp.approveUserById(id);
         return "redirect:/admin/user/request";
     }
+
+    //add user by admin
     @GetMapping("/admin/user/add")
     public String adminAddUser() {
         return "admin/adduser";
     }
 
+    //post add user by admin
     @PostMapping("/admin/user/add")
     public String adminAddUserPost(User user, BindingResult bindingResult) {
         User checkUsername = userDetailServiceImp.findByUsername(user.getUsername());
@@ -92,7 +108,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
 
         } else {
-            user.setPassword("123456");
+            user.setPassword("123456");     //initial password
             userDetailServiceImp.saveUser(user);
             userDetailServiceImp.approveUserById(user.getId());
 
@@ -100,6 +116,7 @@ public class AdminController {
         return "redirect:/admin/user/all";
     }
 
+    //see each courses
     @GetMapping("/admin/course")
     public String showAllCourse(Model model, @RequestParam("courseid") String courseid) {
         Course course = courseService.findByCourseid(courseid);
@@ -122,11 +139,13 @@ public class AdminController {
         model.addAttribute("profs", professors);
         return "admin/addcourse";
     }
-
+    //post admin add course
     @PostMapping("/admin/course/add")
     public String postAddCourse(Course course, BindingResult bindingResult,
                                 @RequestParam("prof") String userid) {
-        Course courseExists = courseService.findByCourseid(course.getCourseid());
+        course.setCourseid();
+        Course courseExists = courseService.findCourseByDepartmentAndCoursecodeAndSection(course.getDepartment(),
+                course.getCoursecode(), course.getSection());
         User professors = userDetailServiceImp.findUserByUserid(userid);
         if (courseExists!= null) {
             bindingResult
@@ -141,7 +160,7 @@ public class AdminController {
                     professors.lastname,professors.getRoles());
             course.setProfessor(shortUser);
             professors.addCourse(shortCourse);
-            userDetailServiceImp.saveUser(professors);
+            userDetailServiceImp.update(professors);
             courseService.saveCourse(course);
         }
         return "redirect:/admin/course/all";
@@ -152,11 +171,16 @@ public class AdminController {
     public String postAddCourse(@RequestParam("courseid") String courseid,
                                 RedirectAttributes redirectAttrs) {
         //can't delete course if there are students in
+        Course course = courseService.findByCourseid(courseid);
         Boolean success = courseService.deleteCourseByCourseid(courseid);
         if(!success){
             String err = "Can't delete course when there are students in this course";
             redirectAttrs.addFlashAttribute("message", err);
-
+        }else {
+            //if delete, delete prof's course list as well
+            String userid = course.getProfessor().getUserid();
+            User professor = userDetailServiceImp.findUserByUserid(userid);
+            professor.dropCourse(course);
         }
         return "redirect:/admin/course/all";
     }
@@ -165,7 +189,16 @@ public class AdminController {
     public String getEditCourse(Model model, @RequestParam("courseid") String courseid) {
         Course course = courseService.findByCourseid(courseid);
         List<User> professors = userDetailServiceImp.findAllByRoles("PROFESSOR");
-
+        User temp = course.getProfessor();
+        User professor = new User();
+        if (temp!=null){
+            professor = userDetailServiceImp.findUserByUserid(temp.getUserid());
+            if (professor!=null){
+                professor.dropCourse(course);
+            }
+        }
+        //              //remove course
+        userDetailServiceImp.update(professor);
         model.addAttribute("profs", professors);
         model.addAttribute("course", course);
         return "admin/editcourse";
@@ -190,9 +223,9 @@ public class AdminController {
         course.setYear(year);
         course.setProfessor(shortUser);
         Course shortCourse = new Course(course.id, course.courseid, course.department,
-                course.coursecode, course.title, course.section, course.term, course.year);
+                course.coursecode,course.title, course.section, course.term, course.year);
         professors.addCourse(shortCourse);
-        userDetailServiceImp.saveUser(professors);
+        userDetailServiceImp.update(professors);
         courseService.saveCourse(course);
         return "redirect:/admin/course/all";
     }

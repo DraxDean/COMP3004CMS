@@ -45,14 +45,60 @@
     </div>
 </nav>
 
-    <h1 th:text ="${user.getUsername()}"></h1>
-    <p>Role:</p>
-    <p th:text="${user.getRoles()}" ></p>
-    <p>First Name:</p>
-    <p th:text="${user.getFirstname()}"></p>
-    <p>Last Name:</p>
-    <p th:text="${user.getLastname()}" ></p>
-    <p> Student Number:</p>
-    <p th:text="${user.getUserid()}" ></p>
+<div class="container" style = "margin-top:2.5%">
+    <div class="columns">
+        <div class="column is-9" style="margin-left:auto;margin-right:auto">
+            <section class="hero is-info welcome is-small">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 th:text ="${user.getUsername()}"></h1>
+                    </div>
+                </div>
+            </section>
+            <div class="mt-5"></div>
+            <div class="columns">
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title">Role:</p>
+                            <p th:text="${user.getRoles()}" style="margin-top:12px;margin-right:12px" ></p>
+                        </header>
+                    </div>
+                </div>
+
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title"> UserId:</p>
+                            <p th:text="${user.getUserid()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title">First Name:</p>
+                            <p th:text="${user.getFirstname()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+
+                <div class="column is-6">
+                    <div class="card events-card" style="padding-top:12px">
+                        <header class="card-header">
+                            <p class="card-header-title">Last Name:</p>
+                            <p th:text="${user.getLastname()}" style="margin-top:12px;margin-right:12px"></p>
+                        </header>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
