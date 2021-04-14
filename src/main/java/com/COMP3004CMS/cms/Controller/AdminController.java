@@ -208,13 +208,14 @@ public class AdminController {
     @PostMapping("/admin/course/edit")
     public String postEditCourse(@RequestParam("department") String department, @RequestParam("coursecode") String coursecode,
                                  @RequestParam("section") String section, @RequestParam("maxSeats") int maxSeats,
-                                 @RequestParam("description") String description,
+                                 @RequestParam("description") String description, @RequestParam("title") String title,
                                  @RequestParam("term") String term, @RequestParam("year") String year,
                                  @RequestParam("courseid") String courseid, @RequestParam("prof") String userid){
         Course course = courseService.findByCourseid(courseid);
         User professors = userDetailServiceImp.findUserByUserid(userid);
         User shortUser = new User(professors.id, professors.userid, professors.firstname,
                 professors.lastname,professors.getRoles());
+        course.setTitle(title);
         course.setDepartment(department);
         course.setCoursecode(coursecode);
         course.setSection(section);

@@ -122,6 +122,7 @@ public class DashboardController {
         deliverable.setStudents(course.getStudents());
         deliverable.initalSubmission();
         course.addDeliverable(deliverable);
+        deliverable.setCourseid(courseid);
         courseService.saveCourse(course);
         deliverableService.save(deliverable);
         model.addAttribute("course", course);
